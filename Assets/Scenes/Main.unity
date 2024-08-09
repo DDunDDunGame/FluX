@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e666bc6d50ada4abfede6f49bf1d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStage: 0
+  currentStage: -1
 --- !u!4 &9068588
 Transform:
   m_ObjectHideFlags: 0
@@ -577,6 +577,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7a1bf192-9a45-41d5-8681-7d0507cc5c98
     m_ActionName: Orbit/Move[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 925926442}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7cf92e0b-c0aa-4d82-b67b-f44a76e0eca0
+    m_ActionName: Barrier/Move[/Keyboard/a,/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: None
