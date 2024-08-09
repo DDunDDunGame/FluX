@@ -6,7 +6,7 @@ public class Define
 {
     public enum Stage
     {
-        None,
+        None = -1,
         Shooting,
         Mouse,
         Run,
