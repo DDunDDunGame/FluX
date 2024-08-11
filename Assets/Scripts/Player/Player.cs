@@ -7,8 +7,9 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour, IStageAttachment
 {
     private Define.Stage currentStage;
-    private Rigidbody2D rigid;
+    public Rigidbody2D Rigid { get; private set; }
     private PlayerInput input;
+    private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
 
     private void Awake()
     {
@@ -19,36 +20,40 @@ public class Player : MonoBehaviour, IStageAttachment
     private void InitVariables()
     {
         currentStage = Define.Stage.None;
-        rigid = GetComponent<Rigidbody2D>();
+        Rigid = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInput>();
+        onStageDict = new Dictionary<Define.Stage, PlayerOnStage>
+        {
+            { Define.Stage.Shooting, new PlayerOnShootingStage(this) },
+            { Define.Stage.Mouse, new PlayerOnMouseStage(this) },
+            { Define.Stage.Run, new PlayerOnRunStage(this) },
+            { Define.Stage.Jump, new PlayerOnJumpStage(this) },
+            { Define.Stage.Orbit, new PlayerOnOrbitStage(this) },
+            { Define.Stage.Barrier, new PlayerOnBarrierStage(this) },
+            { Define.Stage.Boss, new PlayerOnBossStage(this) }
+        };
     }
 
     public void ChangeStage(Define.Stage stage)
     {
         currentStage = stage;
         input.SwitchCurrentActionMap(stage.ToString());
+        onStageDict[currentStage].OnEnter();
     }
 
     // 추후에 활성화된 스테이지 별로 다른 함수가 작동하게 설계
     public void OnMove(InputAction.CallbackContext context)
     {
-        Vector2 input = context.ReadValue<Vector2>();
-        rigid.velocity = input;
+        onStageDict[currentStage].OnMove(context);
     }
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            Debug.Log("Shoot");
-        }
+        onStageDict[currentStage].OnShoot(context);
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            Debug.Log("Jump");
-        }
+        onStageDict[currentStage].OnJump(context);
     }
 }
