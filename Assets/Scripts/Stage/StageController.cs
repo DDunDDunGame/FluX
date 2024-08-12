@@ -19,7 +19,9 @@ public class StageController : MonoBehaviour
 
     private void Start()
     {
-        ChangeStage(SetRandomStage());
+        //ChangeStage(SetRandomStage());
+        //임시
+        ChangeStage(currentStage);
     }
 
     private void InitDict()
@@ -46,14 +48,17 @@ public class StageController : MonoBehaviour
     {
         if (currentStage == Define.Stage.None) { return; }
 
-        if (stageDict[currentStage].IsEnd())
-        {
-            ChangeStage(SetRandomStage());
-        }
-        else
-        {
-            stageDict[currentStage].Update();
-        }
+        //임시
+        stageDict[currentStage].Update();
+
+        //if (stageDict[currentStage].IsEnd())
+        //{
+        //    ChangeStage(SetRandomStage());
+        //}
+        //else
+        //{
+        //    stageDict[currentStage].Update();
+        //}
     }
 
     private Define.Stage SetRandomStage()
