@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerOnBarrierStage : PlayerOnStage
 {
@@ -18,7 +19,13 @@ public class PlayerOnBarrierStage : PlayerOnStage
 
     public override void OnMove(InputAction.CallbackContext context)
     {
+        player.Rigid.angularDrag = 0;
+        Vector2 input = context.ReadValue<Vector2>();
 
+        if (input != null)
+        {
+            player.Rigid.angularVelocity = input.x * 300;
+        }
     }
 
     public override void OnShoot(InputAction.CallbackContext context)
