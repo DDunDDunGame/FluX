@@ -15,17 +15,21 @@ public class PlayerOnJumpStage : PlayerOnStage
     {
         if (context.ReadValueAsButton())
         {
-            player.Rigid.AddForce(Vector3.up * 4, ForceMode2D.Impulse);
+            player.Rigid.AddForce(Vector3.up * 3, ForceMode2D.Impulse);
         }
     }
 
     public override void OnMove(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
+
+        // 이니셜라이져 부분으로 바꾸면 좋을것같아요
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+        player.transform.GetComponent<CircleCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
+
         if (input != null)
         {
-            player.Rigid.velocity = new Vector3(input.x, 0, input.y) * 5;
+            player.Rigid.velocity = new Vector2(input.x * 5, player.Rigid.velocity.y);
         }
     }
 
