@@ -18,7 +18,12 @@ public class PlayerOnOrbitStage : PlayerOnStage
 
     public override void OnMove(InputAction.CallbackContext context)
     {
-
+        Vector2 input = context.ReadValue<Vector2>();
+        player.Rigid.bodyType = RigidbodyType2D.Kinematic;
+        if (input != null)
+        {
+            player.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = input.x * 300;
+        }
     }
 
     public override void OnShoot(InputAction.CallbackContext context)
