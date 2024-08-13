@@ -5,6 +5,7 @@ using UnityEngine;
 public class StageController : MonoBehaviour
 {
     [SerializeField] private Define.Stage currentStage = Define.Stage.None;
+    [SerializeField] private Define.Stage testStage = Define.Stage.None;
     private Dictionary<Define.Stage, BaseStage> stageDict;
     private List<IStageAttachment> attachments;
 
@@ -19,10 +20,11 @@ public class StageController : MonoBehaviour
 
     private void Start()
     {
-        //ChangeStage(SetRandomStage());
-
-        // �ӽ�
-        ChangeStage(currentStage);
+#if UNITY_EDITOR
+        ChangeStage(testStage);
+#else
+        ChangeStage(SetRandomStage());
+#endif
     }
 
     private void InitDict()
