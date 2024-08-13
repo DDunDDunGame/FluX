@@ -19,8 +19,12 @@ public class StageController : MonoBehaviour
 
     private void Start()
     {
-        //ChangeStage(SetRandomStage());
-        ChangeStage(Define.Stage.Shooting);
+        // 에디터에서는 테스트를 위해 원하는 스테이지로 지정, 빌드 시 랜덤 스테이지
+#if UNITY_EDITOR
+        ChangeStage(Define.Stage.Jump);
+#else
+        ChangeStage(SetRandomStage());
+#endif
     }
 
     private void InitDict()
