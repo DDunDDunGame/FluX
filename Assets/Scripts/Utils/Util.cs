@@ -40,4 +40,20 @@ public class Util : MonoBehaviour
 
         return null;
     }
+
+    public static GameObject MapCreate(GameObject obj, Vector3 pos)
+    {
+        GameObject parent = GameObject.Find("Map");
+        return Instantiate(obj, pos, Quaternion.identity, parent.transform);
+    }
+
+    public static bool MapDestroy()
+    {
+        GameObject parent = GameObject.Find("Map");
+        foreach (Transform child in parent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        return false;
+    }
 }
