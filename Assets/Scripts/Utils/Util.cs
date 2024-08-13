@@ -40,4 +40,17 @@ public class Util : MonoBehaviour
 
         return null;
     }
+    public static GameObject CreateObjToParent(GameObject childObj, Vector3 pos, GameObject parentObj)
+    {
+        return Instantiate(childObj, pos, Quaternion.identity, parentObj.transform);
+    }
+    
+    public static bool DestoryObjFromParent(GameObject parentObj)
+    {
+        foreach(Transform child in parentObj.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        return false;
+    }
 }
