@@ -12,10 +12,10 @@
             "id": "84a04996-060e-4c67-aca5-ee7d2a936a66",
             "actions": [
                 {
-                    "name": "Move",
-                    "type": "Value",
+                    "name": "Up",
+                    "type": "Button",
                     "id": "0e67f896-54c2-4a9b-a218-8bf9802071d2",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -32,39 +32,6 @@
             ],
             "bindings": [
                 {
-                    "name": "UpDown",
-                    "id": "36994e52-0fa6-4244-87fb-bda22fedebca",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "4c3d3242-9476-4109-ae1d-7c146682fe2e",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "b179c224-c697-45ca-98d4-3cec865bb728",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "93bb53b9-ad98-4ffb-8236-db06b6e9ba08",
                     "path": "<Keyboard>/space",
@@ -72,6 +39,17 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef560cce-098f-49b0-936d-3f8910b3a30c",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Up",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
