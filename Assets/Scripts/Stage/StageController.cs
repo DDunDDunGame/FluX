@@ -19,7 +19,8 @@ public class StageController : MonoBehaviour
 
     private void Start()
     {
-        ChangeStage(SetRandomStage());
+        //ChangeStage(SetRandomStage());
+        ChangeStage(Define.Stage.Shooting);
     }
 
     private void InitDict()
