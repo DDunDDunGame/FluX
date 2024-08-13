@@ -12,7 +12,7 @@ public class PlayerOnBarrierStage : PlayerOnStage
 
     }
 
-    public override void OnJump(InputAction.CallbackContext context)
+    public override void OnUpdate()
     {
 
     }
@@ -29,6 +29,7 @@ public class PlayerOnBarrierStage : PlayerOnStage
     }
 
     public override void OnShoot(InputAction.CallbackContext context)
+    public override void OnExit()
     {
 
     }
