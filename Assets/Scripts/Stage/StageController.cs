@@ -5,7 +5,7 @@ using UnityEngine;
 public class StageController : MonoBehaviour
 {
     [SerializeField] private Define.Stage currentStage = Define.Stage.None;
-    [SerializeField] private Define.Stage testStage; 
+    [SerializeField] private Define.Stage testStage;
     private Dictionary<Define.Stage, BaseStage> stageDict;
     private List<IStageAttachment> attachments;
 
@@ -20,6 +20,7 @@ public class StageController : MonoBehaviour
 
     private void Start()
     {
+        // 에디터에서는 테스트를 위해 원하는 스테이지로 지정, 빌드 시 랜덤 스테이지
 #if UNITY_EDITOR
         ChangeStage(testStage);
 #else
@@ -51,7 +52,7 @@ public class StageController : MonoBehaviour
     {
         if (currentStage == Define.Stage.None) { return; }
 
-        //�ӽ�
+        //占쌈쏙옙
         stageDict[currentStage].Update();
 
         //if (stageDict[currentStage].IsEnd())

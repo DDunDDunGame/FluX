@@ -34,10 +34,10 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             ""id"": ""84a04996-060e-4c67-aca5-ee7d2a936a66"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
                     ""id"": ""0e67f896-54c2-4a9b-a218-8bf9802071d2"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -54,39 +54,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""UpDown"",
-                    ""id"": ""36994e52-0fa6-4244-87fb-bda22fedebca"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""4c3d3242-9476-4109-ae1d-7c146682fe2e"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""b179c224-c697-45ca-98d4-3cec865bb728"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""93bb53b9-ad98-4ffb-8236-db06b6e9ba08"",
                     ""path"": ""<Keyboard>/space"",
@@ -94,6 +61,17 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef560cce-098f-49b0-936d-3f8910b3a30c"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Up"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -371,7 +349,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_None = asset.FindActionMap("None", throwIfNotFound: true);
         // Shooting
         m_Shooting = asset.FindActionMap("Shooting", throwIfNotFound: true);
-        m_Shooting_Move = m_Shooting.FindAction("Move", throwIfNotFound: true);
+        m_Shooting_Up = m_Shooting.FindAction("Up", throwIfNotFound: true);
         m_Shooting_Shoot = m_Shooting.FindAction("Shoot", throwIfNotFound: true);
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
@@ -488,13 +466,13 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     // Shooting
     private readonly InputActionMap m_Shooting;
     private List<IShootingActions> m_ShootingActionsCallbackInterfaces = new List<IShootingActions>();
-    private readonly InputAction m_Shooting_Move;
+    private readonly InputAction m_Shooting_Up;
     private readonly InputAction m_Shooting_Shoot;
     public struct ShootingActions
     {
         private @PlayerActions m_Wrapper;
         public ShootingActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Shooting_Move;
+        public InputAction @Up => m_Wrapper.m_Shooting_Up;
         public InputAction @Shoot => m_Wrapper.m_Shooting_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_Shooting; }
         public void Enable() { Get().Enable(); }
@@ -505,9 +483,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_ShootingActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_ShootingActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
+            @Up.started += instance.OnUp;
+            @Up.performed += instance.OnUp;
+            @Up.canceled += instance.OnUp;
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
@@ -515,9 +493,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IShootingActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
+            @Up.started -= instance.OnUp;
+            @Up.performed -= instance.OnUp;
+            @Up.canceled -= instance.OnUp;
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
@@ -790,7 +768,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     }
     public interface IShootingActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
     }
     public interface IMouseActions
