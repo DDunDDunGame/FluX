@@ -11,7 +11,7 @@ public class PlayerOnJumpStage : PlayerOnStage
 
     }
 
-    public override void OnJump(InputAction.CallbackContext context)
+    public override void OnUpdate()
     {
         if (context.ReadValueAsButton())
         {
@@ -23,7 +23,7 @@ public class PlayerOnJumpStage : PlayerOnStage
     {
         Vector2 input = context.ReadValue<Vector2>();
 
-        // ÀÌ´Ï¼È¶óÀÌÁ® ºÎºÐÀ¸·Î ¹Ù²Ù¸é ÁÁÀ»°Í°°¾Æ¿ä
+        // ï¿½Ì´Ï¼È¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½Æ¿ï¿½
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         player.transform.GetComponent<CircleCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
 
@@ -34,6 +34,7 @@ public class PlayerOnJumpStage : PlayerOnStage
     }
 
     public override void OnShoot(InputAction.CallbackContext context)
+    public override void OnExit()
     {
 
     }

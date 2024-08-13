@@ -8,20 +8,27 @@ public class Player : MonoBehaviour, IStageAttachment
 {
     private Define.Stage currentStage;
     public Rigidbody2D Rigid { get; private set; }
-    private PlayerInput input;
+    public PlayerActions Actions { get; private set; }
     private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
 
     private void Awake()
     {
         InitVariables();
-        input.SwitchCurrentActionMap(Define.Stage.None.ToString());
+    }
+
+    private void Update()
+    {
+        if(currentStage != Define.Stage.None)
+        {
+            onStageDict[currentStage].OnUpdate();
+        }
     }
 
     private void InitVariables()
     {
         currentStage = Define.Stage.None;
         Rigid = GetComponent<Rigidbody2D>();
-        input = GetComponent<PlayerInput>();
+        Actions = new PlayerActions();
         onStageDict = new Dictionary<Define.Stage, PlayerOnStage>
         {
             { Define.Stage.Shooting, new PlayerOnShootingStage(this) },
@@ -36,24 +43,11 @@ public class Player : MonoBehaviour, IStageAttachment
 
     public void ChangeStage(Define.Stage stage)
     {
+        if(currentStage != Define.Stage.None)
+        {
+            onStageDict[currentStage].OnExit();
+        }
         currentStage = stage;
-        input.SwitchCurrentActionMap(stage.ToString());
         onStageDict[currentStage].OnEnter();
-    }
-
-    // 추후에 활성화된 스테이지 별로 다른 함수가 작동하게 설계
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        onStageDict[currentStage].OnMove(context);
-    }
-
-    public void OnShoot(InputAction.CallbackContext context)
-    {
-        onStageDict[currentStage].OnShoot(context);
-    }
-
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        onStageDict[currentStage].OnJump(context);
     }
 }
