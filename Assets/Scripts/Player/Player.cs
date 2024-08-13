@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IStageAttachment
 {
     private Define.Stage currentStage;
     public Rigidbody2D Rigid { get; private set; }
+    public Collider2D Coll { get; private set; }
     public PlayerActions Actions { get; private set; }
     private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
 
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour, IStageAttachment
     {
         currentStage = Define.Stage.None;
         Rigid = GetComponent<Rigidbody2D>();
+        Coll = GetComponent<Collider2D>();
         Actions = new PlayerActions();
         onStageDict = new Dictionary<Define.Stage, PlayerOnStage>
         {
