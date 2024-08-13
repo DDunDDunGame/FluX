@@ -11,7 +11,7 @@ public class PlayerOnOrbitStage : PlayerOnStage
 
     }
 
-    public override void OnJump(InputAction.CallbackContext context)
+    public override void OnUpdate()
     {
 
     }
@@ -27,6 +27,7 @@ public class PlayerOnOrbitStage : PlayerOnStage
     }
 
     public override void OnShoot(InputAction.CallbackContext context)
+    public override void OnExit()
     {
 
     }

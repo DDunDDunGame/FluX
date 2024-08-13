@@ -8,7 +8,6 @@ public abstract class PlayerOnStage
         this.player = player;
     }
     public abstract void OnEnter();
-    public abstract void OnMove(InputAction.CallbackContext context);
-    public abstract void OnShoot(InputAction.CallbackContext context);
-    public abstract void OnJump(InputAction.CallbackContext context);
+    public abstract void OnUpdate();
+    public abstract void OnExit();
 }

@@ -21,7 +21,7 @@ public class StageController : MonoBehaviour
     {
         //ChangeStage(SetRandomStage());
 
-        // юс╫ц
+        // О©╫с╫О©╫
         ChangeStage(currentStage);
     }
 
@@ -49,7 +49,7 @@ public class StageController : MonoBehaviour
     {
         if (currentStage == Define.Stage.None) { return; }
 
-        // юс╫ц
+        // О©╫с╫О©╫
         stageDict[currentStage].Update();
 
         //if (stageDict[currentStage].IsEnd())
