@@ -20,7 +20,7 @@ public class StageController : MonoBehaviour
 
     private void Start()
     {
-        // ¿¡µğÅÍ¿¡¼­´Â Å×½ºÆ®¸¦ À§ÇØ ¿øÇÏ´Â ½ºÅ×ÀÌÁö·Î ÁöÁ¤, ºôµå ½Ã ·£´ı ½ºÅ×ÀÌÁö
+        // ì—ë””í„°ì—ì„œëŠ” í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´ ì›í•˜ëŠ” ìŠ¤í…Œì´ì§€ë¡œ ì§€ì •, ë¹Œë“œ ì‹œ ëœë¤ ìŠ¤í…Œì´ì§€
 #if UNITY_EDITOR
         ChangeStage(testStage);
 #else
@@ -52,14 +52,17 @@ public class StageController : MonoBehaviour
     {
         if (currentStage == Define.Stage.None) { return; }
 
-        if (stageDict[currentStage].IsEnd())
-        {
-            ChangeStage(SetRandomStage());
-        }
-        else
-        {
-            stageDict[currentStage].Update();
-        }
+        //å ìŒˆì™ì˜™
+        stageDict[currentStage].Update();
+
+        //if (stageDict[currentStage].IsEnd())
+        //{
+        //    ChangeStage(SetRandomStage());
+        //}
+        //else
+        //{
+        //    stageDict[currentStage].Update();
+        //}
     }
 
     private Define.Stage SetRandomStage()
