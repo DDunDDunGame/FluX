@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStage: -1
-  testStage: 1
+  testStage: 2
 --- !u!4 &9068588
 Transform:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 285858557}
   - component: {fileID: 285858558}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: -10}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -1054,20 +1054,12 @@ CompositeCollider2D:
         Y: 50000000
       - X: 150000000
         Y: 50000000
-  - m_Collider: {fileID: 285858558}
-    m_ColliderPaths:
-    - - X: 150000000
-        Y: -50000000
-      - X: -150000000
-        Y: -50000000
-      - X: -150000000
-        Y: -150000000
-      - X: 150000000
-        Y: -150000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 14.999971, y: -15}
-      - {x: 15.000029, y: -5}
+    - - {x: -8.80003, y: -5}
+      - {x: -8.799971, y: 5}
+      - {x: 8.8, y: 4.9999704}
+      - {x: 8.80003, y: -5}
       - {x: 18.800001, y: -4.999971}
       - {x: 18.79997, y: 5}
       - {x: 15, y: 5.0000296}
@@ -1076,12 +1068,6 @@ CompositeCollider2D:
       - {x: -15.000029, y: 5}
       - {x: -18.800001, y: 4.999971}
       - {x: -18.79997, y: -5}
-      - {x: -15, y: -5.0000296}
-      - {x: -14.999971, y: -15}
-    - - {x: 8.8, y: -4.9999704}
-      - {x: -8.8, y: -4.9999704}
-      - {x: -8.799971, y: 5}
-      - {x: 8.8, y: 4.9999704}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
