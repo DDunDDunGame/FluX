@@ -56,6 +56,7 @@ public class Util : MonoBehaviour
         }
         return false;
     }
+
     public static GameObject CreateObjToParent(GameObject childObj, Vector3 pos, GameObject parentObj)
     {
         return Instantiate(childObj, pos, Quaternion.identity, parentObj.transform);
