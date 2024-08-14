@@ -12,10 +12,16 @@ public class StageController : MonoBehaviour
     private const int ROUND_STAGE_MAX = 5;
     private int roundStageCount = 0;
 
+    // 추후 아이템 배치를 위한 변수들
+    public GameObject Fuel { get; private set; }
+    public GameObject Bullets { get; private set; }
+
     private void Awake()
     {
         InitDict();
         InitAttachments();
+        Fuel = Util.FindChild(gameObject, "Fuel");
+        Bullets = Util.FindChild(gameObject, "Bullets");
     }
 
     private void Start()
