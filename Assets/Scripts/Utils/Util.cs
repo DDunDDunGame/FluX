@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Util : MonoBehaviour
@@ -40,7 +41,6 @@ public class Util : MonoBehaviour
 
         return null;
     }
-
     public static GameObject MapCreate(GameObject obj, Vector3 pos)
     {
         GameObject parent = GameObject.Find("Map");
@@ -51,6 +51,20 @@ public class Util : MonoBehaviour
     {
         GameObject parent = GameObject.Find("Map");
         foreach (Transform child in parent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        return false;
+    }
+
+    public static GameObject CreateObjToParent(GameObject childObj, Vector3 pos, GameObject parentObj)
+    {
+        return Instantiate(childObj, pos, Quaternion.identity, parentObj.transform);
+    }
+
+    public static bool DestoryObjFromParent(GameObject parentObj)
+    {
+        foreach (Transform child in parentObj.transform)
         {
             Destroy(child.gameObject);
         }

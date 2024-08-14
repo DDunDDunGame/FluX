@@ -52,7 +52,6 @@ public class StageController : MonoBehaviour
     {
         if (currentStage == Define.Stage.None) { return; }
 
-        // 占쌈쏙옙
         stageDict[currentStage].Update();
 
         //if (stageDict[currentStage].IsEnd())
