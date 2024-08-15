@@ -15,7 +15,7 @@ public class OrbitStage : BaseStage
     public override void Initialize()
     {
         base.Initialize();
-        mainCircle = Util.MapCreate(mainCircle, new Vector3(0, 0, 0));
+        mainCircle = controller.CreateMap(mainCircle, new Vector3(0, 0, 0));
         player.transform.position = mainCircle.transform.position + new Vector3(0, -2.5f, 0);
         Debug.Log("OrbitStage Initialize");
     }
@@ -29,7 +29,6 @@ public class OrbitStage : BaseStage
     public override void Destroy()
     {
         base.Destroy();
-        Util.MapDestroy();
         Debug.Log("OrbitStage Destroy");
     }
 }
