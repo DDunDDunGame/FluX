@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseStage
 {
-    private StageController controller;
+    private readonly StageController controller;
     private const float STAGE_TIME_MAX = 10f;
     private float stageTime;
 
