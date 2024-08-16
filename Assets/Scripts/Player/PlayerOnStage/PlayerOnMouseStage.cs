@@ -10,6 +10,7 @@ public class PlayerOnMouseStage : PlayerOnStage
     {
         player.Actions.Mouse.Enable();
         Cursor.lockState = CursorLockMode.Confined;
+        player.transform.position = Vector3.zero;
     }
 
     public override void OnUpdate()

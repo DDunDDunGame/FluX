@@ -442,7 +442,7 @@ PrefabInstance:
       objectReference: {fileID: 519420031}
     - target: {fileID: 7039516355846058753, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: testStage
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8818983747756113683, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_RootOrder
@@ -487,6 +487,14 @@ PrefabInstance:
     - target: {fileID: 8818983747756113683, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872057640024969899, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872057640024969899, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8872057640024969899, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_LocalPosition.x
