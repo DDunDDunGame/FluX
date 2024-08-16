@@ -11,22 +11,22 @@ public class StageController : MonoBehaviour
 
     private const int ROUND_STAGE_MAX = 5;
     private int roundStageCount = 0;
+    private Transform map;
 
-    // ÃßÈÄ ¾ÆÀÌÅÛ ¹èÄ¡¸¦ À§ÇÑ º¯¼öµé
+    public Player Player { get; private set; }
+    // ì¶”í›„ ì•„ì´í…œ ë°°ì¹˜ë¥¼ ìœ„í•œ ë³€ìˆ˜ë“¤
     public GameObject Fuel { get; private set; }
     public GameObject Bullets { get; private set; }
 
     private void Awake()
     {
+        InitVariables();
         InitDict();
         InitAttachments();
-        Fuel = Util.FindChild(gameObject, "Fuel");
-        Bullets = Util.FindChild(gameObject, "Bullets");
     }
 
     private void Start()
     {
-        // ì—ë””í„°ì—ì„œëŠ” í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´ ì›í•˜ëŠ” ìŠ¤í…Œì´ì§€ë¡œ ì§€ì •, ë¹Œë“œ ì‹œ ëœë¤ ìŠ¤í…Œì´ì§€
 #if UNITY_EDITOR
         ChangeStage(testStage);
 #else
@@ -54,20 +54,26 @@ public class StageController : MonoBehaviour
         Util.FindChild(gameObject, "Attachments").GetComponentsInChildren(attachments);
     }
 
+    private void InitVariables()
+    {
+        map = Util.FindChild<Transform>(gameObject, "Map");
+        Player = Util.FindChild<Player>(gameObject, "Player", true);
+        Fuel = Util.FindChild(gameObject, "Fuel");
+        Bullets = Util.FindChild(gameObject, "Bullets");
+    }
+
     private void Update()
     {
         if (currentStage == Define.Stage.None) { return; }
 
-        stageDict[currentStage].Update();
-
-        //if (stageDict[currentStage].IsEnd())
-        //{
-        //    ChangeStage(SetRandomStage());
-        //}
-        //else
-        //{
-        //    stageDict[currentStage].Update();
-        //}
+        if (stageDict[currentStage].IsEnd())
+        {
+            ChangeStage(SetRandomStage());
+        }
+        else
+        {
+            stageDict[currentStage].Update();
+        }
     }
 
     private Define.Stage SetRandomStage()
@@ -98,6 +104,19 @@ public class StageController : MonoBehaviour
         foreach (IStageAttachment attachment in attachments)
         {
             attachment.ChangeStage(currentStage);
+        }
+    }
+
+    public GameObject CreateMap(GameObject obj, Vector3 pos)
+    {
+        return Instantiate(obj, pos, Quaternion.identity, map);
+    }
+
+    public void DestroyMap()
+    {
+        foreach (Transform child in map)
+        {
+            Destroy(child.gameObject);
         }
     }
 }

@@ -17,6 +17,11 @@ public class Projectile : Poolable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(!collision.CompareTag("Enemy"))
+        {
+            return;
+        }
+
         if(collision.TryGetComponent(out IDamageable damageable))
         {
             damageable.TakeDamage(1);
