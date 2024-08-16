@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class GuidedMissile : MonoBehaviour
 {
     private Rigidbody2D rigid;
     private Transform target;
     private bool isLaunched = false;
-    [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float speedInterval = 0.01f;
     private float speed = 2f;
 
