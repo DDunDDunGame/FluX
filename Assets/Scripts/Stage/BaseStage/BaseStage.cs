@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseStage
 {
-    private StageController controller;
+    protected readonly StageController controller;
     private const float STAGE_TIME_MAX = 10f;
     private float stageTime;
 
@@ -25,7 +25,7 @@ public class BaseStage
 
     public virtual void Destroy()
     {
-
+        controller.DestroyMap();
     }
 
     public virtual bool IsEnd()

@@ -22,6 +22,7 @@ public class PlayerOnShootingStage : PlayerOnStage
     {
         player.Actions.Shooting.Enable();
         player.Rigid.gravityScale = 1;
+        player.transform.position = new Vector3(-7.5f, 0, 0);
 
         shootTimer = Time.time;
     }
@@ -31,6 +32,7 @@ public class PlayerOnShootingStage : PlayerOnStage
         player.Rigid.AddForce(Time.deltaTime * upForce * Vector2.up, ForceMode2D.Impulse);
         if (player.Actions.Shooting.Shoot.ReadValue<float>() > 0.1f)
         {
+            Debug.Log("ddd");
             Shoot();
         }
     }
@@ -40,6 +42,7 @@ public class PlayerOnShootingStage : PlayerOnStage
         player.Actions.Shooting.Disable();
         player.Rigid.gravityScale = 0;
         player.Rigid.velocity = Vector2.zero;
+        player.transform.position = Vector3.zero;
     }
 
     private void Up(InputAction.CallbackContext context)

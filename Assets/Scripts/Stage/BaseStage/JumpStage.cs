@@ -54,12 +54,12 @@ public class JumpStage : BaseStage
     {
         base.Initialize();
         patten = Random.Range(0, 3);
-        currentMap = Util.MapCreate(tiles[patten == 0 ? 0 : 1], new Vector3(0, 0, 0));
+        currentMap = controller.CreateMap(tiles[patten == 0 ? 0 : 1], new Vector3(0, 0, 0));
         SetMapScaleToScreen();
         
         GameObject.Find("Player").transform.position = currentMap.transform.Find("PlayerPoint").transform.position;
 
-        // ¶³¾îÁö´Â enemy parent »ı¼º
+        // ë–¨ì–´ì§€ëŠ” enemy parent ìƒì„±
         enemyFallPrent = new GameObject("FallingEnemys");
         enemyFallPrent.transform.parent = enemyPrent.transform;
         enemyFallPrent.transform.position = new Vector2(0, screenY / 2 + 2);
@@ -96,7 +96,6 @@ public class JumpStage : BaseStage
     public override void Destroy()
     {
         base.Destroy();
-        Util.MapDestroy();
         Debug.Log("JumpStage Destroy");
     }
 
@@ -122,12 +121,12 @@ public class JumpStage : BaseStage
                 playTime = 0;
                 break;
             default:
-                Debug.LogError("ÇØ´ç ÆĞÅÏÀº Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù. JumpStage.cs");
+                Debug.LogError("í•´ë‹¹ íŒ¨í„´ì€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. JumpStage.cs");
                 break;
         }
     }
 
-    // È­¸é ºñÀ²¿¡ ¸Â°Ô Å¸ÀÏ Å©±â Á¶Á¤
+    // í™”ë©´ ë¹„ìœ¨ì— ë§ê²Œ íƒ€ì¼ í¬ê¸° ì¡°ì •
     private void SetMapScaleToScreen()
     {
         screenY = Camera.main.orthographicSize * 2;
@@ -159,7 +158,7 @@ public class JumpStage : BaseStage
                 fallingStart = false;
                 playTime = 0;
             }
-            // 2ÃÊ¸¶´Ù ½ÇÇà
+            // 2ì´ˆë§ˆë‹¤ ì‹¤í–‰
             if (playTime > 1.0f)
             {
                 SpreadCircleEnemy();
@@ -168,7 +167,7 @@ public class JumpStage : BaseStage
         }
     }
 
-    private void SpreadCircleEnemy() // Àû ÆÛÁü °ü¸®
+    private void SpreadCircleEnemy() // ì  í¼ì§ ê´€ë¦¬
     {
         foreach (Transform child in enemyFallPrent.transform)
         {
@@ -193,7 +192,7 @@ public class JumpStage : BaseStage
                 while (spawnX < screenX / 2 - 0.5f)
                 {
                     Util.CreateObjToParent(squareEnemyPrefab, new Vector2(spawnX, enemyFallPrent.transform.position.y), enemyFallPrent);
-                    spawnX += 2.3f; // »çÀÌ °£°İ Á¶Á¤
+                    spawnX += 2.3f; // ì‚¬ì´ ê°„ê²© ì¡°ì •
                 }
             }
 
@@ -203,7 +202,7 @@ public class JumpStage : BaseStage
                 while (spawnX < screenX / 2 - 0.5f)
                 {
                     Util.CreateObjToParent(squareEnemyPrefab, new Vector2(spawnX, enemyFallPrent.transform.position.y), enemyFallPrent);
-                    spawnX += 2.3f; // »çÀÌ °£°İ Á¶Á¤
+                    spawnX += 2.3f; // ì‚¬ì´ ê°„ê²© ì¡°ì •
                 }
 
             }

@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour, IStageAttachment
+public class Player : MonoBehaviour, IStageAttachment, IDamageable
 {
     private Define.Stage currentStage;
     public Rigidbody2D Rigid { get; private set; }
     public Collider2D Coll { get; private set; }
+    public TextMeshProUGUI HpText { get; private set; }
+    public TextMeshProUGUI BulletText { get; private set; }
+    public PlayerStat Stat { get; private set; }
     public PlayerActions Actions { get; private set; }
     private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
 
@@ -30,6 +33,10 @@ public class Player : MonoBehaviour, IStageAttachment
         currentStage = Define.Stage.None;
         Rigid = GetComponent<Rigidbody2D>();
         Coll = GetComponent<Collider2D>();
+        HpText = Util.FindChild<TextMeshProUGUI>(gameObject, "HpText", true);
+        if (HpText == null) Debug.LogError("HpText is null");
+        BulletText = Util.FindChild<TextMeshProUGUI>(gameObject, "BulletText", true);
+        Stat = new PlayerStat(this);
         Actions = new PlayerActions();
         onStageDict = new Dictionary<Define.Stage, PlayerOnStage>
         {
@@ -51,5 +58,18 @@ public class Player : MonoBehaviour, IStageAttachment
         }
         currentStage = stage;
         onStageDict[currentStage].OnEnter();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Stat.TakeDamage(damage);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.TryGetComponent(out IItem item))
+        {
+            item.Use(Stat);
+        }
     }
 }

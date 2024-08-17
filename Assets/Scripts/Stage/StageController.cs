@@ -11,16 +11,22 @@ public class StageController : MonoBehaviour
 
     private const int ROUND_STAGE_MAX = 5;
     private int roundStageCount = 0;
+    private Transform map;
+
+    public Player Player { get; private set; }
+    // 추후 아이템 배치를 위한 변수들
+    public GameObject Fuel { get; private set; }
+    public GameObject Bullets { get; private set; }
 
     private void Awake()
     {
+        InitVariables();
         InitDict();
         InitAttachments();
     }
 
     private void Start()
     {
-        // 에디터에서는 테스트를 위해 원하는 스테이지로 지정, 빌드 시 랜덤 스테이지
 #if UNITY_EDITOR
         ChangeStage(testStage);
 #else
@@ -48,20 +54,26 @@ public class StageController : MonoBehaviour
         Util.FindChild(gameObject, "Attachments").GetComponentsInChildren(attachments);
     }
 
+    private void InitVariables()
+    {
+        map = Util.FindChild<Transform>(gameObject, "Map");
+        Player = Util.FindChild<Player>(gameObject, "Player", true);
+        Fuel = Util.FindChild(gameObject, "Fuel");
+        Bullets = Util.FindChild(gameObject, "Bullets");
+    }
+
     private void Update()
     {
         if (currentStage == Define.Stage.None) { return; }
 
-        stageDict[currentStage].Update();
-
-        //if (stageDict[currentStage].IsEnd())
-        //{
-        //    ChangeStage(SetRandomStage());
-        //}
-        //else
-        //{
-        //    stageDict[currentStage].Update();
-        //}
+        if (stageDict[currentStage].IsEnd())
+        {
+            ChangeStage(SetRandomStage());
+        }
+        else
+        {
+            stageDict[currentStage].Update();
+        }
     }
 
     private Define.Stage SetRandomStage()
@@ -92,6 +104,19 @@ public class StageController : MonoBehaviour
         foreach (IStageAttachment attachment in attachments)
         {
             attachment.ChangeStage(currentStage);
+        }
+    }
+
+    public GameObject CreateMap(GameObject obj, Vector3 pos)
+    {
+        return Instantiate(obj, pos, Quaternion.identity, map);
+    }
+
+    public void DestroyMap()
+    {
+        foreach (Transform child in map)
+        {
+            Destroy(child.gameObject);
         }
     }
 }
