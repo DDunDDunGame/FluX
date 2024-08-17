@@ -10,11 +10,14 @@ public class PlayerOnJumpStage : PlayerOnStage
 
     public PlayerOnJumpStage(Player player) : base(player) 
     {
-        player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        player.transform.GetComponent<CircleCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
+
     }
     public override void OnEnter()
     {
+        player.Rigid.bodyType = RigidbodyType2D.Dynamic;
+        player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+        player.transform.GetComponent<CircleCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
+
         player.Actions.Jump.Enable();
         player.Actions.Jump.Move.performed += Move;
         player.Actions.Jump.Move.canceled += Move;

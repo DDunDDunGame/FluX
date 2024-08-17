@@ -351,7 +351,6 @@ GameObject:
   - component: {fileID: 1728229885}
   - component: {fileID: 1728229889}
   - component: {fileID: 1728229888}
-  - component: {fileID: 1728229887}
   - component: {fileID: 1728229890}
   m_Layer: 0
   m_Name: Player
@@ -427,80 +426,6 @@ Transform:
   m_Father: {fileID: 253854651}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1728229887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1728229884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 223f07c3b4913db4e8f80519c3ec30cd, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0e67f896-54c2-4a9b-a218-8bf9802071d2
-    m_ActionName: Shooting/Move[/Keyboard/w,/Keyboard/s]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7c20acde-244e-4af7-a682-c230f6351c33
-    m_ActionName: Shooting/Shoot[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 944ca135-aaff-4a78-8832-dc6bccefc683
-    m_ActionName: Mouse/Move[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 26adaf51-af72-44fa-b3d0-00d6b548a36e
-    m_ActionName: Run/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3e3d2b17-44f0-4bd2-89c1-378d1abf1507
-    m_ActionName: Jump/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 85d91a94-bed7-4f1a-aa1b-556616b48e8a
-    m_ActionName: Jump/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7a1bf192-9a45-41d5-8681-7d0507cc5c98
-    m_ActionName: Orbit/Move[/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1728229890}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 7cf92e0b-c0aa-4d82-b67b-f44a76e0eca0
-    m_ActionName: Barrier/Move[/Keyboard/a,/Keyboard/d]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: PC
-  m_DefaultActionMap: Barrier
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!58 &1728229888
 CircleCollider2D:
   m_ObjectHideFlags: 0
