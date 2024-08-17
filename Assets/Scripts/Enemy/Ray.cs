@@ -10,11 +10,11 @@ public class Ray : Poolable
     [SerializeField] private float warningMaxAlpha = 0.7f;
     [SerializeField] private float rayTime = 5f;
     [SerializeField] private float rayMaxAlpha = 0.7f;
-    [SerializeField] private float rayXScale = 9f;
+    private float rayScale;
     private SpriteRenderer sprite;
     private Collider2D coll;
 
-    public void ReadyRay()
+    public void ReadyRay(float scale)
     {
         if (sprite == null)
         {
@@ -25,7 +25,8 @@ public class Ray : Poolable
             coll = GetComponent<Collider2D>();
         }
         coll.enabled = false;
-        transform.localScale = new Vector3(rayXScale, transform.localScale.y, transform.localScale.z);
+        rayScale = scale;
+        transform.localScale = new Vector3(rayScale, transform.localScale.y, transform.localScale.z);
         StartCoroutine(ShowWarning());
     }
 
@@ -52,7 +53,7 @@ public class Ray : Poolable
         while (timer < rayTime)
         {
             timer += Time.deltaTime;
-            float xScale = rayXScale * (1f - (timer / rayTime));
+            float xScale = rayScale * (1f - (timer / rayTime));
             transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);  
             yield return null;
         }

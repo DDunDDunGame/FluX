@@ -7,17 +7,18 @@ public class MousePattern1 : MonoBehaviour, IPattern
     #region Platform
     [SerializeField] private GameObject right;
     [SerializeField] private GameObject left;
-    [SerializeField] private MovingPlatform platformPrefab;
+    [SerializeField] private PlatformEnemy platformPrefab;
     [SerializeField] private float platformSpeed = 5f;
     [SerializeField] private float platformInterval = 1f;
     private float platformTimer = 0f;
-    private List<MovingPlatform> platforms = new();
+    private List<PlatformEnemy> platforms = new();
     #endregion
 
     #region Ray
     [SerializeField] private Ray rayPrefab;
     [SerializeField] private float rayIntervalMin = 2.5f;
     [SerializeField] private float rayIntervalMax = 3f;
+    [SerializeField] private float rayXScale = 9f;
     private float rayInterval;
     private float rayTimer = 0f;
     private List<Ray> rays = new();
@@ -47,8 +48,8 @@ public class MousePattern1 : MonoBehaviour, IPattern
 
     private void SpawnTwoPlatforms()
     {
-        MovingPlatform rightPlatform = Managers.ObjectPool.GetObject(platformPrefab.gameObject).GetComponent<MovingPlatform>();
-        MovingPlatform leftPlatform = Managers.ObjectPool.GetObject(platformPrefab.gameObject).GetComponent<MovingPlatform>();
+        PlatformEnemy rightPlatform = Managers.ObjectPool.GetObject(platformPrefab.gameObject).GetComponent<PlatformEnemy>();
+        PlatformEnemy leftPlatform = Managers.ObjectPool.GetObject(platformPrefab.gameObject).GetComponent<PlatformEnemy>();
         rightPlatform.Move(right.transform.position, Vector2.down * platformSpeed);
         leftPlatform.Move(left.transform.position, Vector2.up * platformSpeed);
         platforms.Add(rightPlatform); platforms.Add(leftPlatform);
@@ -67,12 +68,12 @@ public class MousePattern1 : MonoBehaviour, IPattern
         {
             ray.transform.position = left.transform.position;
         }
-        ray.ReadyRay();
+        ray.ReadyRay(rayXScale);
     }
 
     public void Destroy()
     {
-        foreach(MovingPlatform platform in platforms)
+        foreach(PlatformEnemy platform in platforms)
         {
             platform.ReturnToPool();
         }
