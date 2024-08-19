@@ -9,8 +9,9 @@ public class OrbitStage : BaseStage
     GameObject player;
     GameObject enemyParent;
     GameObject rayEnemy;
+    GameObject squareEnemy;
 
-    int patten = 0;
+    int patten = 1;
     float playTime = 0;
     float screenX;
     float screenY;
@@ -21,6 +22,7 @@ public class OrbitStage : BaseStage
     {
         mainCircle = Resources.Load("Prefabs/Orbit/TempOrbit") as GameObject;
         rayEnemy = Resources.Load("Prefabs/Orbit/RayEnemy") as GameObject;
+        squareEnemy = Resources.Load("Prefabs/Orbit/SquareEnemy") as GameObject;
         player = GameObject.Find("Player");
     }
 
@@ -98,6 +100,7 @@ public class OrbitStage : BaseStage
                 PattenZero();
                 break;
             case 1:
+                PattenOne();
                 break;
             case 2:
                 break;
@@ -128,7 +131,23 @@ public class OrbitStage : BaseStage
 
     private void PattenOne()
     {
-
+        // 소환되는 속도 조절
+        if(playTime > 0.4f)
+        {
+            playTime = 0;
+            int  sliceMax = 4;
+            GameObject currentEnemy;
+            float sliceY = mainCircle.transform.localScale.y / (sliceMax-1);
+            for (int spawnDefine = 0; spawnDefine < 2; ++spawnDefine)
+            {
+                int defineY = Random.Range(0, sliceMax);
+                Vector2 spawnPos = new Vector2(spawnDefine == 0 ? (screenX / 2 + 1) * -1 : screenX / 2 + 1, mainCircle.transform.localScale.y/2 - (sliceY * defineY));
+                currentEnemy = Util.CreateObjToParent(squareEnemy, spawnPos, enemyParent);
+                currentEnemy.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                currentEnemy.GetComponent<Rigidbody2D>().velocity = new Vector2(spawnDefine == 0 ? 1 : -1, 0) * 4;
+            }
+            
+        }
     }
 
     private void PattenTwo()
