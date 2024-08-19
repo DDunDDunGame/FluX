@@ -33,8 +33,8 @@ public class BarrierStage : BaseStage
     {
         base.Initialize();
         enemyParent = new GameObject("Enemy");
-        barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
         player.transform.position = new Vector3(0, 0, 0);
+        barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
         patten = 0;
         InitPatten();
         //patten = Random.Range(0, 3);
@@ -100,12 +100,12 @@ public class BarrierStage : BaseStage
         }
     }
 
-    // ∑£¥˝ ∑π¿Ã¿˙ ¡ˆ¿Ã¿Ã¿Ã¿Ã¿◊¿Ã¿Ã¿Ã¿◊
+    // ÎûúÎç§ Î†àÏù¥Ï†Ä ÏßÄÏù¥Ïù¥Ïù¥Ïù¥ÏûâÏù¥Ïù¥Ïù¥Ïûâ
     private void PattenZero()
     {
         if(playTime > 4f)
         {
-            // 4πÊ«‚
+            // 4Î∞©Ìñ•
             playTime = 0;
             Vector2 spawnDir = new Vector2(0, 0);
             int getAxis = 0;
@@ -121,7 +121,7 @@ public class BarrierStage : BaseStage
             currentEnemy.transform.localScale = new Vector3(0.1f, screenX, 1);
             currentEnemy.GetComponent<Rigidbody2D>().velocity = spawnDir.normalized * -8;
             redRays.Add(currentEnemy);
-            // 8πÊ«‚
+            // 8Î∞©Ìñ•
             //playTime = 0;
             //Vector2 spawnDir;
             //do
@@ -130,12 +130,12 @@ public class BarrierStage : BaseStage
             //}while(spawnDir.x == 0 && spawnDir.y == 0);
             //Vector2 spawnPos = new Vector2(spawnDir.x * screenX / 2 + 2, spawnDir.y * screenX / 2 + 2);
             //GameObject currentEnemy = Util.CreateObjToParent(redRayEnemy, spawnPos, enemyParent);
-            //// »∏¿¸
+            //// ÌöåÏ†Ñ
             //Vector3 tmp = player.transform.position - currentEnemy.transform.position;
             //float directionPlayerRot = Mathf.Atan2(tmp.y, tmp.x) * Mathf.Rad2Deg;
             //float rot = Mathf.LerpAngle(currentEnemy.transform.eulerAngles.z, directionPlayerRot, 50);
             //currentEnemy.transform.eulerAngles = new Vector3(0, 0, rot);
-            //// ≈©±‚
+            //// ÌÅ¨Í∏∞
             //currentEnemy.transform.localScale = new Vector3(0.15f, screenX, 1);
             //currentEnemy.GetComponent<Rigidbody2D>().velocity = spawnDir * -8;
         }
@@ -160,7 +160,7 @@ public class BarrierStage : BaseStage
        }
     }
 
-    // ∑£¥˝ √—æÀ ≥Ø∂Ûø¿±‚
+    // ÎûúÎç§ Ï¥ùÏïå ÎÇ†ÎùºÏò§Í∏∞
     private void PattenOne()
     {
         if(playTime > 1f)
@@ -178,12 +178,12 @@ public class BarrierStage : BaseStage
         }
     }
 
-    // ¿Ã.∞≈.¿˝.¥Î.∏¯.∏∑.Ω¿.¥œ.¥Ÿ.
+    // Ïù¥.Í±∞.Ï†à.ÎåÄ.Î™ª.Îßâ.Ïäµ.Îãà.Îã§.
     private void PattenTwo()
     {
         if (playTime > 4f)
         {
-            // 4πÊ«‚ ∑π¿Ã¿˙ πﬂªÁ
+            // 4Î∞©Ìñ• Î†àÏù¥Ï†Ä Î∞úÏÇ¨
             playTime = 0;
             Vector2 spawnDir = new Vector2(0, 0);
             int getAxis = 0;
@@ -199,7 +199,7 @@ public class BarrierStage : BaseStage
             currentEnemy.transform.localScale = new Vector3(screenX / 2, 0.5f, 1);
             currentEnemy.GetComponent<Rigidbody2D>().velocity = spawnDir.normalized * -8;
 
-            // ALL ∑£¥˝ ∑π¿Ã¿˙ πﬂªÁ
+            // ALL ÎûúÎç§ Î†àÏù¥Ï†Ä Î∞úÏÇ¨
             //playTime = 0;
             //Vector2 spawnDir = new Vector2(0, 0);
             //do
