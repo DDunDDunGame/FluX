@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class MovingPlatform : Poolable
+public class PlatformEnemy : Poolable
 {
     private Rigidbody2D rigid;
 

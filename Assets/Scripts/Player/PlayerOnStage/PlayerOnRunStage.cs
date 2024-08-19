@@ -9,6 +9,7 @@ public class PlayerOnRunStage : PlayerOnStage
     private float playerHalfHeight;
     private int maxJumpCount = 2;
     private int currentJumpCount = 0;
+    private LayerMask platformMask = LayerMask.GetMask("Ground");
 
     public PlayerOnRunStage(Player player) : base(player) 
     {
@@ -47,9 +48,8 @@ public class PlayerOnRunStage : PlayerOnStage
     private void Down(InputAction.CallbackContext context)
     {
         if (IsGrounded()) return;
-        LayerMask mask = LayerMask.GetMask("Platform");
         Vector2 origin = player.Coll.bounds.center - new Vector3(0, playerHalfHeight);
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 15f, mask);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 15f, platformMask);
         if (hit)
         {
             player.Rigid.position = hit.point + new Vector2(0f, playerHalfHeight);
@@ -59,10 +59,9 @@ public class PlayerOnRunStage : PlayerOnStage
 
     private bool IsGrounded()
     {
-        LayerMask mask = LayerMask.GetMask("Platform");
         Vector2 origin = player.Coll.bounds.center - new Vector3(0, playerHalfHeight);
         Vector2 size = new(player.Coll.bounds.size.x, 0.1f);
-        RaycastHit2D hit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0.1f, mask);
+        RaycastHit2D hit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0.1f, platformMask);
 
         return hit;
     }

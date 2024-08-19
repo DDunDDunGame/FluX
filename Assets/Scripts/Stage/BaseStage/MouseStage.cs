@@ -9,8 +9,8 @@ public class MouseStage : BaseStage
 
     public MouseStage(StageController controller) : base(controller)
     {
-        //patterns.Add(Resources.Load<GameObject>("Prefabs/MouseStage/Pattern_0"));
-        //patterns.Add(Resources.Load<GameObject>("Prefabs/MouseStage/Pattern_1"));
+        patterns.Add(Resources.Load<GameObject>("Prefabs/MouseStage/Pattern_0"));
+        patterns.Add(Resources.Load<GameObject>("Prefabs/MouseStage/Pattern_1"));
         patterns.Add(Resources.Load<GameObject>("Prefabs/MouseStage/Pattern_2"));
     }
 
