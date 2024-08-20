@@ -6,8 +6,10 @@ using UnityEngine;
 public class RunPlatform : Poolable
 {
     [SerializeField] private float speed = 10f;
+    [SerializeField] private float damage = 10f;
     private Rigidbody2D rigid;
     private SpriteRenderer sprite;
+    private bool isEnemy = false;
 
     public void Move(Vector2 pos, Vector2 dir, bool isEnemy = false)
     {
@@ -17,10 +19,11 @@ public class RunPlatform : Poolable
         }
         transform.position = pos;
         rigid.velocity = dir.normalized * speed;
-        SetSprite(isEnemy);
+        this.isEnemy = isEnemy;
+        SetSprite();
     }
 
-    private void SetSprite(bool isEnemy)
+    private void SetSprite()
     {
         if(sprite == null)
         {
@@ -35,5 +38,14 @@ public class RunPlatform : Poolable
         {
             sprite.color = Color.white;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isEnemy) { return; }
+
+        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+        damageable?.TakeDamage(damage);
+    
     }
 }

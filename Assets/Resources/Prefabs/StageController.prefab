@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8295868866340985528}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,10 +29,11 @@ Transform:
   m_GameObject: {fileID: 208339572986425997}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2075158167726859849}
+  - {fileID: 3655570940517944453}
   m_Father: {fileID: 4289398484775660005}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -195,6 +196,55 @@ Transform:
   m_Father: {fileID: 8818983747756113683}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1155201955613690120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3655570940517944453}
+  - component: {fileID: 5789587307141416305}
+  m_Layer: 0
+  m_Name: PlayerVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3655570940517944453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155201955613690120}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8872057640024969899}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5789587307141416305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155201955613690120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 0
+  sharedProfile: {fileID: 11400000, guid: bb0ae545a3a3580488a0e25d0d2bffe8, type: 2}
 --- !u!1 &2033057605961170389
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +310,7 @@ Transform:
   - {fileID: 5956408800928083316}
   - {fileID: 2728464788444818472}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7039516355846058753
 MonoBehaviour:
@@ -275,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStage: -1
-  testStage: 3
+  testStage: 2
 --- !u!1 &2959439728620194035
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +390,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -10}
+  m_Offset: {x: 0, y: -9.6}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -417,7 +467,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: -13.8, y: 0}
+  m_Offset: {x: -13.7, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -494,7 +544,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 0, y: 10}
+  m_Offset: {x: 0, y: 9.6}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -623,48 +673,48 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 7903474593477981390}
     m_ColliderPaths:
-    - - X: -88000000
+    - - X: -87000000
         Y: 50000000
-      - X: -188000000
+      - X: -187000000
         Y: 50000000
-      - X: -188000000
+      - X: -187000000
         Y: -50000000
-      - X: -88000000
+      - X: -87000000
         Y: -50000000
   - m_Collider: {fileID: 4873795226033382061}
     m_ColliderPaths:
-    - - X: 188000000
+    - - X: 187000000
         Y: 50000000
-      - X: 88000000
+      - X: 87000000
         Y: 50000000
-      - X: 88000000
+      - X: 87000000
         Y: -50000000
-      - X: 188000000
+      - X: 187000000
         Y: -50000000
   - m_Collider: {fileID: 9120705018285993423}
     m_ColliderPaths:
     - - X: 150000000
-        Y: 150000000
+        Y: 146000000
       - X: -150000000
-        Y: 150000000
+        Y: 146000000
       - X: -150000000
-        Y: 50000000
+        Y: 46000004
       - X: 150000000
-        Y: 50000000
+        Y: 46000004
   m_CompositePaths:
     m_Paths:
-    - - {x: -8.80003, y: -5}
-      - {x: -8.799971, y: 5}
-      - {x: 8.8, y: 4.9999704}
-      - {x: 8.80003, y: -5}
-      - {x: 18.800001, y: -4.999971}
-      - {x: 18.79997, y: 5}
+    - - {x: -8.700029, y: -5}
+      - {x: -8.69997, y: 4.6000004}
+      - {x: 8.7, y: 4.5999713}
+      - {x: 8.700029, y: -5}
+      - {x: 18.7, y: -4.999971}
+      - {x: 18.699972, y: 5}
       - {x: 15, y: 5.0000296}
-      - {x: 14.999971, y: 15}
-      - {x: -15, y: 14.999971}
+      - {x: 14.999971, y: 14.6}
+      - {x: -15, y: 14.599972}
       - {x: -15.000029, y: 5}
-      - {x: -18.800001, y: 4.999971}
-      - {x: -18.79997, y: -5}
+      - {x: -18.7, y: 4.999971}
+      - {x: -18.699972, y: -5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -795,7 +845,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 13.8, y: 0}
+  m_Offset: {x: 13.7, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

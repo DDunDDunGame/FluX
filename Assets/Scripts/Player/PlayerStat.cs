@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerStat : IDamageable
 { 
@@ -14,9 +16,20 @@ public class PlayerStat : IDamageable
     }
 
     private readonly Player player;
-    
-    // ÃßÈÄ¿£ ·¹º§¿¡ µû¶ó º¯È­ÇÒ ¼ö ÀÖµµ·Ï ¼öÁ¤
-    // ScriptableObject »ý°¢ Áß
+
+    private bool IsInvicible
+    {
+        get {
+            return Time.time < invicibleTime + invicibleTimer; 
+        }
+    }
+    private float invicibleTimer = -Mathf.Infinity;
+    private float invicibleTime = 1f;
+
+    public int HitCount { get; private set; }
+
+    // ì¶”í›„ì—” ë ˆë²¨ì— ë”°ë¼ ë³€í™”í•  ìˆ˜ ìžˆë„ë¡ ìˆ˜ì •
+    // ScriptableObject ìƒê° ì¤‘
     private float maxHealth = 100;
     private float health;
 
@@ -33,11 +46,22 @@ public class PlayerStat : IDamageable
 
     public void TakeDamage(float damage)
     {
+        if(IsInvicible) { return; }
+        HitCount++;
+        invicibleTimer = Time.time;
+
+        ReduceFuel(damage);
+        player.Volume.EnableAndDisableSmooth(invicibleTime/2);
+    }
+
+    private void ReduceFuel(float damage)
+    {
         health -= damage * (1 - defense);
         SetHPText();
-        if(health <= 0)
+        if (health <= 0)
         {
             Die();
+            return;
         }
     }
 
@@ -68,7 +92,7 @@ public class PlayerStat : IDamageable
 
     private void Die()
     {
-        // Á×À» ½Ã Ã³¸®
+        // ì£½ì„ ì‹œ ì²˜ë¦¬
         player.gameObject.SetActive(false);
     }
 
@@ -77,7 +101,7 @@ public class PlayerStat : IDamageable
         while (true)
         {
             yield return new WaitForSeconds(perSeconds);
-            TakeDamage(damage);
+            ReduceFuel(damage);
         }
     }
 
@@ -89,5 +113,10 @@ public class PlayerStat : IDamageable
     private void SetBulletText()
     {
         player.BulletText.text = $"Bullet: {bullet}";
+    }
+
+    public void ResetHitCount()
+    {
+        HitCount = 0;
     }
 }
