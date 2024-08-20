@@ -191,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3961965376927787229}
   m_Layer: 0
-  m_Name: RayEnemyPos
+  m_Name: Patten_1_RayEnemyPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
