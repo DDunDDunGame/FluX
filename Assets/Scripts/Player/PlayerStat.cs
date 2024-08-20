@@ -51,7 +51,9 @@ public class PlayerStat : IDamageable
         invicibleTimer = Time.time;
 
         ReduceFuel(damage);
-        player.Volume.EnableAndDisableSmooth(invicibleTime/2);
+
+        player.Volume.SetActive(true);
+        player.Volume.DisableSmooth(invicibleTime);
     }
 
     private void ReduceFuel(float damage)

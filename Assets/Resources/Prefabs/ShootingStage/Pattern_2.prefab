@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e0c9a5ba5da404d89606db0df7bc04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  spawnInterval: 1
+  guidedSpawnInterval: 1
+  directSpawnInterval: 2
   guidedMissilePrefab: {fileID: -5074330420472895420, guid: e1d5b4c7a7820aa448d656e0da4f6b65, type: 3}
+  directMissilePrefab: {fileID: 2358349123092953319, guid: 0b25676ba938e3949a219684780439d6, type: 3}
   spawnX: 10.5

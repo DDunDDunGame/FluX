@@ -13,7 +13,14 @@ public class Poolable : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        Pool.Release(gameObject);
+
+        try
+        {
+            Pool.Release(gameObject);
+        }
+        catch(System.Exception e)
+        {
+        }
     }
 
 }

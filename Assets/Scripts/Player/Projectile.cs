@@ -25,7 +25,7 @@ public class Projectile : Poolable
         if(collision.TryGetComponent(out IDamageable damageable))
         {
             damageable.TakeDamage(1);
-            ReturnToPool();
         }
+        ReturnToPool();
     }
 }

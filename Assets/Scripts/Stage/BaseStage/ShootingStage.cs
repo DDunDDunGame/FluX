@@ -31,7 +31,6 @@ public class ShootingStage : BaseStage
     {
         base.Update();
         pattern?.OnUpdate();
-        Debug.Log("ShootingStage Update");
     }
 
     public override void Destroy()

@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 public class Player : MonoBehaviour, IStageAttachment, IDamageable
 {
     private Define.Stage currentStage;
+    public SpriteRenderer Sprite { get; private set; }
     public Rigidbody2D Rigid { get; private set; }
     public Collider2D Coll { get; private set; }
     public TextMeshProUGUI HpText { get; private set; }
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
     private void InitVariables()
     {
         currentStage = Define.Stage.None;
+        Sprite = GetComponent<SpriteRenderer>();
         Rigid = GetComponent<Rigidbody2D>();
         Coll = GetComponent<Collider2D>();
         HpText = Util.FindChild<TextMeshProUGUI>(gameObject, "HpText", true);
