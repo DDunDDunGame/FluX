@@ -10,19 +10,22 @@ public class OrbitStage : BaseStage
     GameObject enemyParent;
     GameObject rayEnemy;
     GameObject squareEnemy;
+    GameObject circleEnemy;
 
-    int patten = 1;
+    int patten = 2;
     float playTime = 0;
     float screenX;
     float screenY;
 
     List<GameObject> rayEnemys = new List<GameObject>();
+    List<GameObject> circleEnemys = new List<GameObject>();
 
     public OrbitStage(StageController controller) : base(controller)
     {
         mainCircle = Resources.Load("Prefabs/Orbit/TempOrbit") as GameObject;
         rayEnemy = Resources.Load("Prefabs/Orbit/RayEnemy") as GameObject;
         squareEnemy = Resources.Load("Prefabs/Orbit/SquareEnemy") as GameObject;
+        circleEnemy = Resources.Load("Prefabs/Orbit/CircleEnemy") as GameObject;
         player = GameObject.Find("Player");
     }
 
@@ -59,6 +62,9 @@ public class OrbitStage : BaseStage
 
     private void InitPatten()
     {
+        rayEnemys.Clear();
+        circleEnemys.Clear();
+        playTime = 0;
         switch (patten)
         {
             case 0:
@@ -103,6 +109,7 @@ public class OrbitStage : BaseStage
                 PattenOne();
                 break;
             case 2:
+                PattenTwo();
                 break;
             default:
                 break;
@@ -152,6 +159,26 @@ public class OrbitStage : BaseStage
 
     private void PattenTwo()
     {
+        if(playTime > 1f)
+        {
+            int rotDir = Random.Range(0, 4);
+            GameObject currentEnemy = Util.CreateObjToParent(circleEnemy, new Vector3(0, 0, 0), enemyParent);
+            currentEnemy.transform.Rotate(new Vector3(0, 0, 1) * (90 * rotDir));
+            circleEnemys.Add(currentEnemy);
+            currentEnemy.transform.localScale = new Vector3(screenX * 1.5f, screenX * 1.5f, 1);
+            currentEnemy.SetActive(true);
+            currentEnemy.transform.DOScale(mainCircle.transform.localScale, 2f);
+            playTime = 0;
+        }
 
+        foreach(GameObject child in circleEnemys)
+        {
+            if(child.transform.localScale == mainCircle.transform.localScale)
+            {
+                circleEnemys.Remove(child);
+                child.SetActive(false);
+                break;
+            }
+        }
     }
 }
