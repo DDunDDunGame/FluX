@@ -40,7 +40,6 @@ public class PlayerOnShootingStage : PlayerOnStage
 
         if (player.Actions.Shooting.Shoot.ReadValue<float>() > 0.1f)
         {
-            Debug.Log("ddd");
             Shoot();
         }
     }
@@ -73,6 +72,7 @@ public class PlayerOnShootingStage : PlayerOnStage
 
             GameObject projectile = Managers.ObjectPool.GetObject(projectilePrefab);
             projectile.transform.position = player.transform.position;
+            projectile.transform.rotation = Quaternion.identity;
             projectile.GetComponent<Projectile>().Launch(Vector2.right);
         }
     }

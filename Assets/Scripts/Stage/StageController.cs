@@ -68,7 +68,7 @@ public class StageController : MonoBehaviour
 
         if (stageDict[currentStage].IsEnd())
         {
-            ChangeStage(SetRandomStage());
+            ChangeStage(testStage);
         }
         else
         {
