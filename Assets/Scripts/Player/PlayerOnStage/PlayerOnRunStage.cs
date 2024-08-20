@@ -20,6 +20,7 @@ public class PlayerOnRunStage : PlayerOnStage
     {
         player.Actions.Run.Enable();
         player.Rigid.gravityScale = 3;
+        player.Rigid.constraints = RigidbodyConstraints2D.FreezePositionX;
         currentJumpCount = maxJumpCount;
         playerHalfHeight = player.Coll.bounds.extents.y;
     }
@@ -33,6 +34,7 @@ public class PlayerOnRunStage : PlayerOnStage
         player.Actions.Run.Disable();
         player.Rigid.gravityScale = 0;
         player.Rigid.velocity = Vector2.zero;
+        player.Rigid.constraints = RigidbodyConstraints2D.None;
     }
 
     private void Jump(InputAction.CallbackContext context)
