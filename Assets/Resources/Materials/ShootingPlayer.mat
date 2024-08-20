@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GlowMaterial
+  m_Name: ShootingPlayer
   m_Shader: {fileID: -6465566751694194690, guid: 75f848a7b8cd6ca4499032333094e119, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -66,7 +66,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _GlowColor: {r: 1.8829594, g: 0, b: 1.0759767, a: 0}
+    - _GlowColor: {r: 0, g: 0.45341277, b: 2.9862773, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &6170879029920352418

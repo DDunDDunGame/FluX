@@ -8,9 +8,9 @@ public class ShootingStage : BaseStage
     private IPattern pattern;
     public ShootingStage(StageController controller) : base(controller)
     {
-        patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_0"));
+        //patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_0"));
         patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_1"));
-        patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_2"));
+        //patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_2"));
     }
 
     public override void Initialize()
@@ -31,7 +31,6 @@ public class ShootingStage : BaseStage
     {
         base.Update();
         pattern?.OnUpdate();
-        Debug.Log("ShootingStage Update");
     }
 
     public override void Destroy()

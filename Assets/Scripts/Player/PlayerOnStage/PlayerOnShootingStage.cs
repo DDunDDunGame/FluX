@@ -6,12 +6,16 @@ using UnityEngine.InputSystem;
 public class PlayerOnShootingStage : PlayerOnStage
 {
     private GameObject projectilePrefab;
+    private ParticleSystem shootingTrail;
     private float shootTimer;
     private float shootDelay = 0.5f;
     private float upForce;
 
     public PlayerOnShootingStage(Player player) : base(player) 
     {
+        player.Sprite.sprite = Resources.Load<Sprite>("Arts/Player/Shooting");
+        shootingTrail = Util.FindChild<ParticleSystem>(player.gameObject, "ShootingTrail");
+        shootingTrail.gameObject.SetActive(false);
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
 
         player.Actions.Shooting.Up.performed += Up;
@@ -23,6 +27,7 @@ public class PlayerOnShootingStage : PlayerOnStage
         player.Actions.Shooting.Enable();
         player.Rigid.gravityScale = 1;
         player.transform.position = new Vector3(-7.5f, 0, 0);
+        shootingTrail.gameObject.SetActive(true);
 
         shootTimer = Time.time;
     }
@@ -30,6 +35,9 @@ public class PlayerOnShootingStage : PlayerOnStage
     public override void OnUpdate()
     {
         player.Rigid.AddForce(Time.deltaTime * upForce * Vector2.up, ForceMode2D.Impulse);
+        float zRotation = Mathf.Clamp(player.Rigid.velocity.y * 10, -90, 90);
+        player.transform.rotation = Quaternion.Euler(0, 0, zRotation);
+
         if (player.Actions.Shooting.Shoot.ReadValue<float>() > 0.1f)
         {
             Debug.Log("ddd");
@@ -43,6 +51,8 @@ public class PlayerOnShootingStage : PlayerOnStage
         player.Rigid.gravityScale = 0;
         player.Rigid.velocity = Vector2.zero;
         player.transform.position = Vector3.zero;
+        shootingTrail.Stop();
+        shootingTrail.gameObject.SetActive(false);
     }
 
     private void Up(InputAction.CallbackContext context)
