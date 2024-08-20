@@ -8,8 +8,8 @@ public class ShootingStage : BaseStage
     private IPattern pattern;
     public ShootingStage(StageController controller) : base(controller)
     {
-        //patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_0"));
-        //patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_1"));
+        patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_0"));
+        patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_1"));
         patterns.Add(Resources.Load<GameObject>("Prefabs/ShootingStage/Pattern_2"));
     }
 
