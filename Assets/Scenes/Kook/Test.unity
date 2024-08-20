@@ -6563,6 +6563,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageController
       objectReference: {fileID: 0}
+    - target: {fileID: 5789587307141416305, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: weight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5808651566432479161, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_Camera
       value: 
