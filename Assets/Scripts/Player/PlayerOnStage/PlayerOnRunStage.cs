@@ -20,7 +20,7 @@ public class PlayerOnRunStage : PlayerOnStage
     {
         player.Actions.Run.Enable();
         player.Rigid.gravityScale = 3;
-        player.Rigid.constraints = RigidbodyConstraints2D.FreezePositionX;
+        player.Rigid.constraints = (int)RigidbodyConstraints2D.FreezePositionX + RigidbodyConstraints2D.FreezeRotation;
         currentJumpCount = maxJumpCount;
         playerHalfHeight = player.Coll.bounds.extents.y;
     }

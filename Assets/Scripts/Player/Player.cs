@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour, IStageAttachment, IDamageable
 {
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
     public TextMeshProUGUI BulletText { get; private set; }
     public PlayerStat Stat { get; private set; }
     public PlayerActions Actions { get; private set; }
+    public PlayerVolume Volume { get; private set; }
     private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
 
     private void Awake()
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         BulletText = Util.FindChild<TextMeshProUGUI>(gameObject, "BulletText", true);
         Stat = new PlayerStat(this);
         Actions = new PlayerActions();
+        Volume = new PlayerVolume(Util.FindChild<Volume>(gameObject, "PlayerVolume"));
         onStageDict = new Dictionary<Define.Stage, PlayerOnStage>
         {
             { Define.Stage.Shooting, new PlayerOnShootingStage(this) },
@@ -55,6 +58,11 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         if(currentStage != Define.Stage.None)
         {
             onStageDict[currentStage].OnExit();
+        }
+        if(Stat.HitCount == 0)
+        {
+            // Fuel Item 생성
+            Stat.ResetHitCount();
         }
         currentStage = stage;
         onStageDict[currentStage].OnEnter();
