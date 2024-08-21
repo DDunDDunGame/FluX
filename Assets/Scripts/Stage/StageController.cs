@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StageController : MonoBehaviour
@@ -14,9 +15,12 @@ public class StageController : MonoBehaviour
     private Transform map;
 
     public Player Player { get; private set; }
+    public TextMeshProUGUI TimeText { get; private set; }
     // 추후 아이템 배치를 위한 변수들
-    public GameObject Fuel { get; private set; }
-    public GameObject Bullets { get; private set; }
+    [SerializeField] private Fuel fuelPrefab;
+    [SerializeField] private Bullet bulletPrefab;
+    private float bulletItemTimer = 2f;
+    private float bulletItemTime = 5f;
 
     private void Awake()
     {
@@ -58,8 +62,7 @@ public class StageController : MonoBehaviour
     {
         map = Util.FindChild<Transform>(gameObject, "Map");
         Player = Util.FindChild<Player>(gameObject, "Player", true);
-        Fuel = Util.FindChild(gameObject, "Fuel");
-        Bullets = Util.FindChild(gameObject, "Bullets");
+        TimeText = Util.FindChild<TextMeshProUGUI>(gameObject, "TimeText", true);
     }
 
     private void Update()
@@ -68,7 +71,7 @@ public class StageController : MonoBehaviour
 
         if (stageDict[currentStage].IsEnd())
         {
-            ChangeStage(SetRandomStage());
+            ChangeStage(testStage);
         }
         else
         {
@@ -97,6 +100,11 @@ public class StageController : MonoBehaviour
         if (currentStage != Define.Stage.None)
         {
             stageDict[currentStage].Destroy();
+            if(Player.Stat.HitCount == 0)
+            {
+                EnableFuelItem();
+            }
+            Player.Stat.ResetHitCount();
         }
 
         currentStage = stage;
@@ -112,11 +120,35 @@ public class StageController : MonoBehaviour
         return Instantiate(obj, pos, Quaternion.identity, map);
     }
 
+    public void EnableFuelItem()
+    {
+        Fuel fuel = Managers.ObjectPool.GetObject(fuelPrefab.gameObject).GetComponent<Fuel>();
+        fuel.Launch();
+    }
+
+    public void TryEnableBulletItem(float stageTime)
+    {
+        if (stageTime >= bulletItemTimer && stageTime <= bulletItemTimer + bulletItemTime)
+        {
+            bulletItemTimer = (bulletItemTime + bulletItemTimer) % 10;
+            Bullet bullet = Managers.ObjectPool.GetObject(bulletPrefab.gameObject).GetComponent<Bullet>();
+            bullet.Launch();
+        }
+    }
+
     public void DestroyMap()
     {
         foreach (Transform child in map)
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void SetTimeText(float time)
+    {
+        time = 10f - time;
+        time = Mathf.Clamp(time, 0f, 10f);
+        int timeInt = Mathf.RoundToInt(time);
+        TimeText.text = timeInt.ToString();
     }
 }

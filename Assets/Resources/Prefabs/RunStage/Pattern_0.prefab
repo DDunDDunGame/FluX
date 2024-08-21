@@ -45,11 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 7491552841480596645, guid: 262655c2591a45a4a8083420ecc0fb0c, type: 3}
+  platformEnemyPrefab: {fileID: 7491552841480596645, guid: 358711fca570c4e4188088ea744b2812, type: 3}
   initPlatformPos: {x: -4, y: -3.5}
-  platformIntervalMax: 1.5
+  platformIntervalMax: 1
   platformIntervalMin: 0.5
-  enemyPlatformIntervalMax: 2
-  enemyPlatformIntervalMin: 2.5
-  platformXPos: 13.5
+  enemyPlatformIntervalMax: 1.5
+  enemyPlatformIntervalMin: 2
+  platformXPos: 13
   platformYMax: -0.5
   platformYMin: -3.5

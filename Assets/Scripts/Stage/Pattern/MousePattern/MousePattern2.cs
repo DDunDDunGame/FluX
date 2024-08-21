@@ -12,6 +12,7 @@ public class MousePattern2 : MonoBehaviour, IPattern
     public void Initialize(Player player)
     {
         timer = Time.time;
+        SpawnRandomRebar();
     }
 
     public void OnUpdate()

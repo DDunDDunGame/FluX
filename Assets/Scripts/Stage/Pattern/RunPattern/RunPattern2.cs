@@ -6,6 +6,7 @@ public class RunPattern2 : MonoBehaviour, IPattern
 {
     [Header("Platform")]
     [SerializeField] private RunPlatform platformPrefab;
+    [SerializeField] private RunPlatform initPlatformPrefab;
     [SerializeField] private Vector2 initPlatformPos;
     [SerializeField] private Vector2 platformPos;
     [SerializeField] private float platformYDistance;
@@ -34,9 +35,11 @@ public class RunPattern2 : MonoBehaviour, IPattern
 
     public void Initialize(Player player)
     {
-        for(int i = 0; i < 5; i++)
+        transform.position = Vector2.zero;
+        SpawnThreePlatforms(initPlatformPrefab, initPlatformPos);
+        for (int i = 2; i < 5; i++)
         {
-            SpawnThreePlatforms(initPlatformPos + Vector2.right * 5 * i);
+            SpawnThreePlatforms(platformPrefab, initPlatformPos + 5 * i * Vector2.right);
         }
         platformTimer = rayTimer = explosionTimer = Time.time;
     }
@@ -46,7 +49,7 @@ public class RunPattern2 : MonoBehaviour, IPattern
         if(Time.time >= platformTimer + platformInterval)
         {
             platformTimer = Time.time;
-            SpawnThreePlatforms(platformPos);
+            SpawnThreePlatforms(platformPrefab, platformPos);
         }
         if (Time.time >= rayTimer + rayInterval)
         {
@@ -77,11 +80,11 @@ public class RunPattern2 : MonoBehaviour, IPattern
         platforms.Clear(); rays.Clear(); explosions.Clear();
     }
     
-    private void SpawnThreePlatforms(Vector2 pos)
+    private void SpawnThreePlatforms(RunPlatform prefab, Vector2 pos)
     {
         for(int i = 0; i < 3; i++)
         {
-            RunPlatform runPlatform = Managers.ObjectPool.GetObject(platformPrefab.gameObject).GetComponent<RunPlatform>();
+            RunPlatform runPlatform = Managers.ObjectPool.GetObject(prefab.gameObject).GetComponent<RunPlatform>();
             runPlatform.Move(new Vector2(pos.x, pos.y + platformYDistance * i), Vector2.left);
             platforms.Add(runPlatform);
         }

@@ -20,4 +20,12 @@ public class Rebar : Poolable
         transform.position = pos;
         rigid.velocity = dir.normalized * speed;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IDamageable damageable) && collision.CompareTag("Player"))
+        {
+            damageable.TakeDamage(10);
+        }
+    }
 }

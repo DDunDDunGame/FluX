@@ -6,6 +6,7 @@ public class RunPattern0 : MonoBehaviour, IPattern
 {
     [Header("Platform Prefab")]
     [SerializeField] private RunPlatform platformPrefab;
+    [SerializeField] private RunPlatform platformEnemyPrefab;
     [SerializeField] private Vector2 initPlatformPos;
     [Header("Platform Spawn Interval")]
     [SerializeField] private float platformIntervalMax = 1f;
@@ -70,7 +71,7 @@ public class RunPattern0 : MonoBehaviour, IPattern
     {
         float randomY = Random.Range(platformYMin, platformYMax);
         Vector2 pos = new(platformXPos + 9, randomY);
-        RunPlatform platform = Managers.ObjectPool.GetObject(platformPrefab.gameObject).GetComponent<RunPlatform>();
+        RunPlatform platform = Managers.ObjectPool.GetObject(platformEnemyPrefab.gameObject).GetComponent<RunPlatform>();
         platform.Move(pos, Vector2.left, true);
         platforms.Add(platform);
     }

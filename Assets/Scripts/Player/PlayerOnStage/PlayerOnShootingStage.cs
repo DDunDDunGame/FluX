@@ -13,7 +13,6 @@ public class PlayerOnShootingStage : PlayerOnStage
 
     public PlayerOnShootingStage(Player player) : base(player) 
     {
-        player.Sprite.sprite = Resources.Load<Sprite>("Arts/Player/Shooting");
         shootingTrail = Util.FindChild<ParticleSystem>(player.gameObject, "ShootingTrail");
         shootingTrail.gameObject.SetActive(false);
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
@@ -24,6 +23,7 @@ public class PlayerOnShootingStage : PlayerOnStage
 
     public override void OnEnter()
     {
+        player.Sprite.sprite = player.ShootingSprite;
         player.Actions.Shooting.Enable();
         player.Rigid.gravityScale = 1;
         player.transform.position = new Vector3(-7.5f, 0, 0);
