@@ -6,32 +6,39 @@ using UnityEngine.Rendering;
 
 public class PlayerVolume
 {
+    private readonly Player player;
     private readonly Volume volume;
 
-    public PlayerVolume(Volume volume)
+    public PlayerVolume(Player player, Volume volume)
     {
+        this.player = player;
         this.volume = volume;
         volume.weight = 0;
     }
 
     public void EnableSmooth(float time)
     {
-        volume.StartCoroutine(SmoothCoroutine(time, 1));
+        player.StartCoroutine(SmoothCoroutine(time, 1));
     }
 
     public void DisableSmooth(float time)
     {
-        volume.StartCoroutine(SmoothCoroutine(time, 0));
-    }
-
-    public void EnableAndDisableSmooth(float halfTime)
-    {
-        void disableAction() => volume.StartCoroutine(SmoothCoroutine(halfTime, 0));
-        volume.StartCoroutine(SmoothCoroutine(halfTime, 1, disableAction));
+        player.StartCoroutine(SmoothCoroutine(time, 0));
     }
 
     public void SetActive(bool isActive)
     {
+        volume.weight = isActive ? 1 : 0;
+    }
+
+    public void SetActive(bool isActive, float time)
+    {
+        player.StartCoroutine(SetActiveCoroutine(isActive, time));
+    }
+
+    private IEnumerator SetActiveCoroutine(bool isActive, float time)
+    {
+        yield return new WaitForSeconds(time);
         volume.weight = isActive ? 1 : 0;
     }
 
@@ -45,18 +52,5 @@ public class PlayerVolume
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-    }
-
-    private IEnumerator SmoothCoroutine(float time, float target, System.Action callback)
-    {
-        float original = volume.weight;
-        float elapsedTime = 0;
-        while (elapsedTime < time)
-        {
-            volume.weight = Mathf.Lerp(original, target, elapsedTime / time);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        callback?.Invoke();
     }
 }

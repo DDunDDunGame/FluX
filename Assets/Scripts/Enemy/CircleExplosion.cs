@@ -22,7 +22,9 @@ public class CircleExplosion : Poolable
         Vector3 center = transform.position;
         foreach(Rigidbody2D fragment in fragments)
         {
-            fragment.velocity = (fragment.transform.position - center).normalized * explosionSpeed;
+            Vector2 dir = (fragment.transform.position - center).normalized;
+            fragment.velocity = dir * explosionSpeed;
+            fragment.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
         }
     }
 

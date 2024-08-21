@@ -45,13 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 7491552841480596645, guid: 9e8320ae76ca18d47b5a9aee72f1c7fa, type: 3}
-  initPlatformPos: {x: -6, y: -3.5}
-  platformPos: {x: 13.5, y: -3.5}
+  initPlatformPrefab: {fileID: 7491552841480596645, guid: 02ffd41942ac68e439f40b5c9c0ae151, type: 3}
+  initPlatformPos: {x: -2.5, y: -3.5}
+  platformPos: {x: 17, y: -3.5}
   platformYDistance: 1.5
   platformInterval: 0.5
   rayPrefab: {fileID: 4740889554745048815, guid: d86f2a563c92f374d8a52a279548f34e, type: 3}
   rayInterval: 1.5
-  rayScale: 1.5
+  rayScale: 1
   rayXPos: 0
   rayYMin: -3.5
   rayYMax: -1

@@ -11,6 +11,8 @@ public class PlayerOnMouseStage : PlayerOnStage
         player.Actions.Mouse.Enable();
         Cursor.lockState = CursorLockMode.Confined;
         player.transform.position = Vector3.zero;
+        player.Sprite.sprite = player.CircleIdle;
+        player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     public override void OnUpdate()
@@ -25,5 +27,6 @@ public class PlayerOnMouseStage : PlayerOnStage
     public override void OnExit()
     {
         player.Actions.Mouse.Disable();
+        player.Rigid.constraints = RigidbodyConstraints2D.None;
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IStageAttachment, IDamageable
 {
@@ -11,12 +12,26 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
     public SpriteRenderer Sprite { get; private set; }
     public Rigidbody2D Rigid { get; private set; }
     public Collider2D Coll { get; private set; }
-    public TextMeshProUGUI HpText { get; private set; }
-    public TextMeshProUGUI BulletText { get; private set; }
+    public Slider HpSlider { get; private set; }
+    public LayoutGroupHelper BulletGroup { get; private set; }
     public PlayerStat Stat { get; private set; }
     public PlayerActions Actions { get; private set; }
-    public PlayerVolume Volume { get; private set; }
+    public PlayerVolume HitVolume { get; private set; }
+    public PlayerVolume InvicibleVolume { get; private set; }
     private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
+
+    #region Sprite
+    [field: SerializeField]
+    public Sprite CircleHit { get; private set; }
+    [field: SerializeField]
+    public Sprite CircleIdle{ get; private set; }
+    [field: SerializeField]
+    public Sprite SquareHit { get; private set; }
+    [field: SerializeField]
+    public Sprite SquareIdle { get; private set; }
+    [field: SerializeField]
+    public Sprite ShootingSprite { get; private set; }
+    #endregion
 
     private void Awake()
     {
@@ -37,12 +52,12 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         Sprite = GetComponent<SpriteRenderer>();
         Rigid = GetComponent<Rigidbody2D>();
         Coll = GetComponent<Collider2D>();
-        HpText = Util.FindChild<TextMeshProUGUI>(gameObject, "HpText", true);
-        if (HpText == null) Debug.LogError("HpText is null");
-        BulletText = Util.FindChild<TextMeshProUGUI>(gameObject, "BulletText", true);
+        HpSlider = Util.FindChild<Slider>(gameObject, "HpSlider", true);
+        BulletGroup = Util.FindChild<LayoutGroupHelper>(gameObject, "BulletGroup", true);
         Stat = new PlayerStat(this);
         Actions = new PlayerActions();
-        Volume = new PlayerVolume(Util.FindChild<Volume>(gameObject, "PlayerVolume"));
+        HitVolume = new PlayerVolume(this, Util.FindChild<Volume>(gameObject, "HitVolume"));
+        InvicibleVolume = new PlayerVolume(this, Util.FindChild<Volume>(gameObject, "InvicibleVolume"));
         onStageDict = new Dictionary<Define.Stage, PlayerOnStage>
         {
             { Define.Stage.Shooting, new PlayerOnShootingStage(this) },
@@ -61,11 +76,6 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         {
             onStageDict[currentStage].OnExit();
         }
-        if(Stat.HitCount == 0)
-        {
-            // Fuel Item 생성
-            Stat.ResetHitCount();
-        }
         currentStage = stage;
         onStageDict[currentStage].OnEnter();
     }
@@ -81,5 +91,25 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         {
             item.Use(Stat);
         }
+    }
+
+    public void ChangeSpriteByHit(float time)
+    {
+        StartCoroutine(ChangeSpriteCoroutine(time));
+    }
+
+    private IEnumerator ChangeSpriteCoroutine(float time)
+    {
+        Sprite original = Sprite.sprite;
+        if (original == CircleIdle)
+        {
+            Sprite.sprite = CircleHit;
+        }
+        else if (original == SquareIdle)
+        {
+            Sprite.sprite = SquareHit;
+        }
+        yield return new WaitForSeconds(time);
+        Sprite.sprite = original;
     }
 }

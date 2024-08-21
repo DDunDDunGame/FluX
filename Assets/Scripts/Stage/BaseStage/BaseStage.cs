@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseStage
 {
+    public event Action<float> OnTimeUpdate;
     protected readonly StageController controller;
     private const float STAGE_TIME_MAX = 10f;
     private float stageTime;
@@ -11,6 +13,8 @@ public class BaseStage
     public BaseStage(StageController controller)
     {
         this.controller = controller;
+        OnTimeUpdate += controller.SetTimeText;
+        OnTimeUpdate += controller.TryEnableBulletItem;
     }
 
     public virtual void Initialize()
@@ -21,6 +25,7 @@ public class BaseStage
     public virtual void Update()
     {
         stageTime += Time.deltaTime;
+        OnTimeUpdate?.Invoke(stageTime);
     }
 
     public virtual void Destroy()
