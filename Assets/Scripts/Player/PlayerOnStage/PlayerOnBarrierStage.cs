@@ -30,6 +30,7 @@ public class PlayerOnBarrierStage : PlayerOnStage
     {
         player.Actions.Barrier.Disable();
         player.Rigid.angularVelocity = 0;
+        player.transform.rotation = Quaternion.identity;
         player.Rigid.bodyType = RigidbodyType2D.Dynamic;
     }
 

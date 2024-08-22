@@ -14,6 +14,12 @@ public class Bullet : Poolable, IItem
     private bool isLaunched = false;
     private float timer;
 
+    private void Awake()
+    {
+        Managers.Game.GameOverAction -= ReturnToPool;
+        Managers.Game.GameOverAction += ReturnToPool;
+
+    }
     void FixedUpdate()
     {
         if (isLaunched)
@@ -41,7 +47,6 @@ public class Bullet : Poolable, IItem
         transform.position = startPos;
         isLaunched = true;
         timer = 0f;
-        print(transform.position);
     }
 
     public void Use(PlayerStat target)

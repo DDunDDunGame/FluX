@@ -14,6 +14,12 @@ public class Fuel : Poolable, IItem
     private bool isLaunched = false;
     private float timer;
 
+    private void Awake()
+    {
+        Managers.Game.GameOverAction -= ReturnToPool;
+        Managers.Game.GameOverAction += ReturnToPool;
+
+    }
     void FixedUpdate()
     {
         if(isLaunched)

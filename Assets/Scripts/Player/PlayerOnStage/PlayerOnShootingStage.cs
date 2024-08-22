@@ -16,6 +16,7 @@ public class PlayerOnShootingStage : PlayerOnStage
         shootingTrail = Util.FindChild<ParticleSystem>(player.gameObject, "ShootingTrail");
         shootingTrail.gameObject.SetActive(false);
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
+        player.Rigid.velocity = Vector2.zero;
 
         player.Actions.Shooting.Up.performed += Up;
         player.Actions.Shooting.Up.canceled += Down;
@@ -50,6 +51,7 @@ public class PlayerOnShootingStage : PlayerOnStage
         player.Rigid.gravityScale = 0;
         player.Rigid.velocity = Vector2.zero;
         player.transform.position = Vector3.zero;
+        player.transform.rotation = Quaternion.identity;
         shootingTrail.Stop();
         shootingTrail.gameObject.SetActive(false);
     }

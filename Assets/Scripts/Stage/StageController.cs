@@ -1,12 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using DG.Tweening;
 
 public class StageController : MonoBehaviour
 {
     [SerializeField] private Define.Stage currentStage = Define.Stage.None;
     [SerializeField] private Define.Stage testStage;
+    [SerializeField] private float changeTime = 0.2f;
+    [SerializeField] private float initY;
+    [SerializeField] private RectTransform[] flyTransforms;
     private Dictionary<Define.Stage, BaseStage> stageDict;
     private List<IStageAttachment> attachments;
 
@@ -16,6 +20,7 @@ public class StageController : MonoBehaviour
 
     public Player Player { get; private set; }
     public TextMeshProUGUI TimeText { get; private set; }
+    private VolumeHelper changeVolume;
     // 추후 아이템 배치를 위한 변수들
     [SerializeField] private Fuel fuelPrefab;
     [SerializeField] private Bullet bulletPrefab;
@@ -27,9 +32,31 @@ public class StageController : MonoBehaviour
         InitVariables();
         InitDict();
         InitAttachments();
+
+        Managers.Game.GameOverAction -= FinishGame;
+        Managers.Game.GameOverAction += FinishGame;
     }
 
     private void Start()
+    {
+        FlyUp(InitStageChange);
+    }
+
+    private void FlyUp(TweenCallback action)
+    {
+        transform.position = new Vector3(transform.position.x, initY, transform.position.z);
+        transform.DOMoveY(transform.position.y + 10, 0.5f).SetEase(Ease.OutQuad).OnComplete(action);
+        
+        foreach(RectTransform child in flyTransforms)
+        {
+            print(child.rect.y - 10f);
+            float rectInitY = child.rect.y;
+            child.DOAnchorPosY(rectInitY - 1300, 0);
+            child.DOAnchorPosY(rectInitY, 0.5f).SetEase(Ease.OutQuad);
+        }
+    }
+
+    private void InitStageChange()
     {
 #if UNITY_EDITOR
         ChangeStage(testStage);
@@ -63,6 +90,7 @@ public class StageController : MonoBehaviour
         map = Util.FindChild<Transform>(gameObject, "Map");
         Player = Util.FindChild<Player>(gameObject, "Player", true);
         TimeText = Util.FindChild<TextMeshProUGUI>(gameObject, "TimeText", true);
+        changeVolume = new(Player, Util.FindChild<Volume>(gameObject, "ChangeVolume", true));
     }
 
     private void Update()
@@ -71,7 +99,7 @@ public class StageController : MonoBehaviour
 
         if (stageDict[currentStage].IsEnd())
         {
-            ChangeStage(testStage);
+            ChangeStage(SetRandomStage());
         }
         else
         {
@@ -86,7 +114,7 @@ public class StageController : MonoBehaviour
             roundStageCount++;
             int randomStart = (int)Define.Stage.None + 1;
             int randomEnd = (int)Define.Stage.Boss;
-            return (Define.Stage)Random.Range(randomStart, randomEnd);
+            return (Define.Stage)UnityEngine.Random.Range(randomStart, randomEnd);
         }
         else
         {
@@ -107,8 +135,38 @@ public class StageController : MonoBehaviour
             Player.Stat.ResetHitCount();
         }
 
+        Managers.Game.Pause();
+        ChangingStage(stage);
+    }
+
+    private void ChangingStage(Define.Stage stage)
+    {
+        currentStage = Define.Stage.None;
+
+        void Change() { FinishChangingStage(stage); }
+        void Disable() { changeVolume.DisableSmooth(changeTime / 3, Change); }
+        void Stay() { changeVolume.SetActive(true, changeTime / 3, Disable); }
+        changeVolume.EnableSmooth(changeTime / 3, Stay);
+    }
+
+    private void FinishChangingStage(Define.Stage stage)
+    {
         currentStage = stage;
         stageDict[currentStage].Initialize();
+        foreach (IStageAttachment attachment in attachments)
+        {
+            attachment.ChangeStage(currentStage);
+        }
+        Managers.Game.Play();
+    }
+
+    private void FinishGame()
+    {
+        if (currentStage != Define.Stage.None)
+        {
+            stageDict[currentStage].Destroy();
+        }
+        currentStage = Define.Stage.None;
         foreach (IStageAttachment attachment in attachments)
         {
             attachment.ChangeStage(currentStage);

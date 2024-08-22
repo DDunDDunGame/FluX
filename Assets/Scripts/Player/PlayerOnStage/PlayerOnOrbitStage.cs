@@ -7,6 +7,8 @@ using UnityEngine.Windows;
 public class PlayerOnOrbitStage : PlayerOnStage
 {
     Sprite playerSprite;
+    float inputX;
+
     public PlayerOnOrbitStage(Player player) : base(player) 
     {
         playerSprite = Resources.Load<Sprite>("Arts/Orbit/TrPlayer");
@@ -19,11 +21,12 @@ public class PlayerOnOrbitStage : PlayerOnStage
         player.Actions.Orbit.Move.performed += Move;
         player.Actions.Orbit.Move.canceled += Move;
         player.Sprite.sprite = playerSprite;
+        inputX = 0f;
     }
 
     public override void OnUpdate()
     {
-        Debug.Log("Player Update");
+        player.transform.RotateAround(Vector3.zero, Vector3.forward, -inputX * 300 * Time.deltaTime);
     }
 
     public override void OnExit()
@@ -31,13 +34,12 @@ public class PlayerOnOrbitStage : PlayerOnStage
         player.Actions.Orbit.Disable();
         player.Rigid.bodyType = RigidbodyType2D.Dynamic;
         player.Sprite.flipY = false;
-        player.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = 0;
         player.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void Move(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
-        player.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = input.x * 300;
+        inputX = input.x;
     }
 }

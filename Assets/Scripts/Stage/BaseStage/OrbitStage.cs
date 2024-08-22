@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class OrbitStage : BaseStage
 {
+    GameObject mainCirclePrefab;
     GameObject mainCircle;
-    GameObject icon;
     GameObject player;
     GameObject enemyParent;
     GameObject rayEnemy;
@@ -23,22 +23,19 @@ public class OrbitStage : BaseStage
 
     public OrbitStage(StageController controller) : base(controller)
     {
-        mainCircle = Resources.Load("Prefabs/Orbit/TempOrbit") as GameObject;
+        mainCirclePrefab = Resources.Load("Prefabs/Orbit/TempOrbit") as GameObject;
         rayEnemy = Resources.Load("Prefabs/Orbit/RayEnemy") as GameObject;
         squareEnemy = Resources.Load("Prefabs/Orbit/SquareEnemy") as GameObject;
         circleEnemy = Resources.Load("Prefabs/Orbit/CircleEnemy") as GameObject;
-        icon = Resources.Load("Prefabs/Orbit/OrbitIcon") as GameObject;
+        enemyParent = GameObject.Find("Enemy");
         player = GameObject.Find("Player");
     }
 
     public override void Initialize()
     {
         base.Initialize();
-        mainCircle = controller.CreateMap(mainCircle, new Vector3(0, 0, 0));
-        icon = Util.CreateObjToParent(icon, new Vector3(0, 0, 0), enemyParent);
-        player.transform.position = mainCircle.transform.position + new Vector3(0, -1.5f, 0);
-        player.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        enemyParent = new GameObject("Enemy");
+        mainCircle = controller.CreateMap(mainCirclePrefab, new Vector3(0, 0, 0));
+        player.transform.position = new Vector3(0, -1.5f, 0);
         GetCurrentPlayScreen();
 
         patten = Random.Range(0, 3);
@@ -58,8 +55,10 @@ public class OrbitStage : BaseStage
     public override void Destroy()
     {
         base.Destroy();
-        Util.Destroy(enemyParent);
-        player.transform.localScale = new Vector3(1f, 1f, 1f);
+        foreach(Transform child in enemyParent.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
         Debug.Log("OrbitStage Destroy");
     }
 

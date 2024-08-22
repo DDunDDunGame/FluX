@@ -20,7 +20,6 @@ public class LayoutGroupHelper : MonoBehaviour
 
         for (int i = 0; i < childCount; i++)
         {
-            print("Init" + i);
             children.Add(Instantiate(childPrefab, transform));
             SetActive(i, false);
         }
