@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,10 +10,12 @@ public class PlayerStat : IDamageable
     {
         this.player = player;
         health = maxHealth;
-        bullet = bulletBox;
+        bullet = 0;
         player.StartCoroutine(FuelDecrease(1, 1));
-        SetHPText();
-        SetBulletText();
+
+        player.HpSlider.maxValue = maxHealth;
+        SetHPSlider(health);
+        player.BulletGroup.Init(bulletBox);
     }
 
     private readonly Player player;
@@ -24,7 +27,8 @@ public class PlayerStat : IDamageable
         }
     }
     private float invicibleTimer = -Mathf.Infinity;
-    private float invicibleTime = 1f;
+    private float invicibleTime = 3f;
+    private float hitTime = 1f;
 
     public int HitCount { get; private set; }
 
@@ -33,7 +37,7 @@ public class PlayerStat : IDamageable
     private float maxHealth = 100;
     private float health;
 
-    private int bulletBox = 5;
+    private int bulletBox = 10;
     private int bullet;
 
     private float defense = 0;
@@ -52,14 +56,19 @@ public class PlayerStat : IDamageable
 
         ReduceFuel(damage);
 
-        player.Volume.SetActive(true);
-        player.Volume.DisableSmooth(invicibleTime);
+        player.HitVolume.SetActive(true);
+        player.HitVolume.DisableSmooth(hitTime);
+        player.ChangeSpriteByHit(hitTime);
+
+        player.InvicibleVolume.SetActive(true);
+        player.InvicibleVolume.SetActive(false, invicibleTime);
+        
     }
 
     private void ReduceFuel(float damage)
     {
         health -= damage * (1 - defense);
-        SetHPText();
+        SetHPSlider(this.health);
         if (health <= 0)
         {
             Die();
@@ -71,7 +80,7 @@ public class PlayerStat : IDamageable
     {
         if (this.health + health <= maxHealth) { this.health += health; }
         else { this.health = maxHealth; }
-        SetHPText();
+        SetHPSlider(this.health);
     }
 
     public bool CanUsingBullet(int bullet)
@@ -82,14 +91,23 @@ public class PlayerStat : IDamageable
     public void UseBullet(int bullet)
     {
         this.bullet -= bullet;
-        SetBulletText();
+        player.BulletGroup.Decrement(bullet);
     }
 
     public void RestoreBullet(int bullet)
     {
-        if(this.bullet + bullet > bulletBox) { this.bullet = bulletBox; }
-        else { this.bullet += bullet; }
-        SetBulletText();
+        if(this.bullet == bulletBox) { return; }
+
+        if(this.bullet + bullet > bulletBox)
+        {
+            player.BulletGroup.Increment(bulletBox-this.bullet);
+            this.bullet = bulletBox;
+        }
+        else 
+        { 
+            this.bullet += bullet;
+            player.BulletGroup.Increment(bullet);
+        }
     }
 
     private void Die()
@@ -107,14 +125,9 @@ public class PlayerStat : IDamageable
         }
     }
 
-    private void SetHPText()
+    private void SetHPSlider(float value)
     {
-        player.HpText.text = $"HP: {health}";
-    }
-
-    private void SetBulletText()
-    {
-        player.BulletText.text = $"Bullet: {bullet}";
+        player.HpSlider.value = value;
     }
 
     public void ResetHitCount()

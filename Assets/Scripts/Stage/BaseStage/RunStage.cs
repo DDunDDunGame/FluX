@@ -11,8 +11,8 @@ public class RunStage : BaseStage
     public RunStage(StageController controller) : base(controller)
     {
         patterns.Add(Resources.Load<GameObject>("Prefabs/RunStage/Pattern_0"));
-        //patterns.Add(Resources.Load<GameObject>("Prefabs/RunStage/Pattern_1"));
-        //patterns.Add(Resources.Load<GameObject>("Prefabs/RunStage/Pattern_2"));
+        patterns.Add(Resources.Load<GameObject>("Prefabs/RunStage/Pattern_1"));
+        patterns.Add(Resources.Load<GameObject>("Prefabs/RunStage/Pattern_2"));
     }
 
     public override void Initialize()

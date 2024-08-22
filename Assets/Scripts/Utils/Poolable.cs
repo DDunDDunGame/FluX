@@ -18,9 +18,7 @@ public class Poolable : MonoBehaviour
         {
             Pool.Release(gameObject);
         }
-        catch(System.Exception e)
-        {
-        }
+        catch (System.Exception) { }
     }
 
 }

@@ -20,32 +20,15 @@ public class RunPlatform : Poolable
         transform.position = pos;
         rigid.velocity = dir.normalized * speed;
         this.isEnemy = isEnemy;
-        SetSprite();
     }
 
-    private void SetSprite()
-    {
-        if(sprite == null)
-        {
-            sprite = GetComponent<SpriteRenderer>();
-        }
-
-        if(isEnemy)
-        {
-            sprite.color = Color.red;
-        }
-        else
-        {
-            sprite.color = Color.white;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isEnemy) { return; }
 
-        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-        damageable?.TakeDamage(damage);
-    
+        if (collision.gameObject.TryGetComponent(out IDamageable damageable) && collision.gameObject.CompareTag("Player"))
+        {
+            damageable.TakeDamage(damage);
+        }
     }
 }

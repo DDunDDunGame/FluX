@@ -18,7 +18,7 @@ public class MousePattern1 : MonoBehaviour, IPattern
     [SerializeField] private Ray rayPrefab;
     [SerializeField] private float rayIntervalMin = 2.5f;
     [SerializeField] private float rayIntervalMax = 3f;
-    [SerializeField] private float rayXScale = 9f;
+    [SerializeField] private float rayScale = 9f;
     private float rayInterval;
     private float rayTimer = 0f;
     private List<Ray> rays = new();
@@ -68,7 +68,7 @@ public class MousePattern1 : MonoBehaviour, IPattern
         {
             ray.transform.position = left.transform.position;
         }
-        ray.ReadyRay(rayXScale);
+        ray.ReadyRay(rayScale);
     }
 
     public void Destroy()

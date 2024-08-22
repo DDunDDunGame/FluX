@@ -44,10 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df97f33d6bfc5a498a75292d4162522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 2
+  interval: 3.5
   rebarPrefabs:
   - {fileID: 1879832440087830056, guid: 8cc43f2f905553a45a85c70d5f282a33, type: 3}
   - {fileID: 4158568703198890145, guid: 2adfeb675ca0a7b4e9fe64d3d052c4c6, type: 3}
   - {fileID: 4567582169843425473, guid: c7504eafe4508b74082c142044a95ff6, type: 3}
-  - {fileID: 5860216738064754545, guid: cc6084f514088734cab39dff763b0b67, type: 3}
-  - {fileID: 5038787932892455601, guid: 7c90b489ef10c0a4bbcdaa434bf11c9e, type: 3}
