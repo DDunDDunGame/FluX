@@ -52,6 +52,7 @@ public class PlayerStat : IDamageable
     {
         if(Managers.Game.IsPlaying == false) { return; }
         if(IsInvicible || health <= 0) { return; }
+        SoundManager.Instance.PlaySound2D("SFX Player Hit");
         HitCount++;
         invicibleTimer = Time.time;
 
@@ -61,8 +62,9 @@ public class PlayerStat : IDamageable
         player.HitVolume.DisableSmooth(hitTime);
         player.ChangeSpriteByHit(hitTime);
 
+        player.InvicibleEffect.Play();
         player.InvicibleVolume.SetActive(true);
-        player.InvicibleVolume.DisableSmooth(invicibleTime);
+        player.InvicibleVolume.DisableSmooth(hitTime);
     }
 
     private void ReduceFuel(float damage)

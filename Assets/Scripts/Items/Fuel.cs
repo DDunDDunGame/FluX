@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,13 +14,17 @@ public class Fuel : Poolable, IItem
 
     private bool isLaunched = false;
     private float timer;
+    private ParticleSystem useEffect;
+    private SpriteRenderer sprite;
 
     private void Awake()
     {
         Managers.Game.GameOverAction -= ReturnToPool;
         Managers.Game.GameOverAction += ReturnToPool;
-
+        useEffect = Util.FindChild<ParticleSystem>(gameObject, "UseEffect");
+        sprite = GetComponent<SpriteRenderer>();
     }
+
     void FixedUpdate()
     {
         if(isLaunched)
@@ -46,15 +51,25 @@ public class Fuel : Poolable, IItem
         SoundManager.Instance.PlaySound2D("SFX Potion Create");
         transform.position = startPos;
         isLaunched = true;
+        sprite.color = Color.white;
         timer = 0f;
-        print(transform.position);
     }
 
     public void Use(PlayerStat target)
     {
+        if (isLaunched == false) { return; }
         SoundManager.Instance.PlaySound2D("SFX Potion Get");
         target.RestoreHealth(fuel);
         isLaunched = false;
+        StartCoroutine(EffectCoroutine());
+    }
+
+    private IEnumerator EffectCoroutine()
+    {
+        useEffect.Play();
+        sprite.DOFade(0f, useEffect.main.duration);
+        yield return new WaitForSeconds(useEffect.main.duration);
+        useEffect.Stop();
         ReturnToPool();
     }
 }

@@ -28,7 +28,7 @@ public class PlayerOrbitTutorial : MonoBehaviour
 
     private void Update()
     {
-        transform.RotateAround(orbitCenter, Vector3.forward, -inputX * 300 * Time.deltaTime);
+        transform.RotateAround(orbitCenter, Vector3.forward, inputX * 300 * Time.deltaTime);
     }
 
     private void OnDisable()

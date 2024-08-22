@@ -51,6 +51,6 @@ MonoBehaviour:
   platformIntervalMin: 0.5
   enemyPlatformIntervalMax: 1.5
   enemyPlatformIntervalMin: 2
-  platformXPos: 13
+  platformXPos: 12
   platformYMax: -0.5
   platformYMin: -3.5

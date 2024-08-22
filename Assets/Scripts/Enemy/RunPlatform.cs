@@ -9,7 +9,7 @@ public class RunPlatform : Poolable
     [SerializeField] private float damage = 10f;
     private Rigidbody2D rigid;
     private SpriteRenderer sprite;
-    private bool isEnemy = false;
+    private bool isEnemy;
 
     public void Move(Vector2 pos, Vector2 dir, bool isEnemy = false)
     {
@@ -22,7 +22,7 @@ public class RunPlatform : Poolable
         this.isEnemy = isEnemy;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!isEnemy) { return; }
 

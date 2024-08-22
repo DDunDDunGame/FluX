@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerOnRunStage : PlayerOnStage
 {
@@ -9,6 +10,7 @@ public class PlayerOnRunStage : PlayerOnStage
     private float playerHalfHeight;
     private int maxJumpCount = 2;
     private int currentJumpCount = 0;
+    private Vector2 initPos = new(-7.5f, -2.5f);
     private LayerMask platformMask = LayerMask.GetMask("Ground");
 
     public PlayerOnRunStage(Player player) : base(player) 
@@ -19,6 +21,8 @@ public class PlayerOnRunStage : PlayerOnStage
     public override void OnEnter()
     {
         player.Actions.Run.Enable();
+        player.transform.position = initPos;
+        player.Rigid.bodyType = RigidbodyType2D.Dynamic;
         player.Rigid.gravityScale = 3;
         player.Rigid.constraints = (int)RigidbodyConstraints2D.FreezePositionX + RigidbodyConstraints2D.FreezeRotation;
         player.Sprite.sprite = player.SquareIdle;
@@ -59,6 +63,7 @@ public class PlayerOnRunStage : PlayerOnStage
             player.Rigid.velocity = Vector2.zero;
         }
         SoundManager.Instance.PlaySound2D("SFX Landing");
+        player.LandEffect.Play();
     }
 
     private bool IsGrounded()
