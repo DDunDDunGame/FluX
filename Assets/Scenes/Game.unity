@@ -6736,6 +6736,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 903317609423939818, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -142.99994
+      objectReference: {fileID: 0}
     - target: {fileID: 2111267372333591406, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_Name
       value: StageController
@@ -6753,6 +6757,10 @@ PrefabInstance:
       value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 7039516355846058753, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: testStage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039516355846058753, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: flyTransforms.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -6768,6 +6776,10 @@ PrefabInstance:
       propertyPath: flyTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 1454750015}
+    - target: {fileID: 8036135094069264715, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8444671152329163470, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: simulationSpeed
       value: 1

@@ -292,6 +292,37 @@ MonoBehaviour:
   blendDistance: 0
   weight: 0
   sharedProfile: {fileID: 11400000, guid: bb0ae545a3a3580488a0e25d0d2bffe8, type: 2}
+--- !u!1 &1334055550402897773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6218393975065368230}
+  m_Layer: 0
+  m_Name: Enemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6218393975065368230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334055550402897773}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8818983747756113683}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2033057605961170389
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,9 +385,7 @@ Transform:
   m_Children:
   - {fileID: 4289398484775660005}
   - {fileID: 2127710470000369579}
-  - {fileID: 5956408800928083316}
-  - {fileID: 2728464788444818472}
-  - {fileID: 986497959842447027}
+  - {fileID: 6218393975065368230}
   - {fileID: 2585425269563630254}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -376,6 +405,8 @@ MonoBehaviour:
   currentStage: -1
   testStage: 1
   changeTime: 0.6
+  initY: 0
+  flyTransforms: []
   fuelPrefab: {fileID: 8310903356854037514, guid: 2b27bf0bacd8e5145bcda68e025823b4, type: 3}
   bulletPrefab: {fileID: 2477754647162071149, guid: 12829be4bdac79e4dbf85c5f26f1d6ed, type: 3}
 --- !u!1 &2959439728620194035
@@ -5692,9 +5723,51 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 4873795226033382061}
+    m_ColliderPaths:
+    - - X: 187000000
+        Y: 50000000
+      - X: 87000000
+        Y: 50000000
+      - X: 87000000
+        Y: -50000000
+      - X: 187000000
+        Y: -50000000
+  - m_Collider: {fileID: 7903474593477981390}
+    m_ColliderPaths:
+    - - X: -87000000
+        Y: 50000000
+      - X: -187000000
+        Y: 50000000
+      - X: -187000000
+        Y: -50000000
+      - X: -87000000
+        Y: -50000000
+  - m_Collider: {fileID: 9120705018285993423}
+    m_ColliderPaths:
+    - - X: 150000000
+        Y: 146000000
+      - X: -150000000
+        Y: 146000000
+      - X: -150000000
+        Y: 46000004
+      - X: 150000000
+        Y: 46000004
   m_CompositePaths:
-    m_Paths: []
+    m_Paths:
+    - - {x: -8.700029, y: -5}
+      - {x: -8.69997, y: 4.6000004}
+      - {x: 8.7, y: 4.5999713}
+      - {x: 8.700029, y: -5}
+      - {x: 18.7, y: -4.999971}
+      - {x: 18.699972, y: 5}
+      - {x: 15, y: 5.0000296}
+      - {x: 14.999971, y: 14.6}
+      - {x: -15, y: 14.599972}
+      - {x: -15.000029, y: 5}
+      - {x: -18.7, y: 4.999971}
+      - {x: -18.699972, y: -5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0

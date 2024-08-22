@@ -12,7 +12,6 @@ public class JumpStage : BaseStage
 {
     GameObject player;
     GameObject currentMap;
-    GameObject icon;
     GameObject circleEnemyPrefab;
     GameObject dropCircleEnemyPrefab;
     GameObject sideCircleEnemyPrefab;
@@ -45,16 +44,14 @@ public class JumpStage : BaseStage
         dropCircleEnemyPrefab = Resources.Load("Prefabs/JumpStage/DropCircleEnemy") as GameObject;
         sideCircleEnemyPrefab = Resources.Load("Prefabs/JumpStage/SideCircle") as GameObject;
         rayParent = Resources.Load("Prefabs/JumpStage/RayEnemys") as GameObject;
-        icon = Resources.Load("Prefabs/JumpStage/JumpIcon") as GameObject;
         enemyParent = GameObject.Find("Enemy");
         mapParent = GameObject.Find("Map");
-        player = GameObject.Find("Player");
+        player = controller.Player.gameObject;
     }
 
     public override void Initialize()
     {
         base.Initialize();
-        icon = Util.CreateObjToParent(icon, new Vector3(0, 0, 0), enemyParent);
         patten = Random.Range(0, 3);
         if (patten == 2) rayParent = Util.CreateObjToParent(rayParent, new Vector3(0, 0, 0), enemyParent);
         currentMap = Resources.Load("Prefabs/JumpStage/Patten_Map_" + patten.ToString()) as GameObject;

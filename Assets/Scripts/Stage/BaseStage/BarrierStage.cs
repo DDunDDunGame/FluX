@@ -7,7 +7,6 @@ using UnityEngine;
 public class BarrierStage : BaseStage
 {
     GameObject barrier;
-    GameObject barrierRange;
     GameObject player;
     GameObject circleEnemy;
     GameObject rayEnemy;
@@ -27,7 +26,6 @@ public class BarrierStage : BaseStage
         circleEnemy = Resources.Load("Prefabs/BarrierStage/CircleEnemy") as GameObject;
         rayEnemy = Resources.Load("Prefabs/BarrierStage/RayEnemy") as GameObject;
         redRayEnemy = Resources.Load("Prefabs/BarrierStage/RedRayEnemy") as GameObject;
-        barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
         player = GameObject.Find("Player");
         enemyParent = GameObject.Find("Enemy");
     }
@@ -38,7 +36,6 @@ public class BarrierStage : BaseStage
         player.transform.position = new Vector3(0, 0, 0);
         barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
         barrier.SetActive(true);
-        barrierRange = Util.CreateObjToParent(barrierRange, new Vector3(0, 0, 0), enemyParent);
         InitPatten();
         patten = 1;
         //patten = Random.Range(0, 3);

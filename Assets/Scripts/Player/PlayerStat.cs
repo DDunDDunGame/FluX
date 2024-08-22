@@ -50,6 +50,7 @@ public class PlayerStat : IDamageable
 
     public void TakeDamage(float damage)
     {
+        if(Managers.Game.IsPlaying == false) { return; }
         if(IsInvicible || health <= 0) { return; }
         HitCount++;
         invicibleTimer = Time.time;

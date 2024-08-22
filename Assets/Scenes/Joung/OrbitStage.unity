@@ -793,6 +793,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 607930808308784812, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 607930808308784812, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2111267372333591406, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_Name
       value: StageController
@@ -805,6 +813,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9a5ad7f51ca3b814d8136d9f7f139321, type: 3}
+    - target: {fileID: 6819725161946472108, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 6819725161946472108, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.875
+      objectReference: {fileID: 0}
     - target: {fileID: 7039516355846058753, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: testStage
       value: 4
