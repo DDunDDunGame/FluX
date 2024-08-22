@@ -55,6 +55,8 @@ public class PlayerOnJumpStage : PlayerOnStage
         if (!isAir && jumpCount > 0) 
         {
             isAir = true;
+            if (jumpCount == 2) SoundManager.Instance.PlaySound2D("SFX JumpOne");
+            else SoundManager.Instance.PlaySound2D("SFX JumpTwo");
             jumpCount--;
             float JumpInput = player.Actions.Jump.Jump.ReadValue<float>();
             player.Rigid.AddForce(Vector3.up * 6, ForceMode2D.Impulse);

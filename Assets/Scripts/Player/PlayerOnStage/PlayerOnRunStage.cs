@@ -42,7 +42,7 @@ public class PlayerOnRunStage : PlayerOnStage
     {
         if(IsGrounded()) currentJumpCount = 0;
         if(currentJumpCount >= maxJumpCount) return;
-
+        SoundManager.Instance.PlaySound2D("SFX JumpOne");
         currentJumpCount++;
         player.Rigid.velocity = Vector2.zero;
         player.Rigid.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -58,6 +58,7 @@ public class PlayerOnRunStage : PlayerOnStage
             player.Rigid.position = hit.point + new Vector2(0f, playerHalfHeight);
             player.Rigid.velocity = Vector2.zero;
         }
+        SoundManager.Instance.PlaySound2D("SFX Landing");
     }
 
     private bool IsGrounded()

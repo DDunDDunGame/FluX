@@ -43,6 +43,7 @@ public class Bullet : Poolable, IItem
 
     public void Launch()
     {
+        SoundManager.Instance.PlaySound2D("SFX Potion Create");
         transform.position = startPos;
         isLaunched = true;
         timer = 0f;
@@ -50,6 +51,7 @@ public class Bullet : Poolable, IItem
 
     public void Use(PlayerStat target)
     {
+        SoundManager.Instance.PlaySound2D("SFX Bullet Get");
         target.RestoreBullet(bullet);
         ReturnToPool();
     }
