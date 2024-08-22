@@ -4,11 +4,33 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using System;
+using TMPro;
 
 public class LobbyUI : MonoBehaviour
 {
     AsyncOperation op;
+    TextMeshProUGUI highScoreText;
+    [SerializeField] private Transform tutorialStage;
+
+    private void Awake()
+    {
+        highScoreText = Util.FindChild<TextMeshProUGUI>(gameObject, "HighScoreText", true);
+        SetHighScoreText(Managers.Game.HighScore);
+    }
+
+    private void SetHighScoreText(int highScore)
+    {
+        string scoreString = "";
+        while (highScore > 0)
+        {
+            if (highScore < 1000) scoreString = (highScore % 1000) + scoreString;
+            else scoreString = "," + (highScore % 1000) + scoreString;
+            highScore /= 1000;
+        }
+        if (scoreString == "") scoreString = "0";
+        highScoreText.text = scoreString;
+    }
+
 
     private void Update()
     {
@@ -43,6 +65,7 @@ public class LobbyUI : MonoBehaviour
         {
             child.DOMoveY(child.position.y - 1, 0.4f).SetEase(Ease.OutQuad).OnComplete(FlyUp);
         }
+        tutorialStage.DOMoveY(tutorialStage.position.y - 1, 0.4f).SetEase(Ease.OutQuad).OnComplete(FlyUp);
     }
 
     private void FlyUp()
@@ -52,6 +75,6 @@ public class LobbyUI : MonoBehaviour
             child.DOMoveY(child.transform.position.y + 10, 0.5f).SetEase(Ease.InQuad)
                 .OnComplete(() => op.allowSceneActivation = true);
         }
-
+        tutorialStage.DOMoveY(tutorialStage.transform.position.y + 10, 0.5f).SetEase(Ease.InQuad);
     }
 }
