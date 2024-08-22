@@ -19,6 +19,8 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
     public VolumeHelper HitVolume { get; private set; }
     public VolumeHelper InvicibleVolume { get; private set; }
     public ParticleSystem DieEffect { get; private set; }
+    public ParticleSystem LandEffect { get; private set; }
+    public ParticleSystem InvicibleEffect { get; private set; }
     private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
 
     #region Sprite
@@ -56,6 +58,8 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         HpSlider = Util.FindChild<Slider>(gameObject, "HpSlider", true);
         BulletGroup = Util.FindChild<LayoutGroupHelper>(gameObject, "BulletGroup", true);
         DieEffect = Util.FindChild<ParticleSystem>(gameObject, "DieEffect");
+        LandEffect = Util.FindChild<ParticleSystem>(gameObject, "LandEffect");
+        InvicibleEffect = Util.FindChild<ParticleSystem>(gameObject, "InvicibleEffect");
         HitVolume = new VolumeHelper(this, Util.FindChild<Volume>(gameObject, "HitVolume"));
         InvicibleVolume = new VolumeHelper(this, Util.FindChild<Volume>(gameObject, "InvicibleVolume"));
         Stat = new PlayerStat(this);
@@ -90,7 +94,6 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
 
     public void TakeDamage(float damage)
     {
-        SoundManager.Instance.PlaySound2D("SFX Player Hit");
         Stat.TakeDamage(damage);
     }
 

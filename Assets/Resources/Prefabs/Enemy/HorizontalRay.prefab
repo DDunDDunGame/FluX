@@ -96,15 +96,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3321974635090895360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5afcc7e788e49744cb2424e2a9327741, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf8d59589a62734288fbc972af00ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   warning: {fileID: 5318684252362060672}
-  warningTime: 1.3
+  warningTime: 1
   warningMaxAlpha: 0.7
   rayOnTime: 0.1
-  rayRemainTime: 0.5
-  rayMaxAlpha: 0.7
+  rayRemainTime: 0.2
+  rayMaxAlpha: 1
   damage: 10
 --- !u!61 &1584996231621772065
 BoxCollider2D:

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public enum SoundType
 {
@@ -17,15 +18,34 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private AudioClip[] preLoadClips;
     private List<TemporaySoundPlayer> instantiatedSounds;
 
-    private void Start()
+    private void Awake()
     {
         clipsDic = new Dictionary<string, AudioClip>();
-        foreach(AudioClip clip in preLoadClips)
+        foreach (AudioClip clip in preLoadClips)
         {
             clipsDic.Add(clip.name, clip);
         }
         instantiatedSounds = new List<TemporaySoundPlayer>();
-        Instance.PlaySound2D("FLUX STAGE", 0, true, SoundType.BGM);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        Managers.Game.GameOverAction -= () => PlaySound2D("SFX GameOver");
+        Managers.Game.GameOverAction += () => PlaySound2D("SFX GameOver");
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "Game")
+        {
+            Instance.PlaySound2D("FLUX STAGE", 0, true, SoundType.BGM);
+        }
+        else if(scene.name == "Lobby")
+        {
+            Instance.PlaySound2D("FLUX MAIN", 0, true, SoundType.BGM);
+        }
+        else if(scene.name == "Title")
+        {
+            Instance.PlaySound2D("FLUX TITLE", 0, true, SoundType.BGM);
+        }
     }
 
     private AudioClip GetClip(string clipName)

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RunStage : BaseStage
 {
-    private Vector2 initPos = new(-7.5f, -2.5f);
     private List<GameObject> patterns = new();
     private IPattern pattern;
 
@@ -19,7 +18,6 @@ public class RunStage : BaseStage
     {
         base.Initialize();
         Debug.Log("RunStage Initialize");
-        controller.Player.transform.position = initPos;
         SetRandomPattern();
     }
 

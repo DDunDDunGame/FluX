@@ -25,6 +25,11 @@ public class GameManager
         Score = 0;
     }
 
+    public void Resume()
+    {
+        IsPlaying = true;
+    }
+
     public void Pause()
     {
         IsPlaying = false;

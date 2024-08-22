@@ -49,7 +49,6 @@ public class StageController : MonoBehaviour
         
         foreach(RectTransform child in flyTransforms)
         {
-            print(child.rect.y - 10f);
             float rectInitY = child.rect.y;
             child.DOAnchorPosY(rectInitY - 1300, 0);
             child.DOAnchorPosY(rectInitY, 0.5f).SetEase(Ease.OutQuad);
@@ -63,6 +62,7 @@ public class StageController : MonoBehaviour
 #else
         ChangeStage(SetRandomStage());
 #endif
+        Managers.Game.Play();
     }
 
     private void InitDict()
@@ -157,7 +157,7 @@ public class StageController : MonoBehaviour
         {
             attachment.ChangeStage(currentStage);
         }
-        Managers.Game.Play();
+        Managers.Game.Resume();
     }
 
     private void FinishGame()
