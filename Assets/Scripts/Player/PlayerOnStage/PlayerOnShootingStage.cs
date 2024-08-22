@@ -50,6 +50,7 @@ public class PlayerOnShootingStage : PlayerOnStage
         player.Rigid.gravityScale = 0;
         player.Rigid.velocity = Vector2.zero;
         player.transform.position = Vector3.zero;
+        player.transform.rotation = Quaternion.identity;
         shootingTrail.Stop();
         shootingTrail.gameObject.SetActive(false);
     }

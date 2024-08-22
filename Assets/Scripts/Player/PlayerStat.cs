@@ -50,7 +50,7 @@ public class PlayerStat : IDamageable
 
     public void TakeDamage(float damage)
     {
-        if(IsInvicible) { return; }
+        if(IsInvicible || health <= 0) { return; }
         HitCount++;
         invicibleTimer = Time.time;
 
@@ -61,12 +61,12 @@ public class PlayerStat : IDamageable
         player.ChangeSpriteByHit(hitTime);
 
         player.InvicibleVolume.SetActive(true);
-        player.InvicibleVolume.SetActive(false, invicibleTime);
-        
+        player.InvicibleVolume.DisableSmooth(invicibleTime);
     }
 
     private void ReduceFuel(float damage)
     {
+        if(health <= 0) { return; }
         health -= damage * (1 - defense);
         SetHPSlider(this.health);
         if (health <= 0)
@@ -112,14 +112,33 @@ public class PlayerStat : IDamageable
 
     private void Die()
     {
-        // 죽을 시 처리
+        Managers.Game.Pause();
+        player.Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        player.StartCoroutine(DieCoroutine());
+    }
+
+    private IEnumerator DieCoroutine()
+    {
+        Time.timeScale = 0.5f;
+        player.DieEffect.Play();
+        float duration = player.DieEffect.main.duration;
+        float timer = 0f;
+        while(timer < duration)
+        {
+            timer += Time.deltaTime;
+            player.Sprite.color = new Color(1, 1, 1, 1 - timer / duration);
+            yield return null;
+        }
         player.gameObject.SetActive(false);
+        Managers.Game.GameOver();
+        Time.timeScale = 1f;
     }
 
     private IEnumerator FuelDecrease(float perSeconds, float damage)
     {
         while (true)
         {
+            if(Managers.Game.IsPlaying == false) { yield return null; }
             yield return new WaitForSeconds(perSeconds);
             ReduceFuel(damage);
         }

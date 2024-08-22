@@ -3,7 +3,12 @@ guid: cb526e7eb6ccfea47b79cf1ac52900f1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - <CircleHit>k__BackingField: {fileID: 21300000, guid: b49c4242dbf31a443bf9c362ef1a3f90, type: 3}
+  - <CircleIdle>k__BackingField: {fileID: 21300000, guid: cf49256f7bce51e4bba018f1738734c2, type: 3}
+  - <SquareHit>k__BackingField: {fileID: 21300000, guid: 94e2b757cd3157b45adb5fb59b6db496, type: 3}
+  - <SquareIdle>k__BackingField: {fileID: 21300000, guid: 389ee3cc5faf3984082adb90f5d0f9ee, type: 3}
+  - <ShootingSprite>k__BackingField: {fileID: 21300000, guid: a56951484ff4b7c4db299bb03a8c946a, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
