@@ -43,6 +43,7 @@ public class LobbyUI : MonoBehaviour
     private IEnumerator LoadGameScene()
     {
         op = SceneManager.LoadSceneAsync("Game");
+        SoundManager.Instance.StopLoopSound("FLUX MAIN");
         op.allowSceneActivation = false;
         bool isFlying = false;
 

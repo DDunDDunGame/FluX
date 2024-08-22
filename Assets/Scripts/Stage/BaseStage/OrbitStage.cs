@@ -41,7 +41,6 @@ public class OrbitStage : BaseStage
         patten = Random.Range(0, 3);
 
         InitPatten();
-        Debug.Log("OrbitStage Initialize");
     }
 
     public override void Update()
@@ -49,17 +48,12 @@ public class OrbitStage : BaseStage
         base.Update();
         playTime += Time.deltaTime;
         UpdatePatten();
-        //Debug.Log("OrbitStage Update");
     }
 
     public override void Destroy()
     {
         base.Destroy();
-        foreach(Transform child in enemyParent.transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-        Debug.Log("OrbitStage Destroy");
+        Util.DestoryObjFromParent(enemyParent);
     }
 
     private void InitPatten()

@@ -114,6 +114,8 @@ public class PlayerStat : IDamageable
     private void Die()
     {
         Managers.Game.Pause();
+        Debug.Log(Managers.Game.Score);
+        Managers.Game.AddScore(Mathf.RoundToInt(Managers.Game.PlayTime) * 100);
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         player.StartCoroutine(DieCoroutine());
     }

@@ -79,15 +79,14 @@ public class BossStage : BaseStage
 
         player.transform.position = currentMap.transform.Find("PlayerStartPoint").transform.position;
         InitPatten();
-        Debug.Log("BossStage Initialize");
     }
 
     public override void Update()
     {
         base.Update();
         playTime += Time.deltaTime;
+        PlayerDropCheck();
         UpdatePatten();
-        Debug.Log("BossStage Update");
     }
 
     public override void Destroy()
@@ -96,7 +95,6 @@ public class BossStage : BaseStage
         player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         Util.DestoryObjFromParent(enemyParent);
         Util.DestoryObjFromParent(mapParent);
-        Debug.Log("BossStage Destroy");
     }
 
     private void InitPatten()
@@ -553,5 +551,13 @@ public class BossStage : BaseStage
     {
         screenY = Camera.main.orthographicSize * 2;
         screenX = screenY / Screen.height * Screen.width;
+    }
+
+    private void PlayerDropCheck()
+    {
+        if (player.transform.position.y < screenY / 2 * -1)
+        {
+            player.transform.position = currentMap.transform.Find("PlayerStartPoint").transform.position;
+        }
     }
 }

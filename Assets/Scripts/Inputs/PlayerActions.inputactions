@@ -163,6 +163,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "d0e9b4c9-0cf4-4a26-ae00-a178d9a53452",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MousePos",
+                    "type": "Value",
+                    "id": "299f9cff-e409-47f1-a029-a27a4cb5ee08",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -234,12 +252,23 @@
                 },
                 {
                     "name": "",
-                    "id": "b7f8f476-e1dc-4414-ac49-128f342d20da",
-                    "path": "<Keyboard>/w",
+                    "id": "8aa47b28-9bdb-44c6-b3ce-4ad362aa8e91",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Jump",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8685a4fe-9c64-459e-b787-2f6ac48ea2af",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "MousePos",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
