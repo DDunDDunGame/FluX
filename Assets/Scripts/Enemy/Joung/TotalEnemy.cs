@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class TotalEnemy : MonoBehaviour, IDamageable
 {
-    public static float bossAttackScore = 0;
     public void TakeDamage(float atk)
     {
         if (transform.name.Contains("Boss"))
         {
             SoundManager.Instance.PlaySound2D("SFX Boss Damage");
-            bossAttackScore += 10;
+            Managers.Game.AddScore(100);
         }
     }
 

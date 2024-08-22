@@ -185,6 +185,24 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0e9b4c9-0cf4-4a26-ae00-a178d9a53452"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePos"",
+                    ""type"": ""Value"",
+                    ""id"": ""299f9cff-e409-47f1-a029-a27a4cb5ee08"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -256,12 +274,23 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b7f8f476-e1dc-4414-ac49-128f342d20da"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""8aa47b28-9bdb-44c6-b3ce-4ad362aa8e91"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""Jump"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8685a4fe-9c64-459e-b787-2f6ac48ea2af"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""MousePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -404,6 +433,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_Jump = asset.FindActionMap("Jump", throwIfNotFound: true);
         m_Jump_Move = m_Jump.FindAction("Move", throwIfNotFound: true);
         m_Jump_Jump = m_Jump.FindAction("Jump", throwIfNotFound: true);
+        m_Jump_Shoot = m_Jump.FindAction("Shoot", throwIfNotFound: true);
+        m_Jump_MousePos = m_Jump.FindAction("MousePos", throwIfNotFound: true);
         // Orbit
         m_Orbit = asset.FindActionMap("Orbit", throwIfNotFound: true);
         m_Orbit_Move = m_Orbit.FindAction("Move", throwIfNotFound: true);
@@ -665,12 +696,16 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private List<IJumpActions> m_JumpActionsCallbackInterfaces = new List<IJumpActions>();
     private readonly InputAction m_Jump_Move;
     private readonly InputAction m_Jump_Jump;
+    private readonly InputAction m_Jump_Shoot;
+    private readonly InputAction m_Jump_MousePos;
     public struct JumpActions
     {
         private @PlayerActions m_Wrapper;
         public JumpActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Jump_Move;
         public InputAction @Jump => m_Wrapper.m_Jump_Jump;
+        public InputAction @Shoot => m_Wrapper.m_Jump_Shoot;
+        public InputAction @MousePos => m_Wrapper.m_Jump_MousePos;
         public InputActionMap Get() { return m_Wrapper.m_Jump; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -686,6 +721,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+            @MousePos.started += instance.OnMousePos;
+            @MousePos.performed += instance.OnMousePos;
+            @MousePos.canceled += instance.OnMousePos;
         }
 
         private void UnregisterCallbacks(IJumpActions instance)
@@ -696,6 +737,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+            @MousePos.started -= instance.OnMousePos;
+            @MousePos.performed -= instance.OnMousePos;
+            @MousePos.canceled -= instance.OnMousePos;
         }
 
         public void RemoveCallbacks(IJumpActions instance)
@@ -835,6 +882,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnMousePos(InputAction.CallbackContext context);
     }
     public interface IOrbitActions
     {
