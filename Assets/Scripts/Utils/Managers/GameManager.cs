@@ -32,7 +32,7 @@ public class GameManager
 
     public void GameOver()
     {
-        if(Score > HighScore) Score = HighScore;
+        if(Score > HighScore) HighScore = Score;
         IsPlaying = false;
         GameOverAction?.Invoke();
     }

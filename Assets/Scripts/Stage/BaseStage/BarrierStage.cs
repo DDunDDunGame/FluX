@@ -40,7 +40,6 @@ public class BarrierStage : BaseStage
         patten = 1;
         //patten = Random.Range(0, 3);
         GetCurrentPlayScreen();
-        Debug.Log("BarrierStage Initialize");
     }
 
     public override void Update()
@@ -49,8 +48,6 @@ public class BarrierStage : BaseStage
         playTime += Time.deltaTime;
 
         UpdatePatten();
-
-        Debug.Log("BarrierStage Update");
     }
 
     public override void Destroy()
@@ -58,7 +55,6 @@ public class BarrierStage : BaseStage
         base.Destroy();
         barrier.SetActive(false);
         Util.DestoryObjFromParent(enemyParent);
-        Debug.Log("BarrierStage Destroy");
     }
 
     private void GetCurrentPlayScreen()
