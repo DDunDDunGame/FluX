@@ -82,6 +82,7 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
 
     public void TakeDamage(float damage)
     {
+        SoundManager.Instance.PlaySound2D("SFX Player Hit");
         Stat.TakeDamage(damage);
     }
 

@@ -55,7 +55,7 @@ public class JumpStage : BaseStage
     {
         base.Initialize();
         icon = Util.CreateObjToParent(icon, new Vector3(0, 0, 0), enemyParent);
-        patten = Random.Range(0, 3);
+        //patten = Random.Range(0, 3);
         if (patten == 2) rayParent = Util.CreateObjToParent(rayParent, new Vector3(0, 0, 0), enemyParent);
         currentMap = Resources.Load("Prefabs/JumpStage/Patten_Map_" + patten.ToString()) as GameObject;
         currentMap = Util.CreateObjToParent(currentMap, new Vector3(0, 0, 0), mapParent);

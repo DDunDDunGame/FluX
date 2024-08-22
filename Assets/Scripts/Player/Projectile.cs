@@ -10,6 +10,7 @@ public class Projectile : Poolable
 
     public void Launch(Vector2 direction)
     {
+        SoundManager.Instance.PlaySound2D("SFX Shooting");
         rigid = GetComponent<Rigidbody2D>();
         rigid.velocity = direction * moveSpeed;
         Invoke(nameof(ReturnToPool), lifeTime);

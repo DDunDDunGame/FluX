@@ -17,7 +17,7 @@ public class PlayerOnBossStage : PlayerOnStage
         player.Rigid.bodyType = RigidbodyType2D.Dynamic;
         player.Rigid.gravityScale = 2;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        player.transform.GetComponent<CircleCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
+        player.transform.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
 
         player.Actions.Jump.Enable();
         player.Actions.Jump.Move.performed += Move;

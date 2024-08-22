@@ -18,7 +18,7 @@ public class PlayerOnJumpStage : PlayerOnStage
         player.Rigid.bodyType = RigidbodyType2D.Dynamic;
         player.Rigid.gravityScale = 2;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        player.transform.GetComponent<CircleCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
+        player.transform.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
         player.Sprite.sprite = playerSprite;
 
         player.Actions.Jump.Enable();
@@ -55,6 +55,8 @@ public class PlayerOnJumpStage : PlayerOnStage
         if (!isAir && jumpCount > 0) 
         {
             isAir = true;
+            if (jumpCount == 2) SoundManager.Instance.PlaySound2D("SFX JumpOne");
+            else SoundManager.Instance.PlaySound2D("SFX JumpTwo");
             jumpCount--;
             float JumpInput = player.Actions.Jump.Jump.ReadValue<float>();
             player.Rigid.AddForce(Vector3.up * 6, ForceMode2D.Impulse);

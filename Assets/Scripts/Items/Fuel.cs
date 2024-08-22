@@ -37,6 +37,7 @@ public class Fuel : Poolable, IItem
 
     public void Launch()
     {
+        SoundManager.Instance.PlaySound2D("SFX Potion Create");
         transform.position = startPos;
         isLaunched = true;
         timer = 0f;
@@ -45,6 +46,7 @@ public class Fuel : Poolable, IItem
 
     public void Use(PlayerStat target)
     {
+        SoundManager.Instance.PlaySound2D("SFX Potion Get");
         target.RestoreHealth(fuel);
         isLaunched = false;
         ReturnToPool();
