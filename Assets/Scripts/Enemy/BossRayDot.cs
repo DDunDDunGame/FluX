@@ -17,17 +17,17 @@ public class BossRayDot : MonoBehaviour
         })
         .OnPlay(() =>
         {
-            transform.localScale = new Vector3(transform.localScale.x, 2, 1);
+            transform.localScale = new Vector3(transform.localScale.x, 1, 1);
             transform.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
         })
-        .Append(transform.DOScaleY(3, 0.1f))
         .Append(transform.DOScaleY(2, 0.1f))
-        .Append(transform.DOScaleY(3, 0.1f))
+        .Append(transform.DOScaleY(1, 0.1f))
         .Append(transform.DOScaleY(2, 0.1f))
-        .Append(transform.DOScaleY(3, 0.1f))
+        .Append(transform.DOScaleY(1, 0.1f))
         .Append(transform.DOScaleY(2, 0.1f))
-        .Append(transform.DOScaleY(3, 0.1f))
+        .Append(transform.DOScaleY(1, 0.1f))
         .Append(transform.DOScaleY(2, 0.1f))
+        .Append(transform.DOScaleY(1, 0.1f))
         .Append(transform.DOScaleY(0, 0.2f))
         .SetDelay(0.1f);
     }
@@ -35,5 +35,13 @@ public class BossRayDot : MonoBehaviour
     private void OnEnable()
     {
         mySequence.Restart();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Player")
+        {
+            collision.transform.GetComponent<Player>().TakeDamage(5);
+        }
     }
 }

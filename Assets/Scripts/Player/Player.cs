@@ -16,8 +16,9 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
     public LayoutGroupHelper BulletGroup { get; private set; }
     public PlayerStat Stat { get; private set; }
     public PlayerActions Actions { get; private set; }
-    public PlayerVolume HitVolume { get; private set; }
-    public PlayerVolume InvicibleVolume { get; private set; }
+    public VolumeHelper HitVolume { get; private set; }
+    public VolumeHelper InvicibleVolume { get; private set; }
+    public ParticleSystem DieEffect { get; private set; }
     private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
 
     #region Sprite
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
 
     private void Update()
     {
-        if(currentStage != Define.Stage.None)
+        if(currentStage != Define.Stage.None && Managers.Game.IsPlaying)
         {
             onStageDict[currentStage].OnUpdate();
         }
@@ -54,10 +55,11 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         Coll = GetComponent<Collider2D>();
         HpSlider = Util.FindChild<Slider>(gameObject, "HpSlider", true);
         BulletGroup = Util.FindChild<LayoutGroupHelper>(gameObject, "BulletGroup", true);
+        DieEffect = Util.FindChild<ParticleSystem>(gameObject, "DieEffect");
+        HitVolume = new VolumeHelper(this, Util.FindChild<Volume>(gameObject, "HitVolume"));
+        InvicibleVolume = new VolumeHelper(this, Util.FindChild<Volume>(gameObject, "InvicibleVolume"));
         Stat = new PlayerStat(this);
         Actions = new PlayerActions();
-        HitVolume = new PlayerVolume(this, Util.FindChild<Volume>(gameObject, "HitVolume"));
-        InvicibleVolume = new PlayerVolume(this, Util.FindChild<Volume>(gameObject, "InvicibleVolume"));
         onStageDict = new Dictionary<Define.Stage, PlayerOnStage>
         {
             { Define.Stage.Shooting, new PlayerOnShootingStage(this) },
@@ -76,6 +78,12 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         {
             onStageDict[currentStage].OnExit();
         }
+        if(stage == Define.Stage.None)
+        {
+            currentStage = Define.Stage.None;
+            return;
+        }
+
         currentStage = stage;
         onStageDict[currentStage].OnEnter();
     }

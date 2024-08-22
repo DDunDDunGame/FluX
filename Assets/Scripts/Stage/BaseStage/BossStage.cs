@@ -7,6 +7,7 @@ public class BossStage : BaseStage
 {
     GameObject bossEnemy;
     GameObject circleEnemy;
+    GameObject noCircleEnemy;
     GameObject squareEnemy;
     GameObject rayEnemy;
     GameObject player;
@@ -14,7 +15,7 @@ public class BossStage : BaseStage
     GameObject mapParent;
     GameObject currentMap;
 
-    int patten = 0;
+    int patten = 4;
     float screenX = 0;
     float screenY = 0;
     float playTime = 0;
@@ -57,7 +58,10 @@ public class BossStage : BaseStage
         bossEnemy = Resources.Load("Prefabs/BossStage/Boss") as GameObject;
         circleEnemy = Resources.Load("Prefabs/BossStage/CircleEnemy") as GameObject;
         squareEnemy = Resources.Load("Prefabs/BossStage/SquareEnemy") as GameObject;
+        noCircleEnemy = Resources.Load("Prefabs/BossStage/CircleEnemyNoEffect") as GameObject;
         player = GameObject.Find("Player");
+        enemyParent = GameObject.Find("Enemy");
+        mapParent = GameObject.Find("Map");
     }
 
     public override void Initialize()
@@ -65,8 +69,8 @@ public class BossStage : BaseStage
         base.Initialize();
         GetCurrentPlayScreen();
         player = GameObject.Find("Player");
-        patten = Random.Range(0, 5);
         enemyParent = GameObject.Find("Enemy");
+        //patten = Random.Range(0, 5);
         mapParent = GameObject.Find("Map");
         currentMap = Resources.Load("Prefabs/BossStage/Patten_Map_" + patten.ToString()) as GameObject;
 
@@ -90,6 +94,8 @@ public class BossStage : BaseStage
     {
         base.Destroy();
         player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        Util.DestoryObjFromParent(enemyParent);
+        Util.DestoryObjFromParent(mapParent);
         Debug.Log("BossStage Destroy");
     }
 
@@ -117,13 +123,10 @@ public class BossStage : BaseStage
                 rayEnemy = Util.CreateObjToParent(rayEnemy, new Vector3(0, 0, 0), enemyParent);
 
                 rayImage = rayEnemy.transform.GetChild(0).gameObject;
-                rayImage.transform.localScale = new Vector2(screenX, 0.05f);
-                rayImage.transform.position = new Vector2(screenX / 2 * -1 + 1, 0);
-                rayImage.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+                rayImage.transform.localScale = new Vector2(1, 0.05f);
 
                 rayEffect = rayEnemy.transform.GetChild(1).gameObject;
-                rayEffect.transform.localScale = new Vector2(screenX, 2f);
-                rayEffect.transform.position = new Vector2(screenX / 2 * -1 + 1, 0);
+                rayEffect.transform.localScale = new Vector2(1, 1);
 
                 rayEnemy.transform.position = bossEnemy.transform.position;
                 break;
@@ -250,7 +253,7 @@ public class BossStage : BaseStage
         for (int rad = 0; rad < 360; rad += 20)
         {
             Rigidbody2D spreadEnemy = Util.CreateObjToParent(circleEnemy, bossEnemy.transform.position, enemyParent).GetComponent<Rigidbody2D>();
-            spreadEnemy.rotation = rad;
+            spreadEnemy.rotation = rad + 270;
             spreadEnemy.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             spreadEnemy.AddForce(Quaternion.Euler(0, 0, rad) * Vector2.up * 4, ForceMode2D.Impulse);
         }
@@ -323,11 +326,12 @@ public class BossStage : BaseStage
                     playTime = 0;
                     return;
                 }
-                    if (rayEnemy.activeSelf) rayEnemy.SetActive(false);
+                if (rayEnemy.activeSelf) rayEnemy.SetActive(false);
                 if (currentWay == 5)
                 {
                     rayEnemy.SetActive(true);
-                    rayEnemy.transform.DOScaleY(screenY, 0.3f).SetEase(Ease.Linear);
+                    rayEnemy.transform.rotation = Quaternion.Euler(0, 0, 90);
+                    rayEnemy.transform.DOScaleX(0.6f, 0.3f).SetEase(Ease.Linear);
                     bossEnemy.transform.DOMove(bossWayPoint[currentWay].transform.position, 2).SetEase(Ease.Linear);
                 }
                 else
@@ -519,7 +523,7 @@ public class BossStage : BaseStage
 
             for(int enemyCount = 0; enemyCount < 4; ++enemyCount)
             {
-                GameObject currentEnemy = Util.CreateObjToParent(circleEnemy, bossEnemy.transform.position, enemyParent);
+                GameObject currentEnemy = Util.CreateObjToParent(noCircleEnemy, bossEnemy.transform.position, enemyParent);
                 currentEnemy.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                 circleEnemys.Add(currentEnemy);
             }
