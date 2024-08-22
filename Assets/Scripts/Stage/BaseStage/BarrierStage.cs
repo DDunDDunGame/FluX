@@ -7,6 +7,7 @@ using UnityEngine;
 public class BarrierStage : BaseStage
 {
     GameObject barrier;
+    GameObject barrierRange;
     GameObject player;
     GameObject circleEnemy;
     GameObject rayEnemy;
@@ -26,17 +27,20 @@ public class BarrierStage : BaseStage
         circleEnemy = Resources.Load("Prefabs/BarrierStage/CircleEnemy") as GameObject;
         rayEnemy = Resources.Load("Prefabs/BarrierStage/RayEnemy") as GameObject;
         redRayEnemy = Resources.Load("Prefabs/BarrierStage/RedRayEnemy") as GameObject;
+        barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
         player = GameObject.Find("Player");
+        enemyParent = GameObject.Find("Enemy");
     }
 
     public override void Initialize()
     {
         base.Initialize();
-        enemyParent = new GameObject("Enemy");
         player.transform.position = new Vector3(0, 0, 0);
         barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
-        patten = 0;
+        barrier.SetActive(true);
+        barrierRange = Util.CreateObjToParent(barrierRange, new Vector3(0, 0, 0), enemyParent);
         InitPatten();
+        patten = 1;
         //patten = Random.Range(0, 3);
         GetCurrentPlayScreen();
         Debug.Log("BarrierStage Initialize");
@@ -55,7 +59,8 @@ public class BarrierStage : BaseStage
     public override void Destroy()
     {
         base.Destroy();
-        Util.DestoryObjFromParent(player);
+        barrier.SetActive(false);
+        Util.DestoryObjFromParent(enemyParent);
         Debug.Log("BarrierStage Destroy");
     }
 
@@ -71,6 +76,7 @@ public class BarrierStage : BaseStage
         {
             case 0:
                 playTime = 3;
+                redRays.Clear();
                 break;
             case 1:
                 break;
@@ -118,7 +124,6 @@ public class BarrierStage : BaseStage
             Vector2 spawnPos = new Vector2(spawnDir.x * screenX/2, spawnDir.y * screenY/2);
             GameObject currentEnemy = Util.CreateObjToParent(redRayEnemy, spawnPos, enemyParent);
             if (getAxis == 1) currentEnemy.transform.localRotation = Quaternion.Euler(0, 0, 90);
-            currentEnemy.transform.localScale = new Vector3(0.1f, screenX, 1);
             currentEnemy.GetComponent<Rigidbody2D>().velocity = spawnDir.normalized * -8;
             redRays.Add(currentEnemy);
             // 8방향
@@ -173,6 +178,8 @@ public class BarrierStage : BaseStage
             } while (spawnDir.x == 0 && spawnDir.y == 0);
             Vector2 spawnPos = new Vector2(spawnDir.x * screenX/2, spawnDir.y * screenX/2);
             GameObject currentEnemy = Util.CreateObjToParent(circleEnemy, spawnPos, enemyParent);
+            Vector2 dir = (player.transform.position - currentEnemy.transform.position).normalized * -1;
+            currentEnemy.transform.right = Vector3.Slerp(currentEnemy.transform.right.normalized, dir, 360);
             currentEnemy.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             currentEnemy.GetComponent<Rigidbody2D>().velocity = spawnDir * -8;
         }
@@ -181,7 +188,7 @@ public class BarrierStage : BaseStage
     // 이.거.절.대.못.막.습.니.다.
     private void PattenTwo()
     {
-        if (playTime > 4f)
+        if (playTime > 2f)
         {
             // 4방향 레이저 발사
             playTime = 0;
@@ -195,8 +202,7 @@ public class BarrierStage : BaseStage
             } while (spawnDir[getAxis] == 0);
             Vector2 spawnPos = new Vector2(spawnDir.x * screenX, spawnDir.y * screenY);
             GameObject currentEnemy = Util.CreateObjToParent(rayEnemy, spawnPos, enemyParent);
-            if (getAxis == 1) currentEnemy.GetComponent<Rigidbody2D>().rotation = 90;
-            currentEnemy.transform.localScale = new Vector3(screenX / 2, 0.5f, 1);
+            currentEnemy.transform.right = Vector3.Slerp(currentEnemy.transform.right, spawnDir * -1, 360);
             currentEnemy.GetComponent<Rigidbody2D>().velocity = spawnDir.normalized * -8;
 
             // ALL 랜덤 레이저 발사

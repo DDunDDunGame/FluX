@@ -25,25 +25,33 @@ public class BossRayDot_3 : MonoBehaviour
         })
         .OnPlay(() =>
         {
-            transform.localScale = new Vector3(1.8f, screenY/2+1, 1);
+            transform.localScale = new Vector3(0.4f, 1.4f, 1);
             transform.GetComponent<SpriteRenderer>().color = new Color(255, 131, 131);
         })
-        .Append(transform.DOMoveX(firstPos.x - 0.5f, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOMoveX(firstPos.x + 0.5f, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOMoveX(firstPos.x - 0.5f, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOMoveX(firstPos.x + 0.5f, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOMoveX(firstPos.x - 0.5f, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOMoveX(firstPos.x + 0.5f, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOMoveX(firstPos.x - 0.5f, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOMoveX(firstPos.x + 0.5f, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOMoveX(firstPos.x - 0.5f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x - 0.2f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x + 0.2f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x - 0.2f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x + 0.2f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x - 0.2f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x + 0.2f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x - 0.2f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x + 0.2f, 0.1f).SetEase(Ease.Linear))
+        .Append(transform.DOMoveX(firstPos.x - 0.2f, 0.1f).SetEase(Ease.Linear))
         .Append(transform.DOMoveX(firstPos.x, 0.1f).SetEase(Ease.Linear))
-        .Append(transform.DOScaleX(0, 0.5f).SetEase(Ease.Linear))
+        .Append(transform.DOScaleY(0, 0.5f).SetEase(Ease.Linear))
         .SetDelay(0.1f);
     }
 
     private void OnEnable()
     {
         mySequence.Restart();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Player")
+        {
+            collision.transform.GetComponent<Player>().TakeDamage(5);
+        }
     }
 }

@@ -7,23 +7,25 @@ using UnityEngine.Experimental.Rendering;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
 using DG.Tweening;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 public class JumpStage : BaseStage
 {
-    List<GameObject> tiles = new List<GameObject>();
+    GameObject player;
     GameObject currentMap;
-    GameObject squareEnemyPrefab;
+    GameObject icon;
     GameObject circleEnemyPrefab;
-    GameObject rayEnemyPrefab;
+    GameObject dropCircleEnemyPrefab;
+    GameObject sideCircleEnemyPrefab;
+    GameObject rayParent;
 
-    private int patten;
+    private int patten = 2;
     private float screenX;
     private float screenY;
     private float playTime = 1;
-    private GameObject enemyPrent;
+    private GameObject enemyParent;
+    private GameObject mapParent;
 
-    private GameObject enemyFallPrent;
+    private GameObject enemyFallParent;
     private int fallFlag = 0;
     private bool fallingStart = false;
     private float fallingSpeed = 5;
@@ -32,40 +34,41 @@ public class JumpStage : BaseStage
 
     //patten 1
     GameObject moveEnemy;
-    private float moveEnemyTime = 3;
+    private float fallingTime = 0;
 
     //patten 2
-    private float rayEnemyTime = 4;
-    private int rayFlag = 0;
-    private bool rayStart = false;
-    private List<SpriteRenderer> rayEnemySrs = new List<SpriteRenderer>();
+    private List<GameObject> rayEnemys = new List<GameObject>();
 
     public JumpStage(StageController controller) : base(controller)
     {
-        tiles.Add(Resources.Load("Prefabs/JumpStage/Patten_Map_0") as GameObject);
-        tiles.Add(Resources.Load("Prefabs/JumpStage/Patten_Map_1_2") as GameObject);
-        squareEnemyPrefab = Resources.Load("Prefabs/JumpStage/SquareEnemy") as GameObject;
         circleEnemyPrefab = Resources.Load("Prefabs/JumpStage/CircleEnemy") as GameObject;
-        rayEnemyPrefab = Resources.Load("Prefabs/JumpStage/RayEnemy") as GameObject;
-        enemyPrent = GameObject.Find("Enemy");
+        dropCircleEnemyPrefab = Resources.Load("Prefabs/JumpStage/DropCircleEnemy") as GameObject;
+        sideCircleEnemyPrefab = Resources.Load("Prefabs/JumpStage/SideCircle") as GameObject;
+        rayParent = Resources.Load("Prefabs/JumpStage/RayEnemys") as GameObject;
+        icon = Resources.Load("Prefabs/JumpStage/JumpIcon") as GameObject;
+        enemyParent = GameObject.Find("Enemy");
+        mapParent = GameObject.Find("Map");
+        player = GameObject.Find("Player");
     }
 
     public override void Initialize()
     {
         base.Initialize();
+        icon = Util.CreateObjToParent(icon, new Vector3(0, 0, 0), enemyParent);
         patten = Random.Range(0, 3);
-        currentMap = controller.CreateMap(tiles[patten == 0 ? 0 : 1], new Vector3(0, 0, 0));
+        if (patten == 2) rayParent = Util.CreateObjToParent(rayParent, new Vector3(0, 0, 0), enemyParent);
+        currentMap = Resources.Load("Prefabs/JumpStage/Patten_Map_" + patten.ToString()) as GameObject;
+        currentMap = Util.CreateObjToParent(currentMap, new Vector3(0, 0, 0), mapParent);
         SetMapScaleToScreen();
         
         GameObject.Find("Player").transform.position = currentMap.transform.Find("PlayerPoint").transform.position;
 
         // 떨어지는 enemy parent 생성
-        enemyFallPrent = new GameObject("FallingEnemys");
-        enemyFallPrent.transform.parent = enemyPrent.transform;
-        enemyFallPrent.transform.position = new Vector2(0, screenY / 2 + 2);
+        enemyFallParent = new GameObject("FallingEnemys");
+        enemyFallParent.transform.parent = enemyParent.transform;
+        enemyFallParent.transform.position = new Vector2(0, screenY / 2 + 2);
 
         InitPatten();
-        Debug.Log("JumpStage Initialize");
     }
 
     public override void Update()
@@ -76,27 +79,29 @@ public class JumpStage : BaseStage
         if (patten == 0) PattenZeroFallingEnemy();
         else if (patten == 1)
         {
+            moveEnemy.transform.Rotate(new Vector3(0, 0, 3) * 360f * Time.deltaTime);
             PattenOneMoveEnemy();
-            PattenOneTwoFallingEnemy();
+            PattenOneFallingEnemy();
         }
         else
         {
+            fallingTime += Time.deltaTime;
             PattenTwoControlRay();
-            PattenOneTwoFallingEnemy();
+            PattenTwoFallingEnemy();
         }
 
         if (fallingStart)
         {
-            enemyFallPrent.transform.Translate(Vector3.down * fallingSpeed * Time.deltaTime);
+            enemyFallParent.transform.Translate(Vector3.down * fallingSpeed * Time.deltaTime);
         }
-
-        Debug.Log("JumpStage Update");
+        PlayerDropCheck();
     }
 
     public override void Destroy()
     {
         base.Destroy();
-        Debug.Log("JumpStage Destroy");
+        Util.DestoryObjFromParent(enemyParent);
+        Util.DestoryObjFromParent(mapParent);
     }
 
     private void InitPatten()
@@ -107,16 +112,15 @@ public class JumpStage : BaseStage
                 playTime = 0;
                 break;
             case 1:
-                moveEnemy = Util.CreateObjToParent(squareEnemyPrefab, new Vector2(screenX / 2 * -1 + -2, -2.75f), enemyPrent);
+                playTime = 2;
+                moveEnemy = Util.CreateObjToParent(sideCircleEnemyPrefab, new Vector2(screenX / 2 * -1 + -2, -2.75f), enemyParent);
                 moveEnemy.transform.localScale = new Vector3(2, 2, 2);
                 break;
             case 2:
-                rayEnemySrs.Add(Util.CreateObjToParent(rayEnemyPrefab, new Vector3(0, -2.75f, 0), enemyPrent).GetComponent<SpriteRenderer>());
-                rayEnemySrs.Add(Util.CreateObjToParent(rayEnemyPrefab, new Vector3(0, -0.75f, 0), enemyPrent).GetComponent<SpriteRenderer>());
-                foreach (SpriteRenderer child in rayEnemySrs)
+                rayEnemys.Clear();
+                foreach(Transform child in rayParent.transform)
                 {
-                    child.transform.localScale = new Vector2(Mathf.Ceil(screenX / child.sprite.bounds.size.x), 2);
-                    child.color = new Color32(255, 0, 0, 0);
+                    rayEnemys.Add(child.gameObject);
                 }
                 playTime = 0;
                 break;
@@ -131,12 +135,6 @@ public class JumpStage : BaseStage
     {
         screenY = Camera.main.orthographicSize * 2;
         screenX = screenY / Screen.height * Screen.width;
-        if (patten != 0)
-        {
-            GameObject tile = currentMap.transform.GetChild(0).gameObject;
-            float spriteX = tile.GetComponent<SpriteRenderer>().sprite.bounds.size.x;
-            tile.transform.localScale = new Vector2(Mathf.Ceil(screenX / spriteX), tile.transform.localScale.y);
-        }
     }
 
     // patten 0
@@ -144,17 +142,17 @@ public class JumpStage : BaseStage
     {
         if (!fallingStart)
         {
-            if (fallFlag % 2 == 0) Util.CreateObjToParent(circleEnemyPrefab, new Vector2(screenX / 3 * -1, enemyFallPrent.transform.position.y), enemyFallPrent);
-            else Util.CreateObjToParent(circleEnemyPrefab, new Vector2(screenX / 3, enemyFallPrent.transform.position.y), enemyFallPrent);
+            if (fallFlag % 2 == 0) Util.CreateObjToParent(dropCircleEnemyPrefab, new Vector2(screenX / 3 * -1, enemyFallParent.transform.position.y), enemyFallParent);
+            else Util.CreateObjToParent(dropCircleEnemyPrefab, new Vector2(screenX / 3, enemyFallParent.transform.position.y), enemyFallParent);
             fallFlag += 1;
             fallingStart = true;
         }
         else
         {
-            if (enemyFallPrent.transform.position.y < (screenY / 2 + 2) * -1)
+            if (enemyFallParent.transform.position.y < (screenY / 2 + 2) * -1)
             {
-                Util.DestoryObjFromParent(enemyFallPrent);
-                enemyFallPrent.transform.position = new Vector2(0, screenY / 2 + 2);
+                Util.DestoryObjFromParent(enemyFallParent);
+                enemyFallParent.transform.position = new Vector2(0, screenY / 2 + 2);
                 fallingStart = false;
                 playTime = 0;
             }
@@ -169,12 +167,12 @@ public class JumpStage : BaseStage
 
     private void SpreadCircleEnemy() // 적 퍼짐 관리
     {
-        foreach (Transform child in enemyFallPrent.transform)
+        foreach (Transform child in enemyFallParent.transform)
         {
             for (int rad = 0; rad < 360; rad += 20)
             {
-                Rigidbody2D spreadEnemy = Util.CreateObjToParent(circleEnemyPrefab, child.position, enemyPrent).GetComponent<Rigidbody2D>();
-                spreadEnemy.rotation = rad;
+                Rigidbody2D spreadEnemy = Util.CreateObjToParent(circleEnemyPrefab, child.position, enemyParent).GetComponent<Rigidbody2D>();
+                spreadEnemy.rotation = rad + 270;
                 spreadEnemy.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                 spreadEnemy.AddForce(Quaternion.Euler(0, 0, rad) * Vector2.up * 4, ForceMode2D.Impulse);
             }
@@ -182,7 +180,7 @@ public class JumpStage : BaseStage
     }
 
     // patten 1, 2
-    private void PattenOneTwoFallingEnemy()
+    private void PattenOneFallingEnemy()
     {
         if (!fallingStart)
         {
@@ -191,7 +189,7 @@ public class JumpStage : BaseStage
                 float spawnX = screenX / 2 * -1 + 1;
                 while (spawnX < screenX / 2 - 0.5f)
                 {
-                    Util.CreateObjToParent(squareEnemyPrefab, new Vector2(spawnX, enemyFallPrent.transform.position.y), enemyFallPrent);
+                    Util.CreateObjToParent(dropCircleEnemyPrefab, new Vector2(spawnX, enemyFallParent.transform.position.y), enemyFallParent);
                     spawnX += 2.3f; // 사이 간격 조정
                 }
             }
@@ -201,7 +199,7 @@ public class JumpStage : BaseStage
                 float spawnX = screenX / 2 * -1 + 2f;
                 while (spawnX < screenX / 2 - 0.5f)
                 {
-                    Util.CreateObjToParent(squareEnemyPrefab, new Vector2(spawnX, enemyFallPrent.transform.position.y), enemyFallPrent);
+                    Util.CreateObjToParent(dropCircleEnemyPrefab, new Vector2(spawnX, enemyFallParent.transform.position.y), enemyFallParent);
                     spawnX += 2.3f; // 사이 간격 조정
                 }
 
@@ -211,10 +209,10 @@ public class JumpStage : BaseStage
         }
         else
         {
-            if (enemyFallPrent.transform.position.y < (screenY / 2 + 2) * -1)
+            if (enemyFallParent.transform.position.y < (screenY / 2 + 2) * -1)
             {
-                Util.DestoryObjFromParent(enemyFallPrent);
-                enemyFallPrent.transform.position = new Vector2(0, screenY / 2 + 2);
+                Util.DestoryObjFromParent(enemyFallParent);
+                enemyFallParent.transform.position = new Vector2(0, screenY / 2 + 2);
                 fallingStart = false;
             }
         }
@@ -222,38 +220,54 @@ public class JumpStage : BaseStage
 
     private void PattenOneMoveEnemy()
     {
-        if(playTime > moveEnemyTime + 2)
+        if(playTime > 3)
         {
-            moveEnemy.transform.DOMoveX(moveEnemy.transform.position.x * -1, moveEnemyTime).SetEase(Ease.InQuart);
+            moveEnemy.transform.DOMoveX(moveEnemy.transform.position.x * -1, 2).SetEase(Ease.InQuart);
             playTime = 0;
+        }
+    }
+
+    private void PattenTwoFallingEnemy()
+    {
+        if(fallingTime > 0.3f)
+        {
+            fallingTime = 0;
+            int upAndDown = Random.Range(0, 2);
+
+            int defineX = Random.Range(Mathf.RoundToInt(screenX / 2 * -1 + 1), Mathf.RoundToInt(screenX / 2 - 1));
+            if (upAndDown == 0) // 위쪽
+            {
+                GameObject currentEnemy = Util.CreateObjToParent(dropCircleEnemyPrefab, new Vector2(defineX, screenY / 2 + 1), enemyParent);
+                currentEnemy.GetComponent<Rigidbody2D>().velocity = Vector2.down * 6;
+            }
+            else
+            {
+                GameObject currentEnemy = Util.CreateObjToParent(dropCircleEnemyPrefab, new Vector2(defineX, screenY / 2 * -1 - 1), enemyParent);
+                currentEnemy.transform.rotation = Quaternion.Euler(0, 0, 180);
+                currentEnemy.GetComponent<Rigidbody2D>().velocity = Vector2.up * 6;
+            }
         }
     }
 
     private void PattenTwoControlRay()
     {
-        SpriteRenderer actionRay;
-        if (!rayStart)
+        if(playTime > 2f)
         {
-            actionRay = rayEnemySrs[rayFlag % 2];
-            actionRay.color = new Color32(255, 0, 0, 0);
-            actionRay.transform.localScale = new Vector3(actionRay.transform.localScale.x, 2, 0);
-            actionRay.DOFade(1, rayEnemyTime).SetEase(Ease.Linear);
-            rayStart = true;
-        }
-        else
-        {
-            if(playTime > rayEnemyTime + 1)
+            playTime = 0;
+            int selectRay;
+            do
             {
-                rayFlag += 1;
-                playTime = 0;
-                rayStart = false;
+                selectRay = Random.Range(0, rayEnemys.Count);
+            } while (rayEnemys[selectRay].activeSelf);
+            rayEnemys[selectRay].SetActive(true);
+        }
+    }
 
-                actionRay = rayEnemySrs[(rayFlag - 1) % 2];
-                actionRay.color = new Color32(255, 255, 255, 255);
-                actionRay.transform.localScale = new Vector3(actionRay.transform.localScale.x, 3, 0);
-                actionRay.transform.DOScaleY(0.1f, 1).SetEase(Ease.Linear);
-                actionRay.DOFade(0, 1).SetEase(Ease.Linear);
-            }
+    private void PlayerDropCheck()
+    {
+        if(player.transform.position.y < screenY/2 * -1)
+        {
+            player.transform.position = currentMap.transform.Find("PlayerPoint").transform.position;
         }
     }
 }

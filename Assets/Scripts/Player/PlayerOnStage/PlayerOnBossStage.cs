@@ -7,11 +7,15 @@ public class PlayerOnBossStage : PlayerOnStage
 {
     bool isAir = false;
     int jumpCount = 2;
+    Sprite playerSprite;
 
-    public PlayerOnBossStage(Player player) : base(player) { }
+    public PlayerOnBossStage(Player player) : base(player) {
+        playerSprite = Resources.Load<Sprite>("Arts/Player/SquarePlayer");
+    }
     public override void OnEnter()
     {
         player.Rigid.bodyType = RigidbodyType2D.Dynamic;
+        player.Rigid.gravityScale = 2;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         player.transform.GetComponent<CircleCollider2D>().sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
 
@@ -19,6 +23,7 @@ public class PlayerOnBossStage : PlayerOnStage
         player.Actions.Jump.Move.performed += Move;
         player.Actions.Jump.Move.canceled += Move;
         player.Actions.Jump.Jump.performed += Jump;
+        player.Sprite.sprite = playerSprite;
     }
 
     public override void OnUpdate()
@@ -32,6 +37,10 @@ public class PlayerOnBossStage : PlayerOnStage
     public override void OnExit()
     {
         player.Actions.Jump.Disable();
+        player.Rigid.gravityScale = 0;
+        player.Rigid.constraints = RigidbodyConstraints2D.None;
+        player.transform.GetComponent<CircleCollider2D>().sharedMaterial = null;
+        player.Rigid.velocity = new Vector2(0, 0);
     }
 
     private void Move(InputAction.CallbackContext context)
@@ -47,7 +56,7 @@ public class PlayerOnBossStage : PlayerOnStage
             isAir = true;
             jumpCount--;
             float JumpInput = player.Actions.Jump.Jump.ReadValue<float>();
-            player.Rigid.AddForce(Vector3.up * 5, ForceMode2D.Impulse);
+            player.Rigid.AddForce(Vector3.up * 6, ForceMode2D.Impulse);
         }
     }
 

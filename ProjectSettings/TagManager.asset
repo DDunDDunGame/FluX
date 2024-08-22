@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Barrier
   - Enemy
+  - BarrierRay
   layers:
   - Default
   - TransparentFX
