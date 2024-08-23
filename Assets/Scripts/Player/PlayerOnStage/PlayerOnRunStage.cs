@@ -73,7 +73,7 @@ public class PlayerOnRunStage : PlayerOnStage
     private bool IsGrounded()
     {
         Vector2 origin = player.Coll.bounds.center - new Vector3(0, playerHalfHeight);
-        float boxWidth = player.Coll.bounds.size.x * 0.8f;
+        float boxWidth = player.Coll.bounds.size.x;
         Vector2 size = new(boxWidth, 0.05f);
         RaycastHit2D centerHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0.1f, platformMask);
 
@@ -85,7 +85,7 @@ public class PlayerOnRunStage : PlayerOnStage
         RaycastHit2D leftHit = Physics2D.Raycast(leftRayOrigin, Vector2.down, rayLength, platformMask);
         RaycastHit2D rightHit = Physics2D.Raycast(rightRayOrigin, Vector2.down, rayLength, platformMask);
 
-        return centerHit.normal == Vector2.up && leftHit.normal == Vector2.up && rightHit.normal == Vector2.up;
+        return centerHit.normal == Vector2.up;
     }
 
     private void DownOnTop()

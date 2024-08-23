@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.SceneManagement;
 
 public class ObjectPoolManager
 {
@@ -13,6 +15,13 @@ public class ObjectPoolManager
     {
         poolDict = new Dictionary<string, IObjectPool<GameObject>>();
         goDict = new Dictionary<string, GameObject>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        poolDict.Clear();
+        goDict.Clear();
     }
 
     public void CreatePool(GameObject prefab)
