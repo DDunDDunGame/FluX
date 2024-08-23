@@ -40,18 +40,14 @@ public class JumpStage : BaseStage
 
     public JumpStage(StageController controller) : base(controller)
     {
-        circleEnemyPrefab = Resources.Load("Prefabs/JumpStage/CircleEnemy") as GameObject;
-        dropCircleEnemyPrefab = Resources.Load("Prefabs/JumpStage/DropCircleEnemy") as GameObject;
-        sideCircleEnemyPrefab = Resources.Load("Prefabs/JumpStage/SideCircle") as GameObject;
-        rayParent = Resources.Load("Prefabs/JumpStage/RayEnemys") as GameObject;
-        enemyParent = GameObject.Find("Enemy");
-        mapParent = GameObject.Find("Map");
+        RePrefab();
         player = controller.Player.gameObject;
     }
 
     public override void Initialize()
     {
         base.Initialize();
+        RePrefab();
         patten = Random.Range(0, 3);
         if (patten == 2) rayParent = Util.CreateObjToParent(rayParent, new Vector3(0, 0, 0), enemyParent);
         currentMap = Resources.Load("Prefabs/JumpStage/Patten_Map_" + patten.ToString()) as GameObject;
@@ -99,6 +95,16 @@ public class JumpStage : BaseStage
         base.Destroy();
         Util.DestoryObjFromParent(enemyParent);
         Util.DestoryObjFromParent(mapParent);
+    }
+
+    private void RePrefab()
+    {
+        circleEnemyPrefab = Resources.Load("Prefabs/JumpStage/CircleEnemy") as GameObject;
+        dropCircleEnemyPrefab = Resources.Load("Prefabs/JumpStage/DropCircleEnemy") as GameObject;
+        sideCircleEnemyPrefab = Resources.Load("Prefabs/JumpStage/SideCircle") as GameObject;
+        rayParent = Resources.Load("Prefabs/JumpStage/RayEnemys") as GameObject;
+        enemyParent = GameObject.Find("Enemy");
+        mapParent = GameObject.Find("Map");
     }
 
     private void InitPatten()

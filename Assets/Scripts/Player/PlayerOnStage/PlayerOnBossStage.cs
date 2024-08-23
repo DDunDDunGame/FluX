@@ -10,9 +10,11 @@ public class PlayerOnBossStage : PlayerOnStage
     private GameObject projectilePrefab;
     private Vector2 touchPosition;
     private float playerHalfHeight;
+    private Texture2D bossCurser;
 
     public PlayerOnBossStage(Player player) : base(player) {
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
+        bossCurser = Resources.Load<Texture2D>("Arts/BossCursor");
     }
     public override void OnEnter()
     {
@@ -21,6 +23,7 @@ public class PlayerOnBossStage : PlayerOnStage
         player.Rigid.gravityScale = 3;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         player.Coll.sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
+        Cursor.SetCursor(bossCurser, Vector2.zero, CursorMode.Auto);
 
         player.Actions.Jump.Enable();
         player.Actions.Jump.Move.performed += Move;
@@ -53,6 +56,7 @@ public class PlayerOnBossStage : PlayerOnStage
         player.Rigid.velocity = new Vector2(0, 0);
         player.Coll.isTrigger = false;
         player.Rigid.velocity = Vector2.zero;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
     private void Move(InputAction.CallbackContext context)

@@ -24,18 +24,14 @@ public class BarrierStage : BaseStage
 
     public BarrierStage(StageController controller) : base(controller)
     {
-        barrier = Resources.Load("Prefabs/BarrierStage/Barrier") as GameObject;
-        circleEnemy = Resources.Load("Prefabs/BarrierStage/CircleEnemy") as GameObject;
-        rayEnemy = Resources.Load("Prefabs/BarrierStage/RayEnemy") as GameObject;
-        redRayEnemy = Resources.Load("Prefabs/BarrierStage/RedRayEnemy") as GameObject;
-        barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
-        player = GameObject.Find("Player");
-        enemyParent = GameObject.Find("Enemy");
+        RePrefabs();
     }
 
     public override void Initialize()
     {
         base.Initialize();
+        RePrefabs();
+        barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
         player.transform.position = new Vector3(0, 0, 0);
         foreach(Transform child in player.transform)
         {
@@ -68,6 +64,17 @@ public class BarrierStage : BaseStage
         base.Destroy();
         barrier.SetActive(false);
         Util.DestoryObjFromParent(enemyParent);
+    }
+
+    private void RePrefabs()
+    {
+        barrier = Resources.Load("Prefabs/BarrierStage/Barrier") as GameObject;
+        circleEnemy = Resources.Load("Prefabs/BarrierStage/CircleEnemy") as GameObject;
+        rayEnemy = Resources.Load("Prefabs/BarrierStage/RayEnemy") as GameObject;
+        redRayEnemy = Resources.Load("Prefabs/BarrierStage/RedRayEnemy") as GameObject;
+        barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
+        player = GameObject.Find("Player");
+        enemyParent = GameObject.Find("Enemy");
     }
 
     private void GetCurrentPlayScreen()
