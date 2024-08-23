@@ -52,9 +52,9 @@ public class PlayerOnShootingStage : PlayerOnStage
         player.Actions.Shooting.Disable();
         player.Rigid.gravityScale = 0;
         player.Rigid.velocity = Vector2.zero;
+        player.Rigid.constraints = RigidbodyConstraints2D.None;
         player.transform.position = Vector3.zero;
         player.transform.rotation = Quaternion.identity;
-        player.Rigid.constraints = RigidbodyConstraints2D.None;
         shootingTrail.Stop();
         shootingTrail.gameObject.SetActive(false);
     }
