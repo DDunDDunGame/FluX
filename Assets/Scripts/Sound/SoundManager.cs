@@ -21,6 +21,7 @@ public class SoundManager : Singleton<SoundManager>
     private void Awake()
     {
         clipsDic = new Dictionary<string, AudioClip>();
+
         foreach (AudioClip clip in preLoadClips)
         {
             clipsDic.Add(clip.name, clip);
@@ -37,7 +38,7 @@ public class SoundManager : Singleton<SoundManager>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         instantiatedSounds.Clear();
-        InitVoumes(-10, -10);
+        InitVoumes(-2, -2);
         if(scene.name == "Game")
         {
             Instance.PlaySound2D("FLUX STAGE", 0, true, SoundType.BGM);

@@ -6,7 +6,7 @@ using UnityEngine.Windows;
 
 public class PlayerOrbitTutorial : MonoBehaviour
 {
-    private Vector3 orbitCenter = new Vector3(0, -0.02f, 0);
+    private Vector3 orbitCenter = new Vector3(0, -0.52f, 0);
     private PlayerActions actions;
     private Rigidbody2D rigid;
     private float inputX;
@@ -22,7 +22,7 @@ public class PlayerOrbitTutorial : MonoBehaviour
     private void OnEnable()
     {
         actions.Orbit.Enable();
-        transform.SetPositionAndRotation(new Vector2(0f, -1.28f), Quaternion.identity);
+        transform.SetPositionAndRotation(new Vector2(0f, -1.5f), Quaternion.identity);
         inputX = 0f;
     }
 

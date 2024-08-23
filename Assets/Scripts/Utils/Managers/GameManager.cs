@@ -41,6 +41,7 @@ public class GameManager
         if(Score > HighScore) HighScore = Score;
         IsPlaying = false;
         GameOverAction?.Invoke();
+        GameOverAction = null;
     }
 
     public void AddScore(int value)
