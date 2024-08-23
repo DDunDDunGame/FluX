@@ -17,6 +17,7 @@ public class TutorialToggle : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        SoundManager.Instance.PlaySound2D("SFX Click");
         EventSystem.current.SetSelectedGameObject(gameObject);
     }
 
