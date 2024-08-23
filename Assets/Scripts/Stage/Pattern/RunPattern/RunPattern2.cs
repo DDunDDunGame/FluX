@@ -15,14 +15,14 @@ public class RunPattern2 : MonoBehaviour, IPattern
     private List<RunPlatform> platforms = new();
 
     [Header("Ray")]
-    [SerializeField] private Ray rayPrefab;
+    [SerializeField] private RayEnemy rayPrefab;
     [SerializeField] private float rayInterval = 1.5f;
     [SerializeField] private float rayScale = 3f;
     [SerializeField] private float rayXPos = 12f;
     [SerializeField] private float rayYMin;
     [SerializeField] private float rayYMax;
     private float rayTimer = 0f;
-    private List<Ray> rays = new();
+    private List<RayEnemy> rays = new();
 
     [Header("Explosion")]
     [SerializeField] private CircleExplosion explosionPrefab;
@@ -92,7 +92,7 @@ public class RunPattern2 : MonoBehaviour, IPattern
 
     private void SpawnRay()
     {
-        Ray ray = Managers.ObjectPool.GetObject(rayPrefab.gameObject).GetComponent<Ray>();
+        RayEnemy ray = Managers.ObjectPool.GetObject(rayPrefab.gameObject).GetComponent<RayEnemy>();
         ray.transform.position = new Vector2(rayXPos, Random.Range(rayYMin, rayYMax));
         ray.ReadyRay(rayScale);
         rays.Add(ray);

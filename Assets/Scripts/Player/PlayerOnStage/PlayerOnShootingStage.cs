@@ -26,6 +26,8 @@ public class PlayerOnShootingStage : PlayerOnStage
     {
         player.Sprite.sprite = player.ShootingSprite;
         player.Actions.Shooting.Enable();
+        player.Rigid.bodyType = RigidbodyType2D.Dynamic;
+        player.Rigid.constraints = RigidbodyConstraints2D.FreezePositionX;
         player.Rigid.gravityScale = 1;
         player.transform.position = new Vector3(-7.5f, 0, 0);
         shootingTrail.gameObject.SetActive(true);
@@ -52,6 +54,7 @@ public class PlayerOnShootingStage : PlayerOnStage
         player.Rigid.velocity = Vector2.zero;
         player.transform.position = Vector3.zero;
         player.transform.rotation = Quaternion.identity;
+        player.Rigid.constraints = RigidbodyConstraints2D.None;
         shootingTrail.Stop();
         shootingTrail.gameObject.SetActive(false);
     }

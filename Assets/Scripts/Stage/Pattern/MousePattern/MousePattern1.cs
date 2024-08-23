@@ -15,13 +15,13 @@ public class MousePattern1 : MonoBehaviour, IPattern
     #endregion
 
     #region Ray
-    [SerializeField] private Ray rayPrefab;
+    [SerializeField] private RayEnemy rayPrefab;
     [SerializeField] private float rayIntervalMin = 2.5f;
     [SerializeField] private float rayIntervalMax = 3f;
     [SerializeField] private float rayScale = 9f;
     private float rayInterval;
     private float rayTimer = 0f;
-    private List<Ray> rays = new();
+    private List<RayEnemy> rays = new();
     #endregion
 
     public void Initialize(Player player)
@@ -57,7 +57,7 @@ public class MousePattern1 : MonoBehaviour, IPattern
 
     private void SpawnRay()
     {
-        Ray ray = Managers.ObjectPool.GetObject(rayPrefab.gameObject).GetComponent<Ray>();
+        RayEnemy ray = Managers.ObjectPool.GetObject(rayPrefab.gameObject).GetComponent<RayEnemy>();
         rays.Add(ray);
         int random = Random.Range(0, 2);
         if(random == 0)
@@ -77,7 +77,7 @@ public class MousePattern1 : MonoBehaviour, IPattern
         {
             platform.ReturnToPool();
         }
-        foreach(Ray ray in rays)
+        foreach(RayEnemy ray in rays)
         {
             ray.ReturnToPool();
         }

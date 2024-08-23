@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager
 {
@@ -23,6 +24,11 @@ public class GameManager
         IsPlaying = true;
         playStartTime = Time.time;
         Score = 0;
+    }
+
+    public void Resume()
+    {
+        IsPlaying = true;
     }
 
     public void Pause()
@@ -49,6 +55,6 @@ public class GameManager
 
     public void Restart()
     {
-        Debug.Log("Restart Game");
+        SceneManager.LoadScene("Lobby");
     }
 }

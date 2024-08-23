@@ -26,13 +26,26 @@ public class SoundManager : Singleton<SoundManager>
             clipsDic.Add(clip.name, clip);
         }
         instantiatedSounds = new List<TemporaySoundPlayer>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        Managers.Game.GameOverAction -= () => PlaySound2D("SFX GameOver");
+        Managers.Game.GameOverAction += () => PlaySound2D("SFX GameOver");
     }
 
-    private void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(SceneManager.GetActiveScene().name == "Lobby") Instance.PlaySound2D("FLUX MAIN", 0, true, SoundType.BGM);
-        else if(SceneManager.GetActiveScene().name == "Game") Instance.PlaySound2D("FLUX STAGE", 0, true, SoundType.BGM);
-        else Instance.PlaySound2D("FLUX STAGE", 0, true, SoundType.BGM);
+        if(scene.name == "Game")
+        {
+            Instance.PlaySound2D("FLUX STAGE", 0, true, SoundType.BGM);
+        }
+        else if(scene.name == "Lobby")
+        {
+            Instance.PlaySound2D("FLUX MAIN", 0, true, SoundType.BGM);
+        }
+        else if(scene.name == "Title")
+        {
+            Instance.PlaySound2D("FLUX TITLE", 0, true, SoundType.BGM);
+        }
     }
 
     private AudioClip GetClip(string clipName)

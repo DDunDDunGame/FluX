@@ -5,7 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerOnMouseStage : PlayerOnStage
 {
-    public PlayerOnMouseStage(Player player) : base(player) { }
+    private GameObject mouseTrail;
+    public PlayerOnMouseStage(Player player) : base(player) 
+    {
+        mouseTrail = Util.FindChild(player.gameObject, "MouseTrail");
+        mouseTrail.SetActive(false);
+    }
     public override void OnEnter() 
     {
         player.Actions.Mouse.Enable();
@@ -13,6 +18,7 @@ public class PlayerOnMouseStage : PlayerOnStage
         player.transform.position = Vector3.zero;
         player.Sprite.sprite = player.CircleIdle;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+        mouseTrail.SetActive(true);
     }
 
     public override void OnUpdate()
@@ -28,5 +34,6 @@ public class PlayerOnMouseStage : PlayerOnStage
     {
         player.Actions.Mouse.Disable();
         player.Rigid.constraints = RigidbodyConstraints2D.None;
+        mouseTrail.SetActive(false);
     }
 }
