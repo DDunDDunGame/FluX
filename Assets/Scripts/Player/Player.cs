@@ -22,18 +22,17 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
     public ParticleSystem LandEffect { get; private set; }
     public ParticleSystem InvicibleEffect { get; private set; }
     private Dictionary<Define.Stage, PlayerOnStage> onStageDict;
+    public Action OnBottomHit { get; set; }
 
     #region Sprite
     [field: SerializeField]
-    public Sprite CircleHit { get; private set; }
+    public Sprite Circle{ get; private set; }
     [field: SerializeField]
-    public Sprite CircleIdle{ get; private set; }
+    public Sprite Square { get; private set; }
     [field: SerializeField]
-    public Sprite SquareHit { get; private set; }
+    public Sprite Triangle { get; private set; }
     [field: SerializeField]
-    public Sprite SquareIdle { get; private set; }
-    [field: SerializeField]
-    public Sprite ShootingSprite { get; private set; }
+    public Sprite Shooting { get; private set; }
     #endregion
 
     private void Awake()
@@ -55,8 +54,8 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         Sprite = GetComponent<SpriteRenderer>();
         Rigid = GetComponent<Rigidbody2D>();
         Coll = GetComponent<Collider2D>();
-        HpSlider = Util.FindChild<Slider>(gameObject, "HpSlider", true);
-        BulletGroup = Util.FindChild<LayoutGroupHelper>(gameObject, "BulletGroup", true);
+        HpSlider = Util.FindChild<Slider>(transform.parent.gameObject, "HpSlider", true);
+        BulletGroup = Util.FindChild<LayoutGroupHelper>(transform.parent.gameObject, "BulletGroup", true);
         DieEffect = Util.FindChild<ParticleSystem>(gameObject, "DieEffect");
         LandEffect = Util.FindChild<ParticleSystem>(gameObject, "LandEffect");
         InvicibleEffect = Util.FindChild<ParticleSystem>(gameObject, "InvicibleEffect");
@@ -103,25 +102,5 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         {
             item.Use(Stat);
         }
-    }
-
-    public void ChangeSpriteByHit(float time)
-    {
-        StartCoroutine(ChangeSpriteCoroutine(time));
-    }
-
-    private IEnumerator ChangeSpriteCoroutine(float time)
-    {
-        Sprite original = Sprite.sprite;
-        if (original == CircleIdle)
-        {
-            Sprite.sprite = CircleHit;
-        }
-        else if (original == SquareIdle)
-        {
-            Sprite.sprite = SquareHit;
-        }
-        yield return new WaitForSeconds(time);
-        Sprite.sprite = original;
     }
 }

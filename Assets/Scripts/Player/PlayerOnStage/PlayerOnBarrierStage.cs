@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerOnBarrierStage : PlayerOnStage
 {
@@ -14,7 +15,7 @@ public class PlayerOnBarrierStage : PlayerOnStage
     {
         player.Rigid.angularDrag = 0;
         player.Rigid.bodyType = RigidbodyType2D.Kinematic;
-        player.Sprite.sprite = playerSprite;
+        player.Sprite.sprite = player.Circle;
 
         player.Actions.Barrier.Enable();
         player.Actions.Barrier.Move.performed += Move;

@@ -31,4 +31,14 @@ public class RunPlatform : Poolable
             damageable.TakeDamage(damage);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isEnemy) { return; }
+
+        if (collision.gameObject.TryGetComponent(out IDamageable damageable) && collision.gameObject.CompareTag("Player"))
+        {
+            damageable.TakeDamage(damage);
+        }
+    }
 }

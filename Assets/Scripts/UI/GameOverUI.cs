@@ -43,7 +43,6 @@ public class GameOverUI : MonoBehaviour
         gameObject.SetActive(true);
         volume.EnableSmooth(volumeChangeTime);
 
-        print(Managers.Game.PlayTime);
         int minute = (int)Managers.Game.PlayTime / 60;
         string minuteString = minute < 10 ? $"0{minute}" : $"{minute}";
         int second = (int)Managers.Game.PlayTime % 60;

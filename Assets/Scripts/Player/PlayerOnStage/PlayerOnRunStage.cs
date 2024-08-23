@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
@@ -10,7 +11,7 @@ public class PlayerOnRunStage : PlayerOnStage
     private float playerHalfHeight;
     private int maxJumpCount = 2;
     private int currentJumpCount = 0;
-    private Vector2 initPos = new(-7.5f, -2.5f);
+    private Vector2 initPos = new(-7f, -2.5f);
     private LayerMask platformMask = LayerMask.GetMask("Ground");
 
     public PlayerOnRunStage(Player player) : base(player) 
@@ -25,9 +26,11 @@ public class PlayerOnRunStage : PlayerOnStage
         player.Rigid.bodyType = RigidbodyType2D.Dynamic;
         player.Rigid.gravityScale = 3;
         player.Rigid.constraints = (int)RigidbodyConstraints2D.FreezePositionX + RigidbodyConstraints2D.FreezeRotation;
-        player.Sprite.sprite = player.SquareIdle;
+        player.Sprite.sprite = player.Square;
         currentJumpCount = maxJumpCount;
         playerHalfHeight = player.Coll.bounds.extents.y;
+        player.OnBottomHit -= DownOnTop;
+        player.OnBottomHit += DownOnTop;
     }
 
     public override void OnUpdate()
@@ -40,12 +43,13 @@ public class PlayerOnRunStage : PlayerOnStage
         player.Rigid.gravityScale = 0;
         player.Rigid.velocity = Vector2.zero;
         player.Rigid.constraints = RigidbodyConstraints2D.None;
+        player.OnBottomHit -= DownOnTop;
     }
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if(IsGrounded()) currentJumpCount = 0;
-        if(currentJumpCount >= maxJumpCount) return;
+        if (IsGrounded()) currentJumpCount = 0;
+        if (currentJumpCount >= maxJumpCount) return;
         SoundManager.Instance.PlaySound2D("SFX JumpOne");
         currentJumpCount++;
         player.Rigid.velocity = Vector2.zero;
@@ -69,9 +73,24 @@ public class PlayerOnRunStage : PlayerOnStage
     private bool IsGrounded()
     {
         Vector2 origin = player.Coll.bounds.center - new Vector3(0, playerHalfHeight);
-        Vector2 size = new(player.Coll.bounds.size.x, 0.1f);
-        RaycastHit2D hit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0.1f, platformMask);
+        float boxWidth = player.Coll.bounds.size.x * 0.8f;
+        Vector2 size = new(boxWidth, 0.05f);
+        RaycastHit2D centerHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0.1f, platformMask);
 
-        return hit;
+        float rayLength = 0.1f;
+        float offsetX = player.Coll.bounds.size.x * 0.4f;
+        Vector2 leftRayOrigin = player.Coll.bounds.center - new Vector3(offsetX, playerHalfHeight);
+        Vector2 rightRayOrigin = player.Coll.bounds.center + new Vector3(offsetX, -playerHalfHeight);
+
+        RaycastHit2D leftHit = Physics2D.Raycast(leftRayOrigin, Vector2.down, rayLength, platformMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(rightRayOrigin, Vector2.down, rayLength, platformMask);
+
+        return centerHit.normal == Vector2.up && leftHit.normal == Vector2.up && rightHit.normal == Vector2.up;
+    }
+
+    private void DownOnTop()
+    {
+        player.transform.position = new Vector2(initPos.x, 4.8f);
+        player.Rigid.velocity = Vector2.zero;
     }
 }

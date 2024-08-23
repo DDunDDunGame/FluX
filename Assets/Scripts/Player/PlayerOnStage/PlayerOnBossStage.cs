@@ -7,12 +7,10 @@ public class PlayerOnBossStage : PlayerOnStage
 {
     bool isAir = false;
     int jumpCount = 2;
-    Sprite playerSprite;
     private GameObject projectilePrefab;
     private Vector2 touchPosition;
 
     public PlayerOnBossStage(Player player) : base(player) {
-        playerSprite = Resources.Load<Sprite>("Arts/Player/SquarePlayer");
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
     }
     public override void OnEnter()
@@ -28,7 +26,7 @@ public class PlayerOnBossStage : PlayerOnStage
         player.Actions.Jump.Move.canceled += Move;
         player.Actions.Jump.Jump.performed += Jump;
         player.Actions.Jump.Shoot.performed += Shoot;
-        player.Sprite.sprite = playerSprite;
+        player.Sprite.sprite = player.Square;
     }
 
     public override void OnUpdate()
