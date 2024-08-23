@@ -13,13 +13,10 @@ public class BarrierStage : BaseStage
     GameObject rayEnemy;
     GameObject redRayEnemy;
     GameObject enemyParent;
-    GameObject rayPos;
-    GameObject visualLineObj;
-    LineRender visualLine;
 
     float screenX;
     float screenY;
-    int patten = 0;
+    int patten = 1;
 
     float playTime = 0;
     bool isBarrier = false;
@@ -28,7 +25,6 @@ public class BarrierStage : BaseStage
     public BarrierStage(StageController controller) : base(controller)
     {
         RePrefabs();
-        player = controller.Player.gameObject;
     }
 
     public override void Initialize()
@@ -36,7 +32,6 @@ public class BarrierStage : BaseStage
         base.Initialize();
         RePrefabs();
         barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
-        visualLine = Util.CreateObjToParent(visualLineObj, new Vector3(0, 0, 0), enemyParent).GetComponent<LineRender>();
         player.transform.position = new Vector3(0, 0, 0);
         foreach(Transform child in player.transform)
         {
@@ -50,8 +45,9 @@ public class BarrierStage : BaseStage
         if (!isBarrier) barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
         barrierRange = Util.CreateObjToParent(barrierRange, new Vector3(0, 0, 0), enemyParent);
         barrier.SetActive(true);
-        patten = Random.Range(0, 2);
         InitPatten();
+        patten = 1;
+        //patten = Random.Range(0, 3);
         GetCurrentPlayScreen();
     }
 
@@ -77,8 +73,7 @@ public class BarrierStage : BaseStage
         rayEnemy = Resources.Load("Prefabs/BarrierStage/RayEnemy") as GameObject;
         redRayEnemy = Resources.Load("Prefabs/BarrierStage/RedRayEnemy") as GameObject;
         barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
-        visualLineObj = Resources.Load("Prefabs/BarrierStage/VisualLine") as GameObject;
-        rayPos = Resources.Load("Prefabs/BarrierStage/RayStartPos") as GameObject;
+        player = GameObject.Find("Player");
         enemyParent = GameObject.Find("Enemy");
     }
 
@@ -131,28 +126,36 @@ public class BarrierStage : BaseStage
         {
             // 4방향
             playTime = 0;
-            int spawnDir = Random.Range(0, 4);
-            GameObject currentEnemy = null;
-            switch (spawnDir)
+            Vector2 spawnDir = new Vector2(0, 0);
+            int getAxis = 0;
+            do
             {
-                case 0: // 위 -> 아래
-                    currentEnemy = Util.CreateObjToParent(rayPos, new Vector3(screenX / 2 * -1, screenY / 2, 0), enemyParent);
-                    currentEnemy.GetComponent<Rigidbody2D>().velocity = Vector2.down * 6;
-                    break;
-                case 1: // 아래 -> 위
-                    currentEnemy = Util.CreateObjToParent(rayPos, new Vector3(screenX / 2, screenY / 2 * -1, 0), enemyParent);
-                    currentEnemy.GetComponent<Rigidbody2D>().velocity = Vector2.up * 6;
-                    break;
-                case 2: // 오른 -> 왼
-                    currentEnemy = Util.CreateObjToParent(rayPos, new Vector3(screenX / 2, screenY / 2, 0), enemyParent);
-                    currentEnemy.GetComponent<Rigidbody2D>().velocity = Vector2.right * -6;
-                    break;
-                case 3: // 왼 -> 오른
-                    currentEnemy = Util.CreateObjToParent(rayPos, new Vector3(screenX / 2 * -1, screenY / 2 * -1, 0), enemyParent);
-                    currentEnemy.GetComponent<Rigidbody2D>().velocity = Vector2.right * 6;
-                    break;
-            }
+                spawnDir = new Vector2(0, 0);
+                getAxis = Random.Range(0, 2);
+                spawnDir[getAxis] = Random.Range(-1, 2);
+            } while (spawnDir[getAxis] == 0);
+            Vector2 spawnPos = new Vector2(spawnDir.x * screenX/2, spawnDir.y * screenY/2);
+            GameObject currentEnemy = Util.CreateObjToParent(redRayEnemy, spawnPos, enemyParent);
+            if (getAxis == 1) currentEnemy.transform.localRotation = Quaternion.Euler(0, 0, 90);
+            currentEnemy.GetComponent<Rigidbody2D>().velocity = spawnDir.normalized * -8;
             redRays.Add(currentEnemy);
+            // 8방향
+            //playTime = 0;
+            //Vector2 spawnDir;
+            //do
+            //{
+            //    spawnDir = new Vector2(Random.Range(-1, 2), Random.Range(-1, 2)).normalized;
+            //}while(spawnDir.x == 0 && spawnDir.y == 0);
+            //Vector2 spawnPos = new Vector2(spawnDir.x * screenX / 2 + 2, spawnDir.y * screenX / 2 + 2);
+            //GameObject currentEnemy = Util.CreateObjToParent(redRayEnemy, spawnPos, enemyParent);
+            //// 회전
+            //Vector3 tmp = player.transform.position - currentEnemy.transform.position;
+            //float directionPlayerRot = Mathf.Atan2(tmp.y, tmp.x) * Mathf.Rad2Deg;
+            //float rot = Mathf.LerpAngle(currentEnemy.transform.eulerAngles.z, directionPlayerRot, 50);
+            //currentEnemy.transform.eulerAngles = new Vector3(0, 0, rot);
+            //// 크기
+            //currentEnemy.transform.localScale = new Vector3(0.15f, screenX, 1);
+            //currentEnemy.GetComponent<Rigidbody2D>().velocity = spawnDir * -8;
         }
         CheckRayVelocity();
 
@@ -160,89 +163,16 @@ public class BarrierStage : BaseStage
        {
             foreach(GameObject child in redRays)
             {
-                float checkX = Mathf.Abs(child.transform.position.x) - (player.transform.localScale.x);
-                float checkY = Mathf.Abs(child.transform.position.y) - (player.transform.localScale.y);
+                float checkX = Mathf.Abs(child.transform.position.x) - player.transform.localScale.x;
+                float checkY = Mathf.Abs(child.transform.position.y) - player.transform.localScale.y;
                 Rigidbody2D currentRigid = child.GetComponent<Rigidbody2D>();
-                if (checkX > 0 && checkY > 0)
+                if (checkX > 0 || checkY > 0)
                 {
-                    currentRigid.velocity = currentRigid.velocity.normalized * 6;
+                    currentRigid.velocity = currentRigid.velocity.normalized * 8;
                 }
                 else
                 {
                     currentRigid.velocity = currentRigid.velocity.normalized * 1;
-                }
-
-                if(currentRigid.velocity.normalized == Vector2.up)
-                {
-                    RaycastHit2D hitBarrier = Physics2D.Raycast(child.transform.position, Vector2.right * -1, Mathf.Infinity, LayerMask.GetMask("Barrier"));
-                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.right * -1, Mathf.Infinity, LayerMask.GetMask("Player"));
-                    if (hitBarrier)
-                    {
-                        visualLine.Play(child.transform.position, hitBarrier.point);
-                    }
-                    else if (hitPlayer)
-                    {
-                        hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
-                        visualLine.Play(child.transform.position, hitPlayer.point);
-                    }
-                    else
-                    {
-                        visualLine.Play(child.transform.position, new Vector2(child.transform.position.x * -1, child.transform.position.y));
-                    }
-                }
-                else if(currentRigid.velocity.normalized == Vector2.down)
-                {
-                    RaycastHit2D hitBarrier = Physics2D.Raycast(child.transform.position, Vector2.right, Mathf.Infinity, LayerMask.GetMask("Barrier"));
-                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.right, Mathf.Infinity, LayerMask.GetMask("Player"));
-                    if (hitBarrier)
-                    {
-                        visualLine.Play(child.transform.position, hitBarrier.point);
-                    }
-                    else if (hitPlayer)
-                    {
-                        hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
-                        visualLine.Play(child.transform.position, hitPlayer.point);
-                    }
-                    else
-                    {
-                        visualLine.Play(child.transform.position, new Vector2(child.transform.position.x * -1, child.transform.position.y));
-                    }
-                }
-                else if(currentRigid.velocity.normalized == Vector2.right)
-                {
-                    RaycastHit2D hitBarrier = Physics2D.Raycast(child.transform.position, Vector2.up, Mathf.Infinity, LayerMask.GetMask("Barrier"));
-                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.up, Mathf.Infinity, LayerMask.GetMask("Player"));
-                    if (hitBarrier)
-                    {
-                        visualLine.Play(child.transform.position, hitBarrier.point);
-                    }
-                    else if (hitPlayer)
-                    {
-                        hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
-                        visualLine.Play(child.transform.position, hitPlayer.point);
-                    }
-                    else
-                    {
-                        visualLine.Play(child.transform.position, new Vector2(child.transform.position.x, child.transform.position.y * -1));
-                    }
-                }
-                else
-                {
-                    RaycastHit2D hitBarrier = Physics2D.Raycast(child.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Barrier"));
-                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Player"));
-                    if (hitBarrier)
-                    {
-                        visualLine.Play(child.transform.position, hitBarrier.point);
-                    }
-                    else if (hitPlayer)
-                    {
-                        hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
-                        visualLine.Play(child.transform.position, hitPlayer.point);
-                    }
-                    else
-                    {
-                        visualLine.Play(child.transform.position, new Vector2(child.transform.position.x, child.transform.position.y * -1));
-                    }
                 }
             }     
        }
