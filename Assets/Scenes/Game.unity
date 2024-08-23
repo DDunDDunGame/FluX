@@ -6903,6 +6903,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageController
       objectReference: {fileID: 0}
+    - target: {fileID: 2147693189937023849, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[1].y
+      value: 4.8367233
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147693189937023849, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[2].y
+      value: 4.836694
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147693189937023849, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[7].y
+      value: 39.909836
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147693189937023849, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[8].y
+      value: 39.909805
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147693189937023849, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[2].m_ColliderPaths.Array.data[0].Array.data[0].Y
+      value: 399098336
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147693189937023849, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[2].m_ColliderPaths.Array.data[0].Array.data[1].Y
+      value: 399098336
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147693189937023849, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[2].m_ColliderPaths.Array.data[0].Array.data[2].Y
+      value: 48367232
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147693189937023849, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[2].m_ColliderPaths.Array.data[0].Array.data[3].Y
+      value: 48367232
+      objectReference: {fileID: 0}
     - target: {fileID: 2429305419404033242, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: stageIcons.Array.size
       value: 7
@@ -6919,6 +6951,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 7286065323114748219, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8818983747756113683, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -6962,6 +6998,14 @@ PrefabInstance:
     - target: {fileID: 8818983747756113683, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120705018285993423, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_Size.y
+      value: 35.07311
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120705018285993423, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_Offset.y
+      value: 22.373278
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

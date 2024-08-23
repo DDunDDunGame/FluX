@@ -63,7 +63,7 @@ public class StageController : MonoBehaviour
 
     private void InitStageChange()
     {
-        ChangeStage(SetRandomStage());
+        ChangeStage(Define.Stage.Shooting);
         Managers.Game.Play();
     }
 
@@ -129,6 +129,7 @@ public class StageController : MonoBehaviour
 
     private Define.Stage SetRandomStage()
     {
+        return Define.Stage.Orbit;
         if(roundStageCount < ROUND_STAGE_MAX)
         {
             roundStageCount++;
