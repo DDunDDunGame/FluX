@@ -6,10 +6,10 @@ using UnityEngine;
 public class RayEnemy : Poolable
 {
     [SerializeField] private SpriteRenderer warning;
-    private float warningTime = 1f;
+    [SerializeField] private float warningTime = 1f;
     [SerializeField] private float warningMaxAlpha = 0.7f;
-    private float rayOnTime = 1f;
-    private float rayRemainTime = 0.5f;
+    [SerializeField] private float rayOnTime = 1f;
+    [SerializeField] private float rayRemainTime = 1f;
     [SerializeField] private float rayMaxAlpha = 0.7f;
     [SerializeField] private float damage = 10f;
     private float rayScale;
@@ -54,10 +54,10 @@ public class RayEnemy : Poolable
         coll.enabled = true;
         sprite.color = new Color(1f, 1f, 1f, rayMaxAlpha);
         float timer = 0f;
-        while (timer < rayRemainTime)
+        while (timer < rayOnTime)
         {
             timer += Time.deltaTime;
-            float yScale = rayScale * (timer / rayRemainTime);
+            float yScale = rayScale * (timer / rayOnTime);
             transform.localScale = new Vector3(transform.localScale.x, yScale, transform.localScale.z);
             yield return null;
         }
@@ -68,7 +68,6 @@ public class RayEnemy : Poolable
             yield return null;
         }
         timer = 0f;
-        coll.enabled = false;
         while (timer < rayOnTime)
         {
             timer += Time.deltaTime;
@@ -77,6 +76,7 @@ public class RayEnemy : Poolable
             yield return null;
         }
         sprite.enabled = false;
+        coll.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

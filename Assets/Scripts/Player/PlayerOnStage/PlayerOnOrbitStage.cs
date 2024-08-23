@@ -6,10 +6,12 @@ using UnityEngine.Windows;
 
 public class PlayerOnOrbitStage : PlayerOnStage
 {
+    Sprite playerSprite;
     float inputX;
 
     public PlayerOnOrbitStage(Player player) : base(player) 
     {
+        playerSprite = Resources.Load<Sprite>("Arts/Orbit/TrPlayer");
     }
     public override void OnEnter()
     {
@@ -18,7 +20,7 @@ public class PlayerOnOrbitStage : PlayerOnStage
         player.Actions.Orbit.Enable();
         player.Actions.Orbit.Move.performed += Move;
         player.Actions.Orbit.Move.canceled += Move;
-        player.Sprite.sprite = player.Triangle;
+        player.Sprite.sprite = playerSprite;
         inputX = 0f;
     }
 

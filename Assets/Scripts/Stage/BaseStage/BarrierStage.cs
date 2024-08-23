@@ -25,7 +25,6 @@ public class BarrierStage : BaseStage
     public BarrierStage(StageController controller) : base(controller)
     {
         RePrefabs();
-        player = controller.Player.gameObject;
     }
 
     public override void Initialize()

@@ -16,7 +16,7 @@ public class PlayerOnMouseStage : PlayerOnStage
         player.Actions.Mouse.Enable();
         Cursor.lockState = CursorLockMode.Confined;
         player.transform.position = Vector3.zero;
-        player.Sprite.sprite = player.Circle;
+        player.Sprite.sprite = player.CircleIdle;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         mouseTrail.SetActive(true);
     }
