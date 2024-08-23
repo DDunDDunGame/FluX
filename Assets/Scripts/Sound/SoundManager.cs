@@ -18,7 +18,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private AudioClip[] preLoadClips;
     private List<TemporaySoundPlayer> instantiatedSounds;
 
-    private void Awake()
+    private void Start()
     {
         clipsDic = new Dictionary<string, AudioClip>();
 
@@ -30,15 +30,18 @@ public class SoundManager : Singleton<SoundManager>
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
+        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
 
-        Managers.Game.GameOverAction -= () => PlaySound2D("SFX GameOver");
-        Managers.Game.GameOverAction += () => PlaySound2D("SFX GameOver");
+        Managers.Game.GameOverAction -= () => Instance.PlaySound2D("SFX GameOver");
+        Managers.Game.GameOverAction += () => Instance.PlaySound2D("SFX GameOver");
+
+        InitVoumes(-2, -2);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("Load");
         instantiatedSounds.Clear();
-        InitVoumes(-2, -2);
         if(scene.name == "Game")
         {
             Instance.PlaySound2D("FLUX STAGE", 0, true, SoundType.BGM);

@@ -24,6 +24,7 @@ public class TutorialToggle : MonoBehaviour, IPointerClickHandler
     public void Toggle(bool value)
     {
         Debug.Log(gameObject.name + " " + value);
+        toggle.Select();
         tutorial.SetActive(value);
     }
 }

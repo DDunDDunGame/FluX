@@ -94,7 +94,7 @@ Transform:
   - {fileID: 6222034010580063052}
   - {fileID: 532981345891299497}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4576081331151466012
 MonoBehaviour:
@@ -111,9 +111,9 @@ MonoBehaviour:
   right: {fileID: 2263793451129346009}
   left: {fileID: 2013288348314257864}
   platformPrefab: {fileID: -6214298111301684457, guid: 54e60ee1708864b49bfa2dc4a2d3d01b, type: 3}
-  platformSpeed: 5
-  platformInterval: 1
+  platformSpeed: 4
+  platformInterval: 1.5
   rayPrefab: {fileID: 4740889554745048815, guid: fc457ff1fc93f1c4e86b089b38d75624, type: 3}
-  rayIntervalMin: 2.5
-  rayIntervalMax: 3
-  raySpeed: 5
+  rayIntervalMin: 3
+  rayIntervalMax: 3.5
+  rayScale: 9

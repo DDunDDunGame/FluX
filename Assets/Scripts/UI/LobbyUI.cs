@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -12,11 +13,18 @@ public class LobbyUI : MonoBehaviour
     TextMeshProUGUI highScoreText;
     [SerializeField] private Transform tutorialStage;
     [SerializeField] private Transform border;
+    [SerializeField] private TutorialToggle firstTutorial;
 
     private void Awake()
     {
         highScoreText = Util.FindChild<TextMeshProUGUI>(gameObject, "HighScoreText", true);
         SetHighScoreText(Managers.Game.HighScore);
+    }
+
+    private void Start()
+    {
+        firstTutorial.Toggle(true);
+        firstTutorial.GetComponent<Toggle>().isOn = true;
     }
 
     private void SetHighScoreText(int highScore)

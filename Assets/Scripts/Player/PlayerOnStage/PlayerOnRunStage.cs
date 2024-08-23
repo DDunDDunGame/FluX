@@ -77,14 +77,6 @@ public class PlayerOnRunStage : PlayerOnStage
         Vector2 size = new(boxWidth, 0.05f);
         RaycastHit2D centerHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0.1f, platformMask);
 
-        float rayLength = 0.1f;
-        float offsetX = player.Coll.bounds.size.x * 0.4f;
-        Vector2 leftRayOrigin = player.Coll.bounds.center - new Vector3(offsetX, playerHalfHeight);
-        Vector2 rightRayOrigin = player.Coll.bounds.center + new Vector3(offsetX, -playerHalfHeight);
-
-        RaycastHit2D leftHit = Physics2D.Raycast(leftRayOrigin, Vector2.down, rayLength, platformMask);
-        RaycastHit2D rightHit = Physics2D.Raycast(rightRayOrigin, Vector2.down, rayLength, platformMask);
-
         return centerHit.normal == Vector2.up;
     }
 

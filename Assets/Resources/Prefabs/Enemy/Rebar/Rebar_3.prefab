@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &258309529171565283
 SpriteRenderer:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  pos: {x: -15.5, y: 10.5}
+  pos: {x: -23, y: 10.5}
   dir: {x: 6.1, y: -4.1}
 --- !u!60 &1405425190097378677
 PolygonCollider2D:

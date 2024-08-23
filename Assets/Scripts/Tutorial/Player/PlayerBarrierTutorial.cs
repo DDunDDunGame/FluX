@@ -32,6 +32,6 @@ public class PlayerBarrierTutorial : MonoBehaviour
     private void Move(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
-        rigid.angularVelocity = input.x * 300;
+        rigid.angularVelocity = -input.x * 300;
     }
 }
