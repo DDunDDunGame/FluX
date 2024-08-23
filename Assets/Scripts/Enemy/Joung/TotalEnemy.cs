@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class TotalEnemy : MonoBehaviour, IDamageable
 {
-    [SerializeField]
-    private LineRender visulLine;
-    [SerializeField]
-    private Transform owner;
-
     public void TakeDamage(float atk)
     {
         if (transform.name.Contains("Boss"))

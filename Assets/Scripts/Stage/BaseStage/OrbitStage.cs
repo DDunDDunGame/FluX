@@ -35,7 +35,7 @@ public class OrbitStage : BaseStage
         init = true;
         GetCurrentPlayScreen();
 
-        patten = Random.Range(0, 3);
+        //patten = Random.Range(0, 3);
 
         InitPatten();
     }
