@@ -34,6 +34,7 @@ public class SoundManager : Singleton<SoundManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        InitVoumes(-10, -10);
         if(scene.name == "Game")
         {
             Instance.PlaySound2D("FLUX STAGE", 0, true, SoundType.BGM);

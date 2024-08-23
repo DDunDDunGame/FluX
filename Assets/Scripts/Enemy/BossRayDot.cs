@@ -28,6 +28,8 @@ public class BossRayDot : MonoBehaviour
         .Append(transform.DOScaleY(1, 0.1f))
         .Append(transform.DOScaleY(2, 0.1f))
         .Append(transform.DOScaleY(1, 0.1f))
+        .Append(transform.DOScaleY(2, 0.1f))
+        .Append(transform.DOScaleY(1, 0.1f))
         .Append(transform.DOScaleY(0, 0.2f))
         .SetDelay(0.1f);
     }
@@ -41,7 +43,7 @@ public class BossRayDot : MonoBehaviour
     {
         if (collision.transform.tag == "Player")
         {
-            collision.transform.GetComponent<Player>().TakeDamage(5);
+            if(transform.localScale.y > 1f) collision.transform.GetComponent<Player>().TakeDamage(5);
         }
     }
 }

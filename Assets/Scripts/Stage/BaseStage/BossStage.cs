@@ -70,7 +70,7 @@ public class BossStage : BaseStage
         GetCurrentPlayScreen();
         player = GameObject.Find("Player");
         enemyParent = GameObject.Find("Enemy");
-        //patten = Random.Range(0, 5);
+        patten = Random.Range(0, 5);
         mapParent = GameObject.Find("Map");
         currentMap = Resources.Load("Prefabs/BossStage/Patten_Map_" + patten.ToString()) as GameObject;
 

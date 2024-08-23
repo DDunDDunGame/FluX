@@ -32,8 +32,8 @@ public class OrbitRayDot : MonoBehaviour
             transform.localScale = currentScale;
             transform.GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 0);
         })
-        .Append(transform.GetComponent<SpriteRenderer>().DOFade(1, 3f).SetEase(Ease.Linear))
-        .Append(transform.DOScaleY(1.3f, 0))
+        .Append(transform.GetComponent<SpriteRenderer>().DOFade(1, 1f).SetEase(Ease.Linear))
+        .Append(transform.DOScaleY(1.3f, 1))
         .Join(transform.GetComponent<SpriteRenderer>().DOColor(new Color(1, 1, 1), 0))
         .Append(transform.DOScaleY(0, 1).SetEase(Ease.Linear))
         .Join(transform.GetComponent<SpriteRenderer>().DOFade(0, 1).SetEase(Ease.Linear))
@@ -42,7 +42,7 @@ public class OrbitRayDot : MonoBehaviour
 
     private void Update()
     {
-        if(attackCount > 0 && playerFlag && currentSr.color.b == 1)
+        if(attackCount > 0 && playerFlag && currentSr.color.b == 1 && transform.localScale.y > 1f)
         {
             Debug.Log("Attack Start");
             player.TakeDamage(10);

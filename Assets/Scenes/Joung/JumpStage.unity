@@ -5748,6 +5748,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 903317609423939818, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -143
+      objectReference: {fileID: 0}
     - target: {fileID: 2111267372333591406, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_Name
       value: StageController
@@ -5756,6 +5760,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1581700660}
+    - target: {fileID: 7039516355846058753, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: testStage
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8818983747756113683, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_RootOrder
       value: 2
