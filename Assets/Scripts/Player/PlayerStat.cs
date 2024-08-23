@@ -51,7 +51,12 @@ public class PlayerStat : IDamageable
     public void TakeDamage(float damage)
     {
         if(Managers.Game.IsPlaying == false) { return; }
-        if(IsInvicible || health <= 0) { return; }
+        if(IsInvicible) { return; }
+        if (health <= 0)
+        {
+            Die();
+            return;
+        }
         SoundManager.Instance.PlaySound2D("SFX Player Hit");
         HitCount++;
         invicibleTimer = Time.time;
@@ -60,7 +65,6 @@ public class PlayerStat : IDamageable
 
         player.HitVolume.SetActive(true);
         player.HitVolume.DisableSmooth(hitTime);
-        player.ChangeSpriteByHit(hitTime);
 
         player.InvicibleEffect.Play();
         player.InvicibleVolume.SetActive(true);
@@ -69,7 +73,6 @@ public class PlayerStat : IDamageable
 
     private void ReduceFuel(float damage)
     {
-        if(health <= 0) { return; }
         health -= damage * (1 - defense);
         SetHPSlider(this.health);
         if (health <= 0)
@@ -116,8 +119,6 @@ public class PlayerStat : IDamageable
     private void Die()
     {
         Managers.Game.Pause();
-        Debug.Log(Managers.Game.Score);
-        Managers.Game.AddScore(Mathf.RoundToInt(Managers.Game.PlayTime) * 100);
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         player.StartCoroutine(DieCoroutine());
     }

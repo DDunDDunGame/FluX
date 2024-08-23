@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class StageBottom : MonoBehaviour
 {
+    public bool canAttack = true;
     [SerializeField] private float damage = 10f;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.TryGetComponent(out IDamageable damageable) && collision.gameObject.CompareTag("Player"))
+        if(!canAttack)
         {
-            damageable.TakeDamage(damage);
+            return;
+        }
+
+        if(collision.gameObject.TryGetComponent(out Player player))
+        {
+            player.TakeDamage(damage);
+            player.OnBottomHit?.Invoke();
         }
     }
 }
