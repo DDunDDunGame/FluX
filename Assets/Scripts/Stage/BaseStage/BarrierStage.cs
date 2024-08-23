@@ -47,8 +47,8 @@ public class BarrierStage : BaseStage
         barrierRange = Util.CreateObjToParent(barrierRange, new Vector3(0, 0, 0), enemyParent);
         barrier.SetActive(true);
         barrier.transform.SetPositionAndRotation(new Vector3(0, 1.25f, 0), Quaternion.identity);
-        InitPatten();
         patten = 1;
+        InitPatten();
         //patten = Random.Range(0, 3);
         GetCurrentPlayScreen();
     }
