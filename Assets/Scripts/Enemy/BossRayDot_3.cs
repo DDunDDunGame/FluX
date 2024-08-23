@@ -51,7 +51,7 @@ public class BossRayDot_3 : MonoBehaviour
     {
         if (collision.transform.tag == "Player")
         {
-            collision.transform.GetComponent<Player>().TakeDamage(5);
+            if(transform.localScale.y > 1.2f) collision.transform.GetComponent<Player>().TakeDamage(5);
         }
     }
 }

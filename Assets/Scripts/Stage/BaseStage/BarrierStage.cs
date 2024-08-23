@@ -7,6 +7,7 @@ using UnityEngine;
 public class BarrierStage : BaseStage
 {
     GameObject barrier;
+    GameObject barrierRange;
     GameObject player;
     GameObject circleEnemy;
     GameObject rayEnemy;
@@ -15,9 +16,10 @@ public class BarrierStage : BaseStage
 
     float screenX;
     float screenY;
-    int patten = 0;
+    int patten = 1;
 
     float playTime = 0;
+    bool isBarrier = false;
     List<GameObject> redRays = new List<GameObject>();
 
     public BarrierStage(StageController controller) : base(controller)
@@ -26,6 +28,7 @@ public class BarrierStage : BaseStage
         circleEnemy = Resources.Load("Prefabs/BarrierStage/CircleEnemy") as GameObject;
         rayEnemy = Resources.Load("Prefabs/BarrierStage/RayEnemy") as GameObject;
         redRayEnemy = Resources.Load("Prefabs/BarrierStage/RedRayEnemy") as GameObject;
+        barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
         player = GameObject.Find("Player");
         enemyParent = GameObject.Find("Enemy");
     }
@@ -34,7 +37,17 @@ public class BarrierStage : BaseStage
     {
         base.Initialize();
         player.transform.position = new Vector3(0, 0, 0);
-        barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
+        foreach(Transform child in player.transform)
+        {
+            if (child.name.Contains("Barrier"))
+            {
+                barrier = child.gameObject;
+                child.gameObject.SetActive(true);
+                isBarrier = true;
+            }
+        }
+        if (!isBarrier) barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
+        barrierRange = Util.CreateObjToParent(barrierRange, new Vector3(0, 0, 0), enemyParent);
         barrier.SetActive(true);
         InitPatten();
         patten = 1;
