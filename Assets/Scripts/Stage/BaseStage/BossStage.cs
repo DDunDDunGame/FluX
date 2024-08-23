@@ -55,23 +55,16 @@ public class BossStage : BaseStage
 
     public BossStage(StageController controller) : base(controller)
     {
-        bossEnemy = Resources.Load("Prefabs/BossStage/Boss") as GameObject;
-        circleEnemy = Resources.Load("Prefabs/BossStage/CircleEnemy") as GameObject;
-        squareEnemy = Resources.Load("Prefabs/BossStage/SquareEnemy") as GameObject;
-        noCircleEnemy = Resources.Load("Prefabs/BossStage/CircleEnemyNoEffect") as GameObject;
-        player = GameObject.Find("Player");
-        enemyParent = GameObject.Find("Enemy");
-        mapParent = GameObject.Find("Map");
+        RePrefabs();
     }
 
     public override void Initialize()
     {
         base.Initialize();
+        RePrefabs();
         GetCurrentPlayScreen();
-        player = GameObject.Find("Player");
-        enemyParent = GameObject.Find("Enemy");
+        Reset();
         patten = Random.Range(0, 5);
-        mapParent = GameObject.Find("Map");
         currentMap = Resources.Load("Prefabs/BossStage/Patten_Map_" + patten.ToString()) as GameObject;
 
         player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
@@ -95,6 +88,41 @@ public class BossStage : BaseStage
         player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         Util.DestoryObjFromParent(enemyParent);
         Util.DestoryObjFromParent(mapParent);
+    }
+
+    private void RePrefabs()
+    {
+        bossEnemy = Resources.Load("Prefabs/BossStage/Boss") as GameObject;
+        circleEnemy = Resources.Load("Prefabs/BossStage/CircleEnemy") as GameObject;
+        squareEnemy = Resources.Load("Prefabs/BossStage/SquareEnemy") as GameObject;
+        noCircleEnemy = Resources.Load("Prefabs/BossStage/CircleEnemyNoEffect") as GameObject;
+        player = GameObject.Find("Player");
+        enemyParent = GameObject.Find("Enemy");
+        mapParent = GameObject.Find("Map");
+    }
+
+    private void Reset()
+    {
+        bossWayPoint.Clear();
+        squarePoints.Clear();
+        squareEnemys.Clear();
+        circleEnemys.Clear();
+        rayEnemys.Clear();
+        jumpPos.Clear();
+        wayCount = 0;
+        bossMoveTime = 0;
+        moveStart = false;
+        attackStart = false;
+        rayStart = false;
+        rayTime = 0;
+        squareTime = 0;
+        countSquare = 0;
+        squareStart = false;
+        currentWay = 0;
+        attackCount = 0;
+        rayCount = 0;
+        currentJump = 0;
+        spreadCircleDelayTime = 0.5f;
     }
 
     private void InitPatten()

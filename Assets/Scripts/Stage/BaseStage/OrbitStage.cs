@@ -23,17 +23,13 @@ public class OrbitStage : BaseStage
 
     public OrbitStage(StageController controller) : base(controller)
     {
-        mainCirclePrefab = Resources.Load("Prefabs/Orbit/TempOrbit") as GameObject;
-        rayEnemy = Resources.Load("Prefabs/Orbit/RayEnemy") as GameObject;
-        squareEnemy = Resources.Load("Prefabs/Orbit/SquareEnemy") as GameObject;
-        circleEnemy = Resources.Load("Prefabs/Orbit/CircleEnemy") as GameObject;
-        enemyParent = GameObject.Find("Enemy");
-        player = GameObject.Find("Player");
+        RePrefab();
     }
 
     public override void Initialize()
     {
         base.Initialize();
+        RePrefab();
         mainCircle = controller.CreateMap(mainCirclePrefab, new Vector3(0, 0, 0));
         player.transform.position = new Vector3(0, -1.5f, 0);
         GetCurrentPlayScreen();
@@ -54,6 +50,16 @@ public class OrbitStage : BaseStage
     {
         base.Destroy();
         Util.DestoryObjFromParent(enemyParent);
+    }
+
+    private void RePrefab()
+    {
+        mainCirclePrefab = Resources.Load("Prefabs/Orbit/TempOrbit") as GameObject;
+        rayEnemy = Resources.Load("Prefabs/Orbit/RayEnemy") as GameObject;
+        squareEnemy = Resources.Load("Prefabs/Orbit/SquareEnemy") as GameObject;
+        circleEnemy = Resources.Load("Prefabs/Orbit/CircleEnemy") as GameObject;
+        enemyParent = GameObject.Find("Enemy");
+        player = GameObject.Find("Player");
     }
 
     private void InitPatten()
@@ -149,7 +155,7 @@ public class OrbitStage : BaseStage
             circleEnemys.Add(currentEnemy);
             currentEnemy.transform.localScale = new Vector3(screenX * 1.5f, screenX * 1.5f, 1);
             currentEnemy.SetActive(true);
-            currentEnemy.transform.DOScale(mainCircle.transform.localScale * 1.2f, 2f);
+            currentEnemy.transform.DOScale(mainCircle.transform.localScale * 1.2f, 2f).SetEase(Ease.Linear);
             currentEnemy.transform.GetComponent<SpriteRenderer>().DOFade(0.4f, 2f).SetEase(Ease.Linear);
             playTime = 0;
         }
@@ -159,11 +165,6 @@ public class OrbitStage : BaseStage
             if(child.transform.localScale == mainCircle.transform.localScale * 1.2f)
             {
                 circleEnemys.Remove(child);
-                OrbitCheckEnter currentOrbit = child.transform.GetChild(0).transform.GetComponent<OrbitCheckEnter>();
-                if (!currentOrbit.checkEnterPlayer)
-                {
-                    player.GetComponent<Player>().TakeDamage(5);
-                }
                 child.SetActive(false);
                 break;
             }
