@@ -34,7 +34,7 @@ public class OrbitStage : BaseStage
         player.transform.position = new Vector3(0, -1.5f, 0);
         GetCurrentPlayScreen();
 
-        //patten = Random.Range(0, 3);
+        patten = Random.Range(0, 3);
 
         InitPatten();
     }

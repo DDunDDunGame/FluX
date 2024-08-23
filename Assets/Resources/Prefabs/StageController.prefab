@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2203128429455618508}
   - component: {fileID: 1096143928272078966}
   - component: {fileID: 6819725161946472108}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStage: -1
-  testStage: 1
+  testStage: 5
   changeTime: 0.6
   initY: -10
   flyTransforms:
@@ -5604,7 +5604,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -142.99994, y: -18}
+  m_AnchoredPosition: {x: -143, y: -18}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7797309219642798222
