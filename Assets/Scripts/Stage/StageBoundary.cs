@@ -6,6 +6,7 @@ public class StageBoundary : MonoBehaviour, IStageAttachment
 {
     // Up, Down, Left, Right
     GameObject[] boundaries = new GameObject[4];
+    StageBottom stageBottom;
 
     private void Awake()
     {
@@ -13,6 +14,7 @@ public class StageBoundary : MonoBehaviour, IStageAttachment
         boundaries[1] = Util.FindChild(gameObject, "Bottom");
         boundaries[2] = Util.FindChild(gameObject, "Left");
         boundaries[3] = Util.FindChild(gameObject, "Right");
+        stageBottom = boundaries[1].GetComponent<StageBottom>();
     }
 
     public void ChangeStage(Define.Stage stage)
@@ -28,6 +30,15 @@ public class StageBoundary : MonoBehaviour, IStageAttachment
             boundaries[1].SetActive(true);
             boundaries[2].SetActive(true);
             boundaries[3].SetActive(true);
+        }
+
+        if(stage == Define.Stage.Shooting || stage == Define.Stage.None)
+        {
+            stageBottom.canAttack = false;
+        }
+        else
+        {
+            stageBottom.canAttack = true;
         }
     }
 }
