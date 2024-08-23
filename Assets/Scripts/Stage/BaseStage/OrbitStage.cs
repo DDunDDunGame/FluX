@@ -13,7 +13,7 @@ public class OrbitStage : BaseStage
     GameObject squareEnemy;
     GameObject circleEnemy;
 
-    int patten = 0;
+    int patten = 2;
     float playTime = 0;
     float screenX;
     float screenY;
@@ -38,7 +38,7 @@ public class OrbitStage : BaseStage
         player.transform.position = new Vector3(0, -1.5f, 0);
         GetCurrentPlayScreen();
 
-        patten = Random.Range(0, 3);
+        //patten = Random.Range(0, 3);
 
         InitPatten();
     }
@@ -149,13 +149,14 @@ public class OrbitStage : BaseStage
             circleEnemys.Add(currentEnemy);
             currentEnemy.transform.localScale = new Vector3(screenX * 1.5f, screenX * 1.5f, 1);
             currentEnemy.SetActive(true);
-            currentEnemy.transform.DOScale(mainCircle.transform.localScale, 2f);
+            currentEnemy.transform.DOScale(mainCircle.transform.localScale * 1.2f, 2f);
+            currentEnemy.transform.GetComponent<SpriteRenderer>().DOFade(0.4f, 2f).SetEase(Ease.Linear);
             playTime = 0;
         }
 
         foreach(GameObject child in circleEnemys)
         {
-            if(child.transform.localScale == mainCircle.transform.localScale)
+            if(child.transform.localScale == mainCircle.transform.localScale * 1.2f)
             {
                 circleEnemys.Remove(child);
                 OrbitCheckEnter currentOrbit = child.transform.GetChild(0).transform.GetComponent<OrbitCheckEnter>();
