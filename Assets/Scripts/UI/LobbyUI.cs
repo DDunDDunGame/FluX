@@ -24,8 +24,11 @@ public class LobbyUI : MonoBehaviour
         string scoreString = "";
         while (highScore > 0)
         {
-            if (highScore < 1000) scoreString = (highScore % 1000) + scoreString;
-            else scoreString = "," + (highScore % 1000) + scoreString;
+            string part = (highScore % 1000).ToString("D3");
+            if (highScore < 1000)
+                scoreString = part.TrimStart('0') + scoreString;
+            else
+                scoreString = "," + part + scoreString;
             highScore /= 1000;
         }
         if (scoreString == "") scoreString = "0";

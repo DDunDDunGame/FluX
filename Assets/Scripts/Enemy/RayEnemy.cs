@@ -68,6 +68,7 @@ public class RayEnemy : Poolable
             yield return null;
         }
         timer = 0f;
+        coll.enabled = false;
         while (timer < rayOnTime)
         {
             timer += Time.deltaTime;
@@ -76,7 +77,6 @@ public class RayEnemy : Poolable
             yield return null;
         }
         sprite.enabled = false;
-        coll.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

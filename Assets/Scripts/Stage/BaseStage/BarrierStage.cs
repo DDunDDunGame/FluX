@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class BarrierStage : BaseStage
 {
-    GameObject barrierPrefab;
     GameObject barrier;
     GameObject barrierRange;
     GameObject player;
@@ -25,7 +24,7 @@ public class BarrierStage : BaseStage
 
     public BarrierStage(StageController controller) : base(controller)
     {
-        barrierPrefab = Resources.Load("Prefabs/BarrierStage/Barrier") as GameObject;
+        barrier = Resources.Load("Prefabs/BarrierStage/Barrier") as GameObject;
         circleEnemy = Resources.Load("Prefabs/BarrierStage/CircleEnemy") as GameObject;
         rayEnemy = Resources.Load("Prefabs/BarrierStage/RayEnemy") as GameObject;
         redRayEnemy = Resources.Load("Prefabs/BarrierStage/RedRayEnemy") as GameObject;
