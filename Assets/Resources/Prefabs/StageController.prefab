@@ -67,7 +67,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &2203128429455618508
 SpriteRenderer:
@@ -391,7 +391,7 @@ Transform:
   - {fileID: 2585425269563630254}
   - {fileID: 343390921946704095}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7039516355846058753
 MonoBehaviour:
@@ -5639,7 +5639,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 0, y: 9.718361}
+  m_Offset: {x: 0, y: 22.373278}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5650,7 +5650,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30, y: 9.763279}
+  m_Size: {x: 30, y: 35.07311}
   m_EdgeRadius: 0
 --- !u!1 &4123640944577060221
 GameObject:
@@ -5736,7 +5736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4807702275249553412
@@ -5955,24 +5955,24 @@ CompositeCollider2D:
   - m_Collider: {fileID: 9120705018285993423}
     m_ColliderPaths:
     - - X: 150000000
-        Y: 146000000
+        Y: 399098336
       - X: -150000000
-        Y: 146000000
+        Y: 399098336
       - X: -150000000
-        Y: 48367216
+        Y: 48367232
       - X: 150000000
-        Y: 48367216
+        Y: 48367232
   m_CompositePaths:
     m_Paths:
     - - {x: -8.700029, y: -5}
-      - {x: -8.69997, y: 4.8367214}
-      - {x: 8.7, y: 4.836692}
+      - {x: -8.69997, y: 4.8367233}
+      - {x: 8.7, y: 4.836694}
       - {x: 8.700029, y: -5}
       - {x: 18.7, y: -4.999971}
       - {x: 18.699972, y: 5}
       - {x: 15, y: 5.0000296}
-      - {x: 14.999971, y: 14.6}
-      - {x: -15, y: 14.599972}
+      - {x: 14.999971, y: 39.909836}
+      - {x: -15, y: 39.909805}
       - {x: -15.000029, y: 5}
       - {x: -18.7, y: 4.999971}
       - {x: -18.699972, y: -5}
@@ -6684,6 +6684,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0a7b4f690bf22db468ba178a154455a6, type: 3}
   - {fileID: 21300000, guid: d470e76e6c7225641870a18fa9c34e7e, type: 3}
   - {fileID: 21300000, guid: ea4bf2eafcd101d46ba6e391c3589bb0, type: 3}
+  - {fileID: 21300000, guid: df42c209545403d4984ea0b62c8fb2fc, type: 3}
 --- !u!1 &8245797001363830733
 GameObject:
   m_ObjectHideFlags: 0
