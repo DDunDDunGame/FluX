@@ -20,7 +20,7 @@ public class PlayerOnJumpStage : PlayerOnStage
         player.Rigid.gravityScale = 3f;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         player.Coll.sharedMaterial = jumpMaterial;
-        player.Sprite.sprite = player.SquareIdle;
+        player.Sprite.sprite = player.Square;
 
         player.Actions.Jump.Enable();
         player.Actions.Jump.Move.performed += Move;
