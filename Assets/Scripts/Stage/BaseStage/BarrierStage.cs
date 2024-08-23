@@ -45,6 +45,7 @@ public class BarrierStage : BaseStage
         if (!isBarrier) barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
         barrierRange = Util.CreateObjToParent(barrierRange, new Vector3(0, 0, 0), enemyParent);
         barrier.SetActive(true);
+        barrier.transform.SetPositionAndRotation(new Vector3(0, 1.25f, 0), Quaternion.identity);
         InitPatten();
         patten = 1;
         //patten = Random.Range(0, 3);
@@ -73,7 +74,6 @@ public class BarrierStage : BaseStage
         rayEnemy = Resources.Load("Prefabs/BarrierStage/RayEnemy") as GameObject;
         redRayEnemy = Resources.Load("Prefabs/BarrierStage/RedRayEnemy") as GameObject;
         barrierRange = Resources.Load("Prefabs/BarrierStage/BarrierRange") as GameObject;
-        player = GameObject.Find("Player");
         enemyParent = GameObject.Find("Enemy");
     }
 
