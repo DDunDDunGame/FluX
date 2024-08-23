@@ -31,6 +31,7 @@ public class PlayerOnBossStage : PlayerOnStage
         player.Actions.Jump.Jump.performed += Jump;
         player.Actions.Jump.Shoot.performed += Shoot;
         playerHalfHeight = player.Coll.bounds.extents.y;
+        player.Sprite.sprite = player.Square;
     }
 
     public override void OnUpdate()

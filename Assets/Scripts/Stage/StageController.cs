@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using DG.Tweening;
+using System;
+using UnityEngine.UI;
 
 public class StageController : MonoBehaviour
 {
@@ -20,6 +22,10 @@ public class StageController : MonoBehaviour
 
     public Player Player { get; private set; }
     public TextMeshProUGUI TimeText { get; private set; }
+    public TextMeshProUGUI ScoreText { get; private set; }
+    public RoundImage RoundImage { get; private set; }
+    private float scoreTimer = 0f;
+    private float scoreTime = 1f;
     private VolumeHelper changeVolume;
     // 추후 아이템 배치를 위한 변수들
     [SerializeField] private Fuel fuelPrefab;
@@ -50,18 +56,14 @@ public class StageController : MonoBehaviour
         foreach(RectTransform child in flyTransforms)
         {
             float rectInitY = child.rect.y;
-            child.DOAnchorPosY(rectInitY - 1300, 0);
-            child.DOAnchorPosY(rectInitY, 0.5f).SetEase(Ease.OutQuad);
+            child.DOAnchorPosY(rectInitY - 1000, 0);
+            child.DOAnchorPosY(rectInitY - 60, 0.5f).SetEase(Ease.OutQuad);
         }
     }
 
     private void InitStageChange()
     {
-#if UNITY_EDITOR
-        ChangeStage(testStage);
-#else
         ChangeStage(SetRandomStage());
-#endif
         Managers.Game.Play();
     }
 
@@ -90,6 +92,8 @@ public class StageController : MonoBehaviour
         map = Util.FindChild<Transform>(gameObject, "Map");
         Player = Util.FindChild<Player>(gameObject, "Player", true);
         TimeText = Util.FindChild<TextMeshProUGUI>(gameObject, "TimeText", true);
+        ScoreText = Util.FindChild<TextMeshProUGUI>(gameObject, "ScoreText", true);
+        RoundImage = Util.FindChild<RoundImage>(gameObject, "RoundImage", true);
         changeVolume = new(Player, Util.FindChild<Volume>(gameObject, "ChangeVolume", true));
     }
 
@@ -105,6 +109,22 @@ public class StageController : MonoBehaviour
         {
             stageDict[currentStage].Update();
         }
+
+        UpdateScore();
+    }
+
+    private void UpdateScore()
+    {
+        if (Managers.Game.IsPlaying)
+        {
+            scoreTimer += Time.deltaTime;
+            if (scoreTimer >= scoreTime)
+            {
+                scoreTimer = 0f;
+                Managers.Game.AddScore(100);
+            }
+        }
+        ScoreText.text = Managers.Game.Score.ToString();
     }
 
     private Define.Stage SetRandomStage()
@@ -112,6 +132,7 @@ public class StageController : MonoBehaviour
         if(roundStageCount < ROUND_STAGE_MAX)
         {
             roundStageCount++;
+            RoundImage.SetRoundImage(roundStageCount);
             int randomStart = (int)Define.Stage.None + 1;
             int randomEnd = (int)Define.Stage.Boss;
             return (Define.Stage)UnityEngine.Random.Range(randomStart, randomEnd);
@@ -125,6 +146,7 @@ public class StageController : MonoBehaviour
 
     public void ChangeStage(Define.Stage stage)
     {
+        Player.Sprite.enabled = false;
         if (currentStage != Define.Stage.None)
         {
             stageDict[currentStage].Destroy();
@@ -157,6 +179,7 @@ public class StageController : MonoBehaviour
         {
             attachment.ChangeStage(currentStage);
         }
+        Player.Sprite.enabled = true;
         Managers.Game.Resume();
     }
 
@@ -171,6 +194,7 @@ public class StageController : MonoBehaviour
         {
             attachment.ChangeStage(currentStage);
         }
+        gameObject.SetActive(false);
     }
 
     public GameObject CreateMap(GameObject obj, Vector3 pos)
