@@ -15,7 +15,7 @@ public class StageIcon : MonoBehaviour, IStageAttachment
 
     public void ChangeStage(Define.Stage stage)
     {
-        if(stage == Define.Stage.Boss || stage == Define.Stage.None)
+        if(stage == Define.Stage.None)
         {
             sprite.sprite = null;
             return;

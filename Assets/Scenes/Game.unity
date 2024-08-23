@@ -6903,6 +6903,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageController
       objectReference: {fileID: 0}
+    - target: {fileID: 2429305419404033242, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: stageIcons.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429305419404033242, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
+      propertyPath: stageIcons.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: df42c209545403d4984ea0b62c8fb2fc, type: 3}
     - target: {fileID: 3881221240768534896, guid: 9e7eaf50062049b4590d58aae6776cb1, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 100

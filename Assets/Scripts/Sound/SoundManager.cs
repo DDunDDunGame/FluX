@@ -26,6 +26,8 @@ public class SoundManager : Singleton<SoundManager>
             clipsDic.Add(clip.name, clip);
         }
         instantiatedSounds = new List<TemporaySoundPlayer>();
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         Managers.Game.GameOverAction -= () => PlaySound2D("SFX GameOver");
@@ -34,6 +36,7 @@ public class SoundManager : Singleton<SoundManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        instantiatedSounds.Clear();
         InitVoumes(-10, -10);
         if(scene.name == "Game")
         {
