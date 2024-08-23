@@ -24,7 +24,7 @@ public class PlayerOnShootingStage : PlayerOnStage
 
     public override void OnEnter()
     {
-        player.Sprite.sprite = player.Shooting;
+        player.Sprite.sprite = player.ShootingSprite;
         player.Actions.Shooting.Enable();
         player.Rigid.bodyType = RigidbodyType2D.Dynamic;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezePositionX;

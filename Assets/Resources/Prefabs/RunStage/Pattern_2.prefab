@@ -55,7 +55,7 @@ MonoBehaviour:
   rayScale: 1
   rayXPos: 0
   rayYMin: -3.5
-  rayYMax: 0
+  rayYMax: -1
   explosionPrefab: {fileID: 4476592607385723458, guid: 3f92877109521db4596c06493ccac1a3, type: 3}
   explosionInterval: 1
   explosionXPos: 9.5

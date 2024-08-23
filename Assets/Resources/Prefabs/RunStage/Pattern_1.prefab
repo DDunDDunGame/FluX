@@ -177,5 +177,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeObstaclePrefab: {fileID: 7491552841480596645, guid: 11a31d6ae757d9942bc336ca82c89257, type: 3}
   cubeObstaclePos: {x: 10, y: -2.5}
-  cubeObstacleDistance: {x: 3, y: 3}
+  cubeObstacleDistance: {x: 3, y: 3.5}
   cubeObstacleInterval: 0.8
