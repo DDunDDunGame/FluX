@@ -11,8 +11,10 @@ public class PlayerOnRunStage : PlayerOnStage
     private float playerHalfHeight;
     private int maxJumpCount = 2;
     private int currentJumpCount = 0;
+    private bool isJumping;
     private Vector2 initPos = new(-7f, -2.5f);
     private LayerMask platformMask = LayerMask.GetMask("Ground");
+    private bool isGrounded;
 
     public PlayerOnRunStage(Player player) : base(player) 
     {
@@ -29,12 +31,17 @@ public class PlayerOnRunStage : PlayerOnStage
         player.Sprite.sprite = player.Square;
         currentJumpCount = maxJumpCount;
         playerHalfHeight = player.Coll.bounds.extents.y;
+        isGrounded = false;
+        isJumping = false;
         player.OnBottomHit -= DownOnTop;
         player.OnBottomHit += DownOnTop;
     }
 
     public override void OnUpdate()
     {
+        isGrounded = IsGrounded();
+        if (isGrounded) { currentJumpCount = 0; isJumping = false; }
+        else if (!isJumping) currentJumpCount = 1;
     }
 
     public override void OnExit()
@@ -48,17 +55,20 @@ public class PlayerOnRunStage : PlayerOnStage
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (IsGrounded()) currentJumpCount = 0;
         if (currentJumpCount >= maxJumpCount) return;
-        SoundManager.Instance.PlaySound2D("SFX JumpOne");
+
+        isJumping = true;
         currentJumpCount++;
         player.Rigid.velocity = Vector2.zero;
         player.Rigid.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+        if(currentJumpCount == 1) { SoundManager.Instance.PlaySound2D("SFX JumpOne"); }
+        else { SoundManager.Instance.PlaySound2D("SFX JumpTwo"); }
     }
 
     private void Down(InputAction.CallbackContext context)
     {
-        if (IsGrounded()) return;
+        if (isGrounded) return;
         Vector2 origin = player.Coll.bounds.center - new Vector3(0, playerHalfHeight);
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 15f, platformMask);
         if (hit)
@@ -74,16 +84,15 @@ public class PlayerOnRunStage : PlayerOnStage
     {
         Vector2 origin = player.Coll.bounds.center - new Vector3(0, playerHalfHeight);
         float boxWidth = player.Coll.bounds.size.x;
-        Vector2 size = new(boxWidth, 0.05f);
-        RaycastHit2D centerHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0.1f, platformMask);
+        Vector2 size = new(boxWidth + 0.2f, 0.1f);
+        RaycastHit2D centerHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0f, platformMask);
 
-        Debug.Log(centerHit.normal);
         return centerHit.normal == Vector2.up;
     }
 
     private void DownOnTop()
     {
-        player.transform.position = new Vector2(initPos.x, 4.8f);
+        player.transform.position = new Vector2(0f, 4.8f);
         player.Rigid.velocity = Vector2.zero;
     }
 }

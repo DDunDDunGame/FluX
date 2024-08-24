@@ -5,10 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerOnJumpStage : PlayerOnStage
 {
-    bool isAir = false;
-    int jumpCount = 2;
     PhysicsMaterial2D jumpMaterial;
     private float playerHalfHeight;
+    private bool isJumping;
+    private int currentJumpCount;
+    private int maxJumpCount = 2;
+    private bool isGrounded;
+    private float jumpForce = 10f;
 
     public PlayerOnJumpStage(Player player) : base(player) 
     {
@@ -27,15 +30,17 @@ public class PlayerOnJumpStage : PlayerOnStage
         player.Actions.Jump.Move.canceled += Move;
         player.Actions.Jump.Jump.performed += Jump;
         playerHalfHeight = player.Coll.bounds.extents.y;
+
+
+        player.OnBottomHit -= DownOnTop;
+        player.OnBottomHit += DownOnTop;
     }
 
     public override void OnUpdate()
     {
-        // 떨어지고 있을 때
-        if (isAir)
-        {
-            LandGround();
-        }
+        isGrounded = IsGrounded();
+        if (isGrounded) { currentJumpCount = 0; isJumping = false; }
+        else if (!isJumping) currentJumpCount = 1;
     }
 
     public override void OnExit()
@@ -44,9 +49,8 @@ public class PlayerOnJumpStage : PlayerOnStage
         player.Rigid.gravityScale = 0;
         player.Rigid.constraints = RigidbodyConstraints2D.None;
         player.Coll.sharedMaterial = null;
-        player.Rigid.velocity = new Vector2(0, 0);
-        player.Coll.isTrigger = false;
         player.Rigid.velocity = Vector2.zero;
+        player.OnBottomHit -= DownOnTop;
     }
 
     private void Move(InputAction.CallbackContext context)
@@ -57,27 +61,30 @@ public class PlayerOnJumpStage : PlayerOnStage
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (!isAir || jumpCount > 0) 
-        {
-            player.Coll.isTrigger = true;
-            player.Rigid.velocity = new Vector2(player.Rigid.velocity.x, 0);
-            isAir = true;
-            if (jumpCount == 2) SoundManager.Instance.PlaySound2D("SFX JumpOne");
-            else SoundManager.Instance.PlaySound2D("SFX JumpTwo");
-            jumpCount--;
-            player.Rigid.AddForce(Vector3.up * 9, ForceMode2D.Impulse);
-        }
+        if (currentJumpCount >= maxJumpCount) return;
+
+        isJumping = true;
+        currentJumpCount++;
+        player.Rigid.velocity = new Vector2(player.Rigid.velocity.x, 0);
+        player.Rigid.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+        if (currentJumpCount == 1) { SoundManager.Instance.PlaySound2D("SFX JumpOne"); }
+        else { SoundManager.Instance.PlaySound2D("SFX JumpTwo"); }
     }
 
-    private void LandGround()
+    private bool IsGrounded()
     {
-        RaycastHit2D hitGround = Physics2D.Raycast(player.transform.position, Vector3.down, playerHalfHeight, LayerMask.GetMask("Ground"));
-        if (hitGround)
-        {
-            player.Coll.isTrigger = false;
-            player.Rigid.position = hitGround.point + new Vector2(0f, playerHalfHeight);
-            isAir = false;
-            jumpCount = 2;
-        }
+        Vector2 origin = player.Coll.bounds.center - new Vector3(0, playerHalfHeight);
+        float boxWidth = player.Coll.bounds.size.x;
+        Vector2 size = new(boxWidth + 0.2f, 0.1f);
+        RaycastHit2D centerHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0f, LayerMask.GetMask("Ground"));
+
+        return centerHit.normal == Vector2.up;
+    }
+
+    private void DownOnTop()
+    {
+        player.transform.position = new Vector2(0f, 4.8f);
+        player.Rigid.velocity = new Vector2(player.Rigid.velocity.x, 0);
     }
 }

@@ -63,7 +63,7 @@ public class StageController : MonoBehaviour
 
     private void InitStageChange()
     {
-        ChangeStage(Define.Stage.Run);
+        ChangeStage(SetRandomStage());
         Managers.Game.Play();
     }
 
@@ -103,7 +103,7 @@ public class StageController : MonoBehaviour
 
         if (stageDict[currentStage].IsEnd())
         {
-            ChangeStage(Define.Stage.Orbit);
+            ChangeStage(SetRandomStage());
         }
         else
         {

@@ -19,11 +19,6 @@ public class StageBoundary : MonoBehaviour, IStageAttachment
 
     public void EnterStage(Define.Stage stage)
     {
-        if (stage == Define.Stage.Jump)
-        {
-            boundaries[0].SetActive(false);
-            boundaries[1].SetActive(false);
-        }
         if (stage == Define.Stage.Shooting || stage == Define.Stage.None)
         {
             stageBottom.canAttack = false;
@@ -32,11 +27,6 @@ public class StageBoundary : MonoBehaviour, IStageAttachment
 
     public void ExitStage(Define.Stage stage)
     {
-        if (stage == Define.Stage.Jump)
-        {
-            boundaries[0].SetActive(true);
-            boundaries[1].SetActive(true);
-        }
         if (stage == Define.Stage.Shooting || stage == Define.Stage.None)
         {
             stageBottom.canAttack = true;

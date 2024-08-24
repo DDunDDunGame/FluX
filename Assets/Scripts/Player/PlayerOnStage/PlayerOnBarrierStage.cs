@@ -38,6 +38,6 @@ public class PlayerOnBarrierStage : PlayerOnStage
     private void Move(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
-        player.Rigid.angularVelocity = -input.x * 600;
+        player.Rigid.angularVelocity = -input.x * 400;
     }
 }

@@ -72,13 +72,15 @@ public class BossStage : BaseStage
 
         player.transform.position = currentMap.transform.Find("PlayerStartPoint").transform.position;
         InitPatten();
+
+        controller.Player.OnBottomHit -= PlayerDropCheck;
+        controller.Player.OnBottomHit += PlayerDropCheck;
     }
 
     public override void Update()
     {
         base.Update();
         playTime += Time.deltaTime;
-        PlayerDropCheck();
         UpdatePatten();
     }
 
@@ -88,6 +90,7 @@ public class BossStage : BaseStage
         player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         Util.DestoryObjFromParent(enemyParent);
         Util.DestoryObjFromParent(mapParent);
+        controller.Player.OnBottomHit -= PlayerDropCheck;
     }
 
     private void RePrefabs()
@@ -583,9 +586,7 @@ public class BossStage : BaseStage
 
     private void PlayerDropCheck()
     {
-        if (player.transform.position.y < screenY / 2 * -1)
-        {
-            player.transform.position = currentMap.transform.Find("PlayerStartPoint").transform.position;
-        }
+        controller.Player.transform.position = new Vector2(currentMap.transform.Find("PlayerStartPoint").transform.position.x, 4.8f);
+        controller.Player.Rigid.velocity = new Vector2(controller.Player.Rigid.velocity.x, 0);
     }
 }

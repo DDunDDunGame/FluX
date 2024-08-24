@@ -176,15 +176,15 @@ public class BarrierStage : BaseStage
                 if (currentRigid.velocity.normalized == Vector2.up)
                 {
                     RaycastHit2D hitBarrier = Physics2D.Raycast(child.transform.position, Vector2.right * -1, Mathf.Infinity, LayerMask.GetMask("Barrier"));
-                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.right * -1, Mathf.Infinity, LayerMask.GetMask("Player"));
-                    if (hitBarrier)
-                    {
-                        visualLine.Play(child.transform.position, hitBarrier.point);
-                    }
-                    else if (hitPlayer)
+                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.right * -1, Mathf.Infinity, LayerMask.GetMask("Player", "Barrier"));
+                    if (hitPlayer.collider != null && hitPlayer.collider.gameObject == player)
                     {
                         hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
                         visualLine.Play(child.transform.position, hitPlayer.point);
+                    }
+                    else if (hitBarrier)
+                    {
+                        visualLine.Play(child.transform.position, hitBarrier.point);
                     }
                     else
                     {
@@ -194,15 +194,15 @@ public class BarrierStage : BaseStage
                 else if (currentRigid.velocity.normalized == Vector2.down)
                 {
                     RaycastHit2D hitBarrier = Physics2D.Raycast(child.transform.position, Vector2.right, Mathf.Infinity, LayerMask.GetMask("Barrier"));
-                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.right, Mathf.Infinity, LayerMask.GetMask("Player"));
-                    if (hitBarrier)
-                    {
-                        visualLine.Play(child.transform.position, hitBarrier.point);
-                    }
-                    else if (hitPlayer)
+                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.right, Mathf.Infinity, LayerMask.GetMask("Player", "Barrier"));
+                    if (hitPlayer.collider != null && hitPlayer.collider.gameObject == player)
                     {
                         hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
                         visualLine.Play(child.transform.position, hitPlayer.point);
+                    }
+                    else if (hitBarrier)
+                    {
+                        visualLine.Play(child.transform.position, hitBarrier.point);
                     }
                     else
                     {
@@ -212,15 +212,15 @@ public class BarrierStage : BaseStage
                 else if (currentRigid.velocity.normalized == Vector2.right)
                 {
                     RaycastHit2D hitBarrier = Physics2D.Raycast(child.transform.position, Vector2.up, Mathf.Infinity, LayerMask.GetMask("Barrier"));
-                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.up, Mathf.Infinity, LayerMask.GetMask("Player"));
-                    if (hitBarrier)
-                    {
-                        visualLine.Play(child.transform.position, hitBarrier.point);
-                    }
-                    else if (hitPlayer)
+                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.up, Mathf.Infinity, LayerMask.GetMask("Player", "Barrier"));
+                    if (hitPlayer.collider != null && hitPlayer.collider.gameObject == player)
                     {
                         hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
                         visualLine.Play(child.transform.position, hitPlayer.point);
+                    }
+                    else if (hitBarrier)
+                    {
+                        visualLine.Play(child.transform.position, hitBarrier.point);
                     }
                     else
                     {
@@ -230,15 +230,15 @@ public class BarrierStage : BaseStage
                 else
                 {
                     RaycastHit2D hitBarrier = Physics2D.Raycast(child.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Barrier"));
-                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Player"));
-                    if (hitBarrier)
-                    {
-                        visualLine.Play(child.transform.position, hitBarrier.point);
-                    }
-                    else if (hitPlayer)
+                    RaycastHit2D hitPlayer = Physics2D.Raycast(child.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Player", "Barrier"));
+                    if (hitPlayer.collider != null && hitPlayer.collider.gameObject == player)
                     {
                         hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
                         visualLine.Play(child.transform.position, hitPlayer.point);
+                    }
+                    else if (hitBarrier)
+                    {
+                        visualLine.Play(child.transform.position, hitBarrier.point);
                     }
                     else
                     {

@@ -5,16 +5,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerOnBossStage : PlayerOnStage
 {
-    bool isAir = false;
-    int jumpCount = 2;
     private GameObject projectilePrefab;
     private Vector2 touchPosition;
-    private float playerHalfHeight;
     private Texture2D bossCurser;
+    PhysicsMaterial2D jumpMaterial;
+    private float playerHalfHeight;
+    private bool isJumping;
+    private int currentJumpCount;
+    private int maxJumpCount = 2;
+    private bool isGrounded;
+    private float jumpForce = 10f;
 
     public PlayerOnBossStage(Player player) : base(player) {
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
         bossCurser = Resources.Load<Texture2D>("Arts/BossCursor");
+        jumpMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
     }
     public override void OnEnter()
     {
@@ -22,7 +27,7 @@ public class PlayerOnBossStage : PlayerOnStage
         Cursor.lockState = CursorLockMode.Confined;
         player.Rigid.gravityScale = 3;
         player.Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        player.Coll.sharedMaterial = Resources.Load("Physics/Jump") as PhysicsMaterial2D;
+        player.Coll.sharedMaterial = jumpMaterial;
         Cursor.SetCursor(bossCurser, Vector2.zero, CursorMode.Auto);
 
         player.Actions.Jump.Enable();
@@ -41,10 +46,9 @@ public class PlayerOnBossStage : PlayerOnStage
         mousePos.y = Mathf.Clamp(mousePos.y, 0, Screen.height);
         touchPosition = Camera.main.ScreenToWorldPoint(mousePos);
 
-        if (isAir)
-        {
-            LandGround();
-        }
+        isGrounded = IsGrounded();
+        if (isGrounded) { currentJumpCount = 0; isJumping = false; }
+        else if (!isJumping) currentJumpCount = 1;
     }
 
     public override void OnExit()
@@ -54,8 +58,6 @@ public class PlayerOnBossStage : PlayerOnStage
         player.Rigid.gravityScale = 0;
         player.Rigid.constraints = RigidbodyConstraints2D.None;
         player.Coll.sharedMaterial = null;
-        player.Rigid.velocity = new Vector2(0, 0);
-        player.Coll.isTrigger = false;
         player.Rigid.velocity = Vector2.zero;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
@@ -68,16 +70,25 @@ public class PlayerOnBossStage : PlayerOnStage
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (!isAir || jumpCount > 0)
-        {
-            player.Coll.isTrigger = true;
-            player.Rigid.velocity = new Vector2(player.Rigid.velocity.x, 0);
-            isAir = true;
-            if (jumpCount == 2) SoundManager.Instance.PlaySound2D("SFX JumpOne");
-            else SoundManager.Instance.PlaySound2D("SFX JumpTwo");
-            jumpCount--;
-            player.Rigid.AddForce(Vector3.up * 9, ForceMode2D.Impulse);
-        }
+        if (currentJumpCount >= maxJumpCount) return;
+
+        isJumping = true;
+        currentJumpCount++;
+        player.Rigid.velocity = new Vector2(player.Rigid.velocity.x, 0);
+        player.Rigid.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+        if (currentJumpCount == 1) { SoundManager.Instance.PlaySound2D("SFX JumpOne"); }
+        else { SoundManager.Instance.PlaySound2D("SFX JumpTwo"); }
+    }
+
+    private bool IsGrounded()
+    {
+        Vector2 origin = player.Coll.bounds.center - new Vector3(0, playerHalfHeight);
+        float boxWidth = player.Coll.bounds.size.x;
+        Vector2 size = new(boxWidth + 0.2f, 0.1f);
+        RaycastHit2D centerHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0f, LayerMask.GetMask("Ground"));
+
+        return centerHit.normal == Vector2.up;
     }
 
     private void Shoot(InputAction.CallbackContext context)
@@ -90,18 +101,6 @@ public class PlayerOnBossStage : PlayerOnStage
             projectile.transform.position = player.transform.position;
             projectile.transform.right = Vector3.Slerp(projectile.transform.right.normalized, bulletDir, 360);
             projectile.GetComponent<Projectile>().Launch(bulletDir);
-        }
-    }
-
-    private void LandGround()
-    {
-        RaycastHit2D hitGround = Physics2D.Raycast(player.transform.position, Vector3.down, playerHalfHeight, LayerMask.GetMask("Ground"));
-        if (hitGround)
-        {
-            player.Coll.isTrigger = false;
-            player.Rigid.position = hitGround.point + new Vector2(0f, playerHalfHeight);
-            isAir = false;
-            jumpCount = 2;
         }
     }
 }

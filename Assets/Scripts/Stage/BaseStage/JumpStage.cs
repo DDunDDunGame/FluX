@@ -87,7 +87,6 @@ public class JumpStage : BaseStage
         {
             enemyFallParent.transform.Translate(Vector3.down * fallingSpeed * Time.deltaTime);
         }
-        PlayerDropCheck();
     }
 
     public override void Destroy()
@@ -263,14 +262,6 @@ public class JumpStage : BaseStage
                 selectRay = Random.Range(0, rayEnemys.Count);
             } while (rayEnemys[selectRay].activeSelf);
             rayEnemys[selectRay].SetActive(true);
-        }
-    }
-
-    private void PlayerDropCheck()
-    {
-        if(player.transform.position.y < screenY/2 * -1)
-        {
-            player.transform.position = currentMap.transform.Find("PlayerPoint").transform.position;
         }
     }
 }
