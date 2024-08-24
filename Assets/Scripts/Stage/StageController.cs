@@ -155,6 +155,10 @@ public class StageController : MonoBehaviour
                 EnableFuelItem();
             }
             Player.Stat.ResetHitCount();
+            foreach (IStageAttachment attachment in attachments)
+            {
+                attachment.ExitStage(currentStage);
+            }
         }
 
         Managers.Game.Pause();
@@ -177,7 +181,7 @@ public class StageController : MonoBehaviour
         stageDict[currentStage].Initialize();
         foreach (IStageAttachment attachment in attachments)
         {
-            attachment.ChangeStage(currentStage);
+            attachment.EnterStage(currentStage);
         }
         Player.Sprite.enabled = true;
         Managers.Game.Resume();
@@ -189,12 +193,12 @@ public class StageController : MonoBehaviour
         if (currentStage != Define.Stage.None)
         {
             stageDict[currentStage].Destroy();
+            foreach (IStageAttachment attachment in attachments)
+            {
+                attachment.ExitStage(currentStage);
+            }
         }
         currentStage = Define.Stage.None;
-        foreach (IStageAttachment attachment in attachments)
-        {
-            attachment.ChangeStage(currentStage);
-        }
         gameObject.SetActive(false);
     }
 

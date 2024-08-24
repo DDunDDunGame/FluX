@@ -13,13 +13,15 @@ public class StageIcon : MonoBehaviour, IStageAttachment
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    public void ChangeStage(Define.Stage stage)
+    public void EnterStage(Define.Stage stage)
     {
-        if(stage == Define.Stage.None)
+        if (stage == Define.Stage.None)
         {
             sprite.sprite = null;
             return;
         }
         sprite.sprite = stageIcons[(int)stage];
     }
+
+    public void ExitStage(Define.Stage stage) { }
 }

@@ -77,6 +77,7 @@ public class PlayerOnRunStage : PlayerOnStage
         Vector2 size = new(boxWidth, 0.05f);
         RaycastHit2D centerHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, 0.1f, platformMask);
 
+        Debug.Log(centerHit.normal);
         return centerHit.normal == Vector2.up;
     }
 

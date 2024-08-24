@@ -75,20 +75,23 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         };
     }
 
-    public void ChangeStage(Define.Stage stage)
+    public void EnterStage(Define.Stage stage)
     {
-        if(currentStage != Define.Stage.None)
-        {
-            onStageDict[currentStage].OnExit();
-        }
-        if(stage == Define.Stage.None)
+        if (stage == Define.Stage.None)
         {
             currentStage = Define.Stage.None;
             return;
         }
-
         currentStage = stage;
         onStageDict[currentStage].OnEnter();
+    }
+
+    public void ExitStage(Define.Stage stage)
+    {
+        if (currentStage != Define.Stage.None)
+        {
+            onStageDict[currentStage].OnExit();
+        }
     }
 
     public void TakeDamage(float damage)

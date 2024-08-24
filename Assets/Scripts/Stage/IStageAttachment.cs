@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IStageAttachment
 {
-    void ChangeStage(Define.Stage stage);
+    void EnterStage(Define.Stage stage);
+    void ExitStage(Define.Stage stage);
 }

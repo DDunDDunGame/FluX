@@ -17,26 +17,27 @@ public class StageBoundary : MonoBehaviour, IStageAttachment
         stageBottom = boundaries[1].GetComponent<StageBottom>();
     }
 
-    public void ChangeStage(Define.Stage stage)
+    public void EnterStage(Define.Stage stage)
     {
-        if(stage == Define.Stage.Jump)
+        if (stage == Define.Stage.Jump)
         {
             boundaries[0].SetActive(false);
             boundaries[1].SetActive(false);
         }
-        else
-        {
-            boundaries[0].SetActive(true);
-            boundaries[1].SetActive(true);
-            boundaries[2].SetActive(true);
-            boundaries[3].SetActive(true);
-        }
-
-        if(stage == Define.Stage.Shooting || stage == Define.Stage.None)
+        if (stage == Define.Stage.Shooting || stage == Define.Stage.None)
         {
             stageBottom.canAttack = false;
         }
-        else
+    }
+
+    public void ExitStage(Define.Stage stage)
+    {
+        if (stage == Define.Stage.Jump)
+        {
+            boundaries[0].SetActive(true);
+            boundaries[1].SetActive(true);
+        }
+        if (stage == Define.Stage.Shooting || stage == Define.Stage.None)
         {
             stageBottom.canAttack = true;
         }
