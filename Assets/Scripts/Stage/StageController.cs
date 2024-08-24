@@ -63,7 +63,7 @@ public class StageController : MonoBehaviour
 
     private void InitStageChange()
     {
-        ChangeStage(SetRandomStage());
+        ChangeStage(Define.Stage.Run);
         Managers.Game.Play();
     }
 
@@ -103,7 +103,7 @@ public class StageController : MonoBehaviour
 
         if (stageDict[currentStage].IsEnd())
         {
-            ChangeStage(SetRandomStage());
+            ChangeStage(Define.Stage.Orbit);
         }
         else
         {
@@ -185,6 +185,7 @@ public class StageController : MonoBehaviour
 
     private void FinishGame()
     {
+        SoundManager.Instance.PlaySound2D("SFX GameOver");
         if (currentStage != Define.Stage.None)
         {
             stageDict[currentStage].Destroy();

@@ -32,9 +32,6 @@ public class SoundManager : Singleton<SoundManager>
         SceneManager.sceneLoaded += OnSceneLoaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
 
-        Managers.Game.GameOverAction -= () => Instance.PlaySound2D("SFX GameOver");
-        Managers.Game.GameOverAction += () => Instance.PlaySound2D("SFX GameOver");
-
         InitVoumes(-2, -2);
     }
 
