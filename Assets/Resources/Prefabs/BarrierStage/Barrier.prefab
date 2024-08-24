@@ -34,7 +34,7 @@ Transform:
   - {fileID: 7508909557678465881}
   - {fileID: 6080024791639932306}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2407596824658525362
 SpriteRenderer:
@@ -155,7 +155,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1795992203533318, guid: 890aba7398207db48978724168fac5a7, type: 3}
       propertyPath: m_Name
-      value: LayBarrierEffect
+      value: RayBarrierEffect
       objectReference: {fileID: 0}
     - target: {fileID: 4375260158437666, guid: 890aba7398207db48978724168fac5a7, type: 3}
       propertyPath: m_RootOrder

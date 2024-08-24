@@ -7,6 +7,7 @@ using UnityEngine;
 public class BarrierStage : BaseStage
 {
     GameObject barrier;
+    BarrierEffect barrierEffect;
     GameObject barrierRange;
     GameObject player;
     GameObject circleEnemy;
@@ -50,6 +51,7 @@ public class BarrierStage : BaseStage
         if (!isBarrier) barrier = Util.CreateObjToParent(barrier, new Vector3(0, 1.25f, 0), player);
         barrierRange = Util.CreateObjToParent(barrierRange, new Vector3(0, 0, 0), enemyParent);
         barrier.SetActive(true);
+        barrierEffect = barrier.GetComponent<BarrierEffect>();
         patten = Random.Range(0, 2);
         barrier.transform.SetPositionAndRotation(new Vector3(0, 1.25f, 0), Quaternion.identity);
         InitPatten();
@@ -181,14 +183,17 @@ public class BarrierStage : BaseStage
                     {
                         hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
                         visualLine.Play(child.transform.position, hitPlayer.point);
+                        barrierEffect.RayBarrierEffect.Stop();
                     }
                     else if (hitBarrier)
                     {
                         visualLine.Play(child.transform.position, hitBarrier.point);
+                        barrierEffect.RayBarrierEffect.Play();
                     }
                     else
                     {
                         visualLine.Play(child.transform.position, new Vector2(child.transform.position.x * -1, child.transform.position.y));
+                        barrierEffect.RayBarrierEffect.Stop();
                     }
                 }
                 else if (currentRigid.velocity.normalized == Vector2.down)
@@ -199,14 +204,17 @@ public class BarrierStage : BaseStage
                     {
                         hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
                         visualLine.Play(child.transform.position, hitPlayer.point);
+                        barrierEffect.RayBarrierEffect.Stop();
                     }
                     else if (hitBarrier)
                     {
                         visualLine.Play(child.transform.position, hitBarrier.point);
+                        barrierEffect.RayBarrierEffect.Play();
                     }
                     else
                     {
                         visualLine.Play(child.transform.position, new Vector2(child.transform.position.x * -1, child.transform.position.y));
+                        barrierEffect.RayBarrierEffect.Stop();
                     }
                 }
                 else if (currentRigid.velocity.normalized == Vector2.right)
@@ -217,14 +225,17 @@ public class BarrierStage : BaseStage
                     {
                         hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
                         visualLine.Play(child.transform.position, hitPlayer.point);
+                        barrierEffect.RayBarrierEffect.Stop();
                     }
                     else if (hitBarrier)
                     {
                         visualLine.Play(child.transform.position, hitBarrier.point);
+                        barrierEffect.RayBarrierEffect.Play();
                     }
                     else
                     {
                         visualLine.Play(child.transform.position, new Vector2(child.transform.position.x, child.transform.position.y * -1));
+                        barrierEffect.RayBarrierEffect.Stop();
                     }
                 }
                 else
@@ -235,14 +246,17 @@ public class BarrierStage : BaseStage
                     {
                         hitPlayer.transform.GetComponent<Player>().TakeDamage(5);
                         visualLine.Play(child.transform.position, hitPlayer.point);
+                        barrierEffect.RayBarrierEffect.Stop();
                     }
                     else if (hitBarrier)
                     {
                         visualLine.Play(child.transform.position, hitBarrier.point);
+                        barrierEffect.RayBarrierEffect.Play();
                     }
                     else
                     {
                         visualLine.Play(child.transform.position, new Vector2(child.transform.position.x, child.transform.position.y * -1));
+                        barrierEffect.RayBarrierEffect.Stop();
                     }
                 }
             }
