@@ -22,6 +22,7 @@ public class BarrierStage : BaseStage
     float screenY;
     int patten = 0;
 
+    bool init = false;
     float playTime = 0;
     bool isBarrier = false;
     List<GameObject> redRays = new List<GameObject>();
@@ -60,6 +61,12 @@ public class BarrierStage : BaseStage
 
     public override void Update()
     {
+        if (init)
+        {
+            controller.Player.Rigid.velocity = Vector2.zero;
+            player.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
+            init = false;
+        }
         base.Update();
         playTime += Time.deltaTime;
 
