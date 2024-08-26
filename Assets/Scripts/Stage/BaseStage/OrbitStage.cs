@@ -45,6 +45,7 @@ public class OrbitStage : BaseStage
         if (init)
         {
             player.Rigid.position = new Vector3(0, -1.5f, 0);
+            player.Rigid.velocity = Vector2.zero;
             player.transform.rotation = Quaternion.identity;
             init = false;
         }

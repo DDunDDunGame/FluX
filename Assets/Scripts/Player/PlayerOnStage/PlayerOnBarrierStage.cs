@@ -13,6 +13,7 @@ public class PlayerOnBarrierStage : PlayerOnStage
     }
     public override void OnEnter()
     {
+        player.Rigid.velocity = Vector2.zero;
         player.Rigid.angularDrag = 0;
         player.Rigid.bodyType = RigidbodyType2D.Kinematic;
         player.Sprite.sprite = player.Circle;

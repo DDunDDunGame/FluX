@@ -92,7 +92,7 @@ public class PlayerOnRunStage : PlayerOnStage
 
     private void DownOnTop()
     {
-        player.transform.position = new Vector2(0f, 4.8f);
+        player.transform.position = new Vector2(initPos.x, 4.8f);
         player.Rigid.velocity = Vector2.zero;
     }
 }
