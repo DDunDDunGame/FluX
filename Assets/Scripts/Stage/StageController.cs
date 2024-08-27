@@ -181,6 +181,10 @@ public class StageController : MonoBehaviour
 
     private void FinishChangingStage(Define.Stage stage)
     {
+        foreach (IStageAttachment attachment in attachments)
+        {
+            attachment.ExitStage(currentStage);
+        }
         currentStage = stage;
         stageDict[currentStage].Initialize();
         foreach (IStageAttachment attachment in attachments)
