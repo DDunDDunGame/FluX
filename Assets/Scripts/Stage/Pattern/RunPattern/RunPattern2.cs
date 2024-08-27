@@ -19,19 +19,9 @@ public class RunPattern2 : MonoBehaviour, IPattern
     [SerializeField] private float rayInterval = 1.5f;
     [SerializeField] private float rayScale = 3f;
     [SerializeField] private float rayXPos = 12f;
-    [SerializeField] private float rayYMin;
-    [SerializeField] private float rayYMax;
+    [SerializeField] private float rayYFloor1 = -3f;
     private float rayTimer = 0f;
     private List<RayEnemy> rays = new();
-
-    [Header("Explosion")]
-    [SerializeField] private CircleExplosion explosionPrefab;
-    [SerializeField] private float explosionInterval = 1f;
-    [SerializeField] private float explosionXPos = 12f;
-    [SerializeField] private float explosionYMin;
-    [SerializeField] private float explosionYMax;
-    private float explosionTimer = 0f;
-    private List<CircleExplosion> explosions = new();
 
     public void Initialize(Player player)
     {
@@ -41,7 +31,7 @@ public class RunPattern2 : MonoBehaviour, IPattern
         {
             SpawnThreePlatforms(platformPrefab, initPlatformPos + 5 * i * Vector2.right);
         }
-        platformTimer = rayTimer = explosionTimer = Time.time;
+        platformTimer = rayTimer = Time.time;
     }
 
     public void OnUpdate()
@@ -56,11 +46,6 @@ public class RunPattern2 : MonoBehaviour, IPattern
             rayTimer = Time.time;
             SpawnRay();
         }
-        if (Time.time >= explosionTimer + explosionInterval)
-        {
-            explosionTimer = Time.time;
-            SpawnExplosion();
-        }
     }
 
     public void Destroy()
@@ -73,11 +58,7 @@ public class RunPattern2 : MonoBehaviour, IPattern
         {
             ray.ReturnToPool();
         }
-        foreach (var explosion in explosions)
-        {
-            explosion.ReturnToPool();
-        }
-        platforms.Clear(); rays.Clear(); explosions.Clear();
+        platforms.Clear(); rays.Clear();
     }
     
     private void SpawnThreePlatforms(RunPlatform prefab, Vector2 pos)
@@ -93,16 +74,11 @@ public class RunPattern2 : MonoBehaviour, IPattern
     private void SpawnRay()
     {
         RayEnemy ray = Managers.ObjectPool.GetObject(rayPrefab.gameObject).GetComponent<RayEnemy>();
-        ray.transform.position = new Vector2(rayXPos, Random.Range(rayYMin, rayYMax));
+
+        int floor = Random.Range(1, 4);
+        float rayYPos = rayYFloor1 + (floor - 1) * platformYDistance;
+        ray.transform.position = new Vector2(rayXPos, rayYPos);
         ray.ReadyRay(rayScale);
         rays.Add(ray);
-    }
-
-    private void SpawnExplosion()
-    {
-        CircleExplosion explosion = Managers.ObjectPool.GetObject(explosionPrefab.gameObject).GetComponent<CircleExplosion>();
-        explosion.transform.position = new Vector2(explosionXPos, Random.Range(explosionYMin, explosionYMax));
-        explosion.MakeExplosion();
-        explosions.Add(explosion);
     }
 }

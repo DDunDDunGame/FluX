@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8972548627863285549
 MonoBehaviour:
@@ -54,10 +54,4 @@ MonoBehaviour:
   rayInterval: 1.5
   rayScale: 1
   rayXPos: 0
-  rayYMin: -3.5
-  rayYMax: 0
-  explosionPrefab: {fileID: 4476592607385723458, guid: 3f92877109521db4596c06493ccac1a3, type: 3}
-  explosionInterval: 1
-  explosionXPos: 9.5
-  explosionYMin: -4
-  explosionYMax: 4
+  rayYFloor1: -3

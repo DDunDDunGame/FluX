@@ -8,7 +8,7 @@ public class RayEnemy : Poolable
     [SerializeField] private SpriteRenderer warning;
     private float warningTime = 1f;
     [SerializeField] private float warningMaxAlpha = 0.7f;
-    private float rayOnTime = 1f;
+    private float rayOnTime = 0.3f;
     private float rayRemainTime = 0.5f;
     [SerializeField] private float rayMaxAlpha = 0.7f;
     [SerializeField] private float damage = 10f;

@@ -46,6 +46,17 @@ public class Player : MonoBehaviour, IStageAttachment, IDamageable
         {
             onStageDict[currentStage].OnUpdate();
         }
+        else if(currentStage == Define.Stage.None)
+        {
+            ResetPlayerMovement();
+        }
+    }
+
+    private void ResetPlayerMovement()
+    {
+        Rigid.velocity = Vector2.zero;
+        Rigid.angularVelocity = 0;
+        transform.rotation = Quaternion.identity;
     }
 
     private void InitVariables()

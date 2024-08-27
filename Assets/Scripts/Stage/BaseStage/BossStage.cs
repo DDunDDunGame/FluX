@@ -135,7 +135,7 @@ public class BossStage : BaseStage
         {
             case 0:
                 wayBox = currentMap.transform.Find("BossMovePoint");
-                squareEnemy = Util.CreateObjToParent(squareEnemy, new Vector3(0, 3, 0), enemyParent);
+                //squareEnemy = Util.CreateObjToParent(squareEnemy, new Vector3(0, 3, 0), enemyParent);
 
                 foreach (Transform child in wayBox)
                 {
@@ -274,7 +274,7 @@ public class BossStage : BaseStage
                 bossMoveTime = 0;
             }
         }
-        GuidedMissile();
+        //GuidedMissile();
     }
 
     private void SpreadCircleEnemy()

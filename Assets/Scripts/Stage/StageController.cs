@@ -168,6 +168,10 @@ public class StageController : MonoBehaviour
     private void ChangingStage(Define.Stage stage)
     {
         currentStage = Define.Stage.None;
+        foreach (IStageAttachment attachment in attachments)
+        {
+            attachment.EnterStage(currentStage);
+        }
 
         void Change() { FinishChangingStage(stage); }
         void Disable() { changeVolume.DisableSmooth(changeTime / 3, Change); }

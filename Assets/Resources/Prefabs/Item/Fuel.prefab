@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18def8fcb0791b4e97e8ae282edfaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuel: 12
+  fuel: 15
   startPos: {x: 9.5, y: 0}
   amplitude: 2
   frequency: 2

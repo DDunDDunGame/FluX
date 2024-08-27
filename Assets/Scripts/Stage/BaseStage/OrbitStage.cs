@@ -13,7 +13,6 @@ public class OrbitStage : BaseStage
     GameObject squareEnemy;
     GameObject circleEnemy;
 
-    bool init = false;
     int patten = 2;
     float playTime = 0;
     float screenX;
@@ -32,7 +31,7 @@ public class OrbitStage : BaseStage
         base.Initialize();
         RePrefab();
         mainCircle = controller.CreateMap(mainCirclePrefab, new Vector3(0, 0, 0));
-        init = true;
+        player.transform.position = new Vector3(0, -1.5f, 0);
         GetCurrentPlayScreen();
 
         patten = Random.Range(0, 3);
@@ -42,13 +41,6 @@ public class OrbitStage : BaseStage
 
     public override void Update()
     {
-        if (init)
-        {
-            player.Rigid.position = new Vector3(0, -1.5f, 0);
-            player.Rigid.velocity = Vector2.zero;
-            player.transform.rotation = Quaternion.identity;
-            init = false;
-        }
         base.Update();
         playTime += Time.deltaTime;
         UpdatePatten();
@@ -135,7 +127,7 @@ public class OrbitStage : BaseStage
     private void PattenOne()
     {
         // 소환되는 속도 조절
-        if(playTime > 0.4f)
+        if(playTime > 0.6f)
         {
             playTime = 0;
             int  sliceMax = 4;
@@ -147,6 +139,7 @@ public class OrbitStage : BaseStage
                 Vector2 spawnPos = new Vector2(spawnDefine == 0 ? (screenX / 2 + 1) * -1 : screenX / 2 + 1, mainCircle.transform.localScale.y/2 - (sliceY * defineY));
                 currentEnemy = Util.CreateObjToParent(squareEnemy, spawnPos, enemyParent);
                 currentEnemy.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                currentEnemy.transform.rotation = Quaternion.Euler(0, 0, spawnDefine == 0 ? 180 : 0);
                 currentEnemy.GetComponent<Rigidbody2D>().velocity = new Vector2(spawnDefine == 0 ? 1 : -1, 0) * 4;
             }
             
